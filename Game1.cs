@@ -34,7 +34,7 @@ namespace simple_farming_game
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            ballTexture = Content.Load<Texture2D>("ball");
+            ballTexture = Content.Load<Texture2D>("player");
         }
 
         protected override void Update(GameTime gameTime)
