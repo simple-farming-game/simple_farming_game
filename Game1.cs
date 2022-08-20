@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
 
 namespace simple_farming_game
 {
@@ -12,6 +14,8 @@ namespace simple_farming_game
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        TiledMap _tiledMap;
+        TiledMapRenderer _tiledMapRenderer;
 
         public Game1()
         {
@@ -35,6 +39,11 @@ namespace simple_farming_game
 
             // TODO: use this.Content to load your game content here
             playerTexture = Content.Load<Texture2D>("player");
+
+            _tiledMap = Content.Load<TiledMap>("tiledmap1");
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
@@ -64,7 +73,7 @@ namespace simple_farming_game
             {
                 playerPosition.X += playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-
+            _tiledMapRenderer.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -73,6 +82,9 @@ namespace simple_farming_game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            _tiledMapRenderer.Draw();
+
             _spriteBatch.Begin();
             _spriteBatch.Draw(
                 playerTexture,
