@@ -10,8 +10,14 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:C:\Users\armyo\.nuget\packages\monogame.extended.content.pipeline\3.8.0\tools\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin map.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map.tmx
 
 #begin player.png
 /importer:TextureImporter
@@ -24,4 +30,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:player.png
+
+#begin tile1.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:tile1.tsx
 
