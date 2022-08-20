@@ -1,3 +1,3 @@
 ﻿
-using var game = new simple_farming_game.Game1();
+using var game = new sfg.Game1();
 game.Run();
