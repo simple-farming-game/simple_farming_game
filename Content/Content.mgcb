@@ -26,3 +26,8 @@
 /processorParam:TextureFormat=Color
 /build:player.png
 
+#begin tile1.png
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:tile1.png
+

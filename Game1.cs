@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
+
 namespace simple_farming_game
 {
     public class Game1 : Game
@@ -12,6 +15,9 @@ namespace simple_farming_game
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        TiledMap _tiledMap;
+        TiledMapRenderer _tiledMapRenderer;
 
         public Game1()
         {
@@ -31,63 +37,22 @@ namespace simple_farming_game
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _tiledMap = Content.Load<TiledMap>("samplemap");
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
-            // TODO: use this.Content to load your game content here
-            playerTexture = Content.Load<Texture2D>("player");
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-            var kstate = Keyboard.GetState();
-
-            if (kstate.IsKeyDown(Keys.W))
-            {
-                playerPosition.Y -= playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (kstate.IsKeyDown(Keys.S))
-            {
-                playerPosition.Y += playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (kstate.IsKeyDown(Keys.A))
-            {
-                playerPosition.X -= playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (kstate.IsKeyDown(Keys.D))
-            {
-                playerPosition.X += playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            base.Update(gameTime);
+            _tiledMapRenderer.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(
-                playerTexture,
-                playerPosition,
-                null,
-                Color.White,
-                0f,
-                new Vector2(playerTexture.Width / 2, playerTexture.Height / 2),
-                Vector2.One,
-                SpriteEffects.None,
-                0f
-            );
-            _spriteBatch.End();
-
-            base.Draw(gameTime);
+            _tiledMapRenderer.Draw();
         }
     }
 }
