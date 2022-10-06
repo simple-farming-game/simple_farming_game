@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8178d65a-6f5c-4d3c-83a0-e33665a75561" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.config/dotnet-tools.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/simple_farming_game.metadata.v5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/simple_farming_game.projects.v5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/simple_farming_game/DesignTimeBuild/.dtbcache.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/simple_farming_game/FileContentIndex/2423c646-6e5c-4894-bdce-4d671e59b1eb.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/simple_farming_game/FileContentIndex/5dcd2291-1f78-42e4-8197-e3bd83bd8f16.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/simple_farming_game/FileContentIndex/read.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/simple_farming_game/v17/.futdcache.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Content.mgcb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/tile1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/tile1.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Icon.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple_farming_game.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple_farming_game.sln" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2FfhiBqZqSYPM0DojDSTYoRaG7D" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="C:/pygame_snake" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="8178d65a-6f5c-4d3c-83a0-e33665a75561" name="변경" comment="" />
+      <created>1664889174184</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664889174184</updated>
+    </task>
+    <servers />
+  </component>
+</project>
