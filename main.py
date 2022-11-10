@@ -1,3 +1,5 @@
+import sys
+import os
 import pygame
 import pytmx
 
@@ -5,7 +7,7 @@ pygame.init()
 
 # 변수
 running = True
-screen = pygame.display.set_mode((500, 400))
+screen = pygame.display.set_mode((960, 640))
 clock = pygame.time.Clock() 
 # 색변수
 SKYBLUE = (113, 199, 245)
@@ -13,7 +15,10 @@ SKYBLUE = (113, 199, 245)
 playerImg = pygame.image.load("asset/img/player.png")
 playerPos = [100,100]
 # 타일맵
-tiled_map = pytmx.TiledMap.from_xml_string(some_string_here)
+tmxFile = pytmx.load_pygame('asset/tilemap/farm.tmx')
+
+# 세팅
+pygame.display.set_caption("sfg alpha! - by newkin")
 
 # 게임와일
 while running:
@@ -44,7 +49,7 @@ while running:
             
     # 플래이어
     # 움직이기
-    speed = 0.1
+    speed = 1
     if dir == "l":
         playerPos[0] -= speed
     elif dir == "r":
@@ -53,10 +58,17 @@ while running:
         playerPos[1] -= speed
     elif dir == "d":
         playerPos[1] += speed
-        
+
+    # 타일맵 https://codememo.tistory.com/21
+    for layer in tmxFile.visible_layers:
+        for x, y, gid, in layer:
+            tile = tmxFile.get_tile_image_by_gid(gid)
+            if tile:
+                screen.blit(tile, (x * tmxFile.tilewidth, y * tmxFile.tileheight))
+    
     # 이미지 그리기
     screen.blit(playerImg, playerPos)
-    
+
     pygame.display.update() # 화면 업데이트
 
 pygame.quit()
