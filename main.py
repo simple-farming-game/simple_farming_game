@@ -78,7 +78,7 @@ while running:
         playerPos[1] += speed
     # 중심잡기
     
-    # 타일맵 https://codememo.tistory.com/21
+    # 타일맵
     tilePos = [0,0]
     for line in farm.tileMap:
         for tile in line:
@@ -90,7 +90,7 @@ while running:
         tilePos[1] += 32
         tilePos[0] = 0
 
-    # 밭 갈기
+    # 밭 갈기 todo: 파이게임 기본 입력 말고 따로 입력받는 라이브러리 불러와서 사용
     
     
     # 이미지 그리기
