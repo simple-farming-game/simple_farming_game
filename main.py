@@ -15,7 +15,7 @@ var = "alpha"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
-clock = pygame.time.Clock() 
+clock = pygame.time.Clock()
 # 색변수
 SKYBLUE = (113, 199, 245)
 BLACK = (255,255,255)
@@ -26,9 +26,13 @@ playerPos = [900,100]
 # 타일맵
 dirtImg = pygame.image.load("asset/img/dirt.png")
 farmlandImg = pygame.image.load("asset/img/farmland.png")
-
+farmRiceImg = pygame.image.load("asset/img/farm_rice_0.png")
 # 글시
 lsFont = pygame.font.Font( "asset/font/Galmuri.ttf", 20)
+# 이미지
+selectImg = [pygame.image.load("asset/img/rice_seed.png"), 1]
+# 좌표
+selectPos = [0,50]
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
@@ -57,6 +61,15 @@ while running:
             if event.key == pygame.K_f:
                 farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 2
                 print(plyerTilePos)
+            if event.key == pygame.K_0:
+                selectImg[0] = pygame.image.load("asset/img/none.png")
+                selectImg[1] = 0
+            elif event.key == pygame.K_1:
+                selectImg[0] = pygame.image.load("asset/img/rice_seed.png")
+                selectImg[1] = 1
+            if event.key == pygame.K_d:
+                if (selectImg[1] == 1) and (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] == 2):
+                    farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 3
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 dir = ""
@@ -100,6 +113,8 @@ while running:
                 screen.blit(dirtImg, tilePos)
             if tile == 2:
                 screen.blit(farmlandImg, tilePos)
+            if tile == 3:
+                screen.blit(farmRiceImg, tilePos)
             tilePos[0] += 32
         tilePos[1] += 32
         tilePos[0] = 0
@@ -108,11 +123,12 @@ while running:
     
     # 이미지 그리기
     screen.blit(playerImg, playerPos)
+    screen.blit(selectImg[0], selectPos)
     screen.blit(verTextOutline, (10+2,10))
     screen.blit(verTextOutline, (10-2,10))
     screen.blit(verTextOutline, (10,10+2))
     screen.blit(verTextOutline, (10,10-2))
-    screen.blit(verText, (10,10)) 
+    screen.blit(verText, (10,10))
 
     pygame.display.update() # 화면 업데이트
 
