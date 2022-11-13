@@ -16,6 +16,7 @@ hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
 clock = pygame.time.Clock()
+riceCon = 0
 # 색변수
 SKYBLUE = (113, 199, 245)
 BLACK = (255,255,255)
@@ -39,6 +40,8 @@ pygame.display.set_caption(f"sfg {var}! - by newkin")
 
 # 게임와일
 while running:
+    clock.tick(100)
+
     plyerTilePos = [math.trunc(playerPos[0]/32),math.trunc(playerPos[1]/32)]
     verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                          {plyerTilePos}", True, BLACK)
     verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                          {plyerTilePos}", True, WHITE)
@@ -118,7 +121,14 @@ while running:
             tilePos[0] += 32
         tilePos[1] += 32
         tilePos[0] = 0
-    # 밭 갈기 todo: 파이게임 기본 입력 말고 따로 입력받는 라이브러리 불러와서 사용
+    # 식물 자라게
+    riceCon += 1
+    
+    if riceCon == 10000:
+        farmRiceImg = pygame.image.load("asset/img/farm_rice_1.png")
+    if riceCon == 50000:
+        farmRiceImg = pygame.image.load("asset/img/farm_rice_2.png")
+    print(riceCon)
 
     
     # 이미지 그리기
