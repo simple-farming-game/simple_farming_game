@@ -1,9 +1,10 @@
 import sys
 import os
 import pygame
-import pytmx
 import math
 import asset.tilemap.farm as farm
+
+print("TESTER : OTTO\nIF MACOS : SYSTEM SETING > KEYBORD > INPUT SOURCE > CAPS LOOK KEY ABC INPUT SOURCE TRANSFORM OFF")
 
 pygame.init()
 
@@ -21,24 +22,23 @@ BLACK = (255,255,255)
 WHITE = (0,0,0)
 # 플래이어 변수
 playerImg = pygame.image.load("asset/img/player.png")
-playerPos = [100,100]
-plyerTilePos = [math.trunc(playerPos[0]/32),math.trunc(playerPos[1]/32)]
+playerPos = [900,100]
 # 타일맵
-tmxFile = pytmx.load_pygame('asset/tilemap/farm.tmx')
 dirtImg = pygame.image.load("asset/img/dirt.png")
 farmlandImg = pygame.image.load("asset/img/farmland.png")
 
 # 글시
 lsFont = pygame.font.Font( "asset/font/Galmuri.ttf", 20)
 
-verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
-verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
-
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 
 # 게임와일
 while running:
+    plyerTilePos = [math.trunc(playerPos[0]/32),math.trunc(playerPos[1]/32)]
+    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                          {plyerTilePos}", True, BLACK)
+    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                          {plyerTilePos}", True, WHITE)
+
     screen.fill(SKYBLUE) # 화면 채우기
     
     for event in pygame.event.get():  # 키입력 감지
@@ -46,26 +46,40 @@ while running:
         if event.type == pygame.QUIT:  # 나가기 버튼 눌럿을때
             running = False  # 와일문 나가기
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_LEFT:
                 dir = "l"
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_RIGHT:
                 dir = "r"
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_UP:
                 dir = "u"
-            elif event.key == pygame.K_s:
+            elif event.key == pygame.K_DOWN:
                 dir = "d"
             if event.key == pygame.K_f:
-                farm.tileMap[plyerTilePos[0]][plyerTilePos[1]] = 2
+                farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 2
+                print(plyerTilePos)
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_UP:
                 dir = ""
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_DOWN:
                 dir = ""
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_LEFT:
                 dir = ""
-            elif event.key == pygame.K_s:
+            elif event.key == pygame.K_RIGHT:
                 dir = ""   
     # 플래이어
+    # 경계
+    if playerPos[0] >= hw[0]-32:
+        print(playerPos)
+        playerPos[0] = hw[0]-33
+    if playerPos[0] <= 0:
+        print(playerPos)
+        playerPos[0] = 1
+    if playerPos[1] >= hw[1]-32:
+        print(playerPos)
+        playerPos[1] = hw[1]-32
+    if playerPos[1] <= 1:
+        print(playerPos)
+        playerPos[1] = 1
     # 움직이기
     speed = 1
     if dir == "l":
@@ -89,9 +103,8 @@ while running:
             tilePos[0] += 32
         tilePos[1] += 32
         tilePos[0] = 0
-
     # 밭 갈기 todo: 파이게임 기본 입력 말고 따로 입력받는 라이브러리 불러와서 사용
-    
+
     
     # 이미지 그리기
     screen.blit(playerImg, playerPos)
