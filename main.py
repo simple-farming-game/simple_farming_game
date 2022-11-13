@@ -11,7 +11,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "alpha"
+var = "beta 1.0"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -43,8 +43,8 @@ while running:
     clock.tick(100)
 
     plyerTilePos = [math.trunc(playerPos[0]/32),math.trunc(playerPos[1]/32)]
-    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                          {plyerTilePos}", True, BLACK)
-    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                          {plyerTilePos}", True, WHITE)
+    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {plyerTilePos}", True, BLACK)
+    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {plyerTilePos}", True, WHITE)
 
     screen.fill(SKYBLUE) # 화면 채우기
     
