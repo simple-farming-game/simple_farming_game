@@ -3,6 +3,7 @@ import os
 import pygame
 import math
 import asset.tilemap.farm as farm
+import file.code.player as player
 
 print("TESTER : OTTO\nIF MACOS : SYSTEM SETING > KEYBORD > INPUT SOURCE > CAPS LOOK KEY ABC INPUT SOURCE TRANSFORM OFF")
 
@@ -11,7 +12,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "beta 1.0"
+var = "beta 1.1/1"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -37,6 +38,7 @@ selectPos = [0,50]
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
+playerClass = player.player(playerPos, screen, hw)
 
 # 게임와일
 while running:
@@ -83,29 +85,11 @@ while running:
             elif event.key == pygame.K_RIGHT:
                 dir = ""   
     # 플래이어
+    playerClass.dir = dir
     # 경계
-    if playerPos[0] >= hw[0]-32:
-        print(playerPos)
-        playerPos[0] = hw[0]-33
-    if playerPos[0] <= 0:
-        print(playerPos)
-        playerPos[0] = 1
-    if playerPos[1] >= hw[1]-32:
-        print(playerPos)
-        playerPos[1] = hw[1]-32
-    if playerPos[1] <= 1:
-        print(playerPos)
-        playerPos[1] = 1
+    
     # 움직이기
-    speed = 1
-    if dir == "l":
-        playerPos[0] -= speed
-    elif dir == "r":
-        playerPos[0] += speed
-    elif dir == "u":
-        playerPos[1] -= speed
-    elif dir == "d":
-        playerPos[1] += speed
+    playerClass.move()
     # 중심잡기
     
     # 타일맵
@@ -132,7 +116,7 @@ while running:
 
     
     # 이미지 그리기
-    screen.blit(playerImg, playerPos)
+    playerClass.draw(playerImg)
     screen.blit(selectImg[0], selectPos)
     screen.blit(verTextOutline, (10+2,10))
     screen.blit(verTextOutline, (10-2,10))
