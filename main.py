@@ -12,7 +12,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "beta 1.1/1"
+var = "alpha 1.1/1"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -36,9 +36,18 @@ selectImg = [pygame.image.load("asset/img/rice_seed.png"), 1]
 # 좌표
 selectPos = [0,50]
 
+class rice:
+    def __init__(self):
+        pass
+    def draw(pltipo, img):
+        tilePos = [32 * pltipo[0], 32 * pltipo[1]]
+        
+        screen.blit(img, tilePos)
+
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 playerClass = player.player(playerPos, screen, hw)
+
 
 # 게임와일
 while running:
