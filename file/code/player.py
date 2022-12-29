@@ -1,10 +1,12 @@
+import math
 class player:
     def __init__(self, pos, screen,hw):
-        self.dir=""
+        self.dir="l"
         self.pos = pos
         self.screen = screen
         self.hw = hw
         self.speed = 1
+        self.playerTilePos = []
     def move(self):
         if self.dir == "l":
             self.pos[0] -= self.speed
@@ -28,3 +30,6 @@ class player:
             self.pos[1] = 1
     def draw(self, img):
         self.screen.blit(img, self.pos)
+    def update(self, dir):
+        self.playerTilePos = [math.trunc(self.pos[0]/32),math.trunc(self.pos[1]/32)]
+        self.dir=dir

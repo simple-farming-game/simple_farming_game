@@ -12,7 +12,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "alpha 1.1/11"
+var = "alpha 1.1/3"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -38,24 +38,29 @@ selectPos = [0,50]
 
 class rice:
     def __init__(self):
-        pass
-    def draw(pltipo, img):
-        tilePos = [32 * pltipo[0], 32 * pltipo[1]]
-        
-        screen.blit(img, tilePos)
+        self.tilePos=[]
+        self.drawList=[]
+    def update(self, playerTilePos):
+        self.tilePos = [32 * playerTilePos[0], 32 * playerTilePos[1]]
+    def addList(self):
+        self.drawList.append(self.tilePos)
+    def draw(self, img):
+        for i in self.drawList:
+            screen.blit(img, i)
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 playerClass = player.player(playerPos, screen, hw)
+riceClass = rice()
 
 
 # 게임와일
 while running:
     clock.tick(100)
 
-    plyerTilePos = [math.trunc(playerPos[0]/32),math.trunc(playerPos[1]/32)]
-    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {plyerTilePos}", True, BLACK)
-    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {plyerTilePos}", True, WHITE)
+    playerTilePos = playerClass.playerTilePos
+    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {playerTilePos}", True, BLACK)
+    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {playerTilePos}", True, WHITE)
 
     screen.fill(SKYBLUE) # 화면 채우기
     
@@ -72,10 +77,17 @@ while running:
                 dir = "u"
             elif event.key == pygame.K_DOWN:
                 dir = "d"
+            if event.key == pygame.K_d:
+                if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2):
+                    # farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 3
+                    riceClass.addList()
+                    print(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+                else:
+                    print("실패 : 이미 심어져 있음.")
             if event.key == pygame.K_f:
-                if (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] != 3) and (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] != 2):
-                    farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 2
-                    print(f"경작 : X:{plyerTilePos[1]} Y:{plyerTilePos[0]}")
+                if (farm.tileMap[playerTilePos[1]][playerTilePos[0]] != 3) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] != 2):
+                    farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
+                    print(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
                 else:
                     print("실패 : 이미 심어져 있거나 경작되어 있음.")
             if event.key == pygame.K_0:
@@ -84,12 +96,6 @@ while running:
             elif event.key == pygame.K_1:
                 selectImg[0] = pygame.image.load("asset/img/rice_seed.png")
                 selectImg[1] = 1
-            if event.key == pygame.K_d:
-                if (selectImg[1] == 1) and (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] == 2):
-                    farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 3
-                    print(f"심기 : X:{plyerTilePos[1]} Y:{plyerTilePos[0]}")
-                else:
-                    print("실패 : 이미 심어져 있음.")
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 dir = ""
@@ -100,13 +106,9 @@ while running:
             elif event.key == pygame.K_RIGHT:
                 dir = ""   
     # 플래이어
-    playerClass.dir = dir
     # 경계
-    
     # 움직이기
     playerClass.move()
-    # 중심잡기
-    
     # 타일맵
     tilePos = [0,0]
     for line in farm.tileMap:
@@ -121,6 +123,7 @@ while running:
         tilePos[1] += 32
         tilePos[0] = 0
     # 식물 자라게
+    riceClass.draw(farmRiceImg)
     riceCon += 1
     
     if riceCon == 10000:
@@ -139,5 +142,7 @@ while running:
     screen.blit(verText, (10,10))
 
     pygame.display.update() # 화면 업데이트
+    playerClass.update(dir)
+    riceClass.update(playerClass.playerTilePos)
 
 pygame.quit()
