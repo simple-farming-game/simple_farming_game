@@ -12,7 +12,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "alpha 1.1/1"
+var = "alpha 1.1/11"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -73,8 +73,11 @@ while running:
             elif event.key == pygame.K_DOWN:
                 dir = "d"
             if event.key == pygame.K_f:
-                farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 2
-                print(plyerTilePos)
+                if (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] != 3) and (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] != 2):
+                    farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 2
+                    print(f"경작 : X:{plyerTilePos[1]} Y:{plyerTilePos[0]}")
+                else:
+                    print("실패 : 이미 심어져 있거나 경작되어 있음.")
             if event.key == pygame.K_0:
                 selectImg[0] = pygame.image.load("asset/img/none.png")
                 selectImg[1] = 0
@@ -84,6 +87,9 @@ while running:
             if event.key == pygame.K_d:
                 if (selectImg[1] == 1) and (farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] == 2):
                     farm.tileMap[plyerTilePos[1]][plyerTilePos[0]] = 3
+                    print(f"심기 : X:{plyerTilePos[1]} Y:{plyerTilePos[0]}")
+                else:
+                    print("실패 : 이미 심어져 있음.")
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 dir = ""
@@ -121,7 +127,6 @@ while running:
         farmRiceImg = pygame.image.load("asset/img/farm_rice_1.png")
     if riceCon == 50000:
         farmRiceImg = pygame.image.load("asset/img/farm_rice_2.png")
-    print(riceCon)
 
     
     # 이미지 그리기
