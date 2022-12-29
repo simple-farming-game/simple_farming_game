@@ -51,7 +51,7 @@ class rice:
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 playerClass = player.player(playerPos, screen, hw)
-riceClass = rice()
+riceClass = rice() # TODO:리스트화하기, 따로따로 자라게
 
 
 # 게임와일
