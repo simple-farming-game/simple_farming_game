@@ -2,8 +2,11 @@ import sys
 import os
 import pygame
 import math
-import asset.tilemap.farm as farm
+import file.asset.tilemap.farm as farm
 import file.code.player as player
+import file.code.sfgchat as sfgchat
+
+sfgchat.runchat()
 
 print("TESTER : OTTO\nIF MACOS : SYSTEM SETING > KEYBORD > INPUT SOURCE > CAPS LOOK KEY ABC INPUT SOURCE TRANSFORM OFF")
 
@@ -23,16 +26,16 @@ SKYBLUE = (113, 199, 245)
 BLACK = (255,255,255)
 WHITE = (0,0,0)
 # 플래이어 변수
-playerImg = pygame.image.load("asset/img/player.png")
+playerImg = pygame.image.load("file/asset/img/player.png")
 playerPos = [900,100]
 # 타일맵
-dirtImg = pygame.image.load("asset/img/dirt.png")
-farmlandImg = pygame.image.load("asset/img/farmland.png")
-farmRiceImg = pygame.image.load("asset/img/farm_rice_0.png")
+dirtImg = pygame.image.load("file/asset/img/dirt.png")
+farmlandImg = pygame.image.load("file/asset/img/farmland.png")
+farmRiceImg = pygame.image.load("file/asset/img/farm_rice_0.png")
 # 글시
-lsFont = pygame.font.Font( "asset/font/Galmuri.ttf", 20)
+lsFont = pygame.font.Font( "file/asset/font/Galmuri.ttf", 20)
 # 이미지
-selectImg = [pygame.image.load("asset/img/rice_seed.png"), 1]
+selectImg = [pygame.image.load("file/asset/img/rice_seed.png"), 1]
 # 좌표
 selectPos = [0,50]
 
@@ -91,10 +94,10 @@ while running:
                 else:
                     print("실패 : 이미 심어져 있거나 경작되어 있음.")
             if event.key == pygame.K_0:
-                selectImg[0] = pygame.image.load("asset/img/none.png")
+                selectImg[0] = pygame.image.load("file/asset/img/none.png")
                 selectImg[1] = 0
             elif event.key == pygame.K_1:
-                selectImg[0] = pygame.image.load("asset/img/rice_seed.png")
+                selectImg[0] = pygame.image.load("file/asset/img/rice_seed.png")
                 selectImg[1] = 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -127,9 +130,9 @@ while running:
     riceCon += 1
     
     if riceCon == 10000:
-        farmRiceImg = pygame.image.load("asset/img/farm_rice_1.png")
+        farmRiceImg = pygame.image.load("file/asset/img/farm_rice_1.png")
     if riceCon == 50000:
-        farmRiceImg = pygame.image.load("asset/img/farm_rice_2.png")
+        farmRiceImg = pygame.image.load("file/asset/img/farm_rice_2.png")
 
     
     # 이미지 그리기
