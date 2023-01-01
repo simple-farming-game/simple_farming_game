@@ -5,6 +5,7 @@ import math
 import file.asset.tilemap.farm as farm
 import file.code.player as player
 import file.code.sfgchat as sfgchat
+import random
 
 sfgchat.runchat()
 
@@ -15,7 +16,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "alpha 1.1/3"
+var = "alpha 1.1/4"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -39,22 +40,25 @@ selectImg = [pygame.image.load("file/asset/img/rice_seed.png"), 1]
 # 좌표
 selectPos = [0,50]
 
-class rice:
-    def __init__(self):
-        self.tilePos=[]
-        self.drawList=[]
-    def update(self, playerTilePos):
-        self.tilePos = [32 * playerTilePos[0], 32 * playerTilePos[1]]
-    def addList(self):
-        self.drawList.append(self.tilePos)
-    def draw(self, img):
-        for i in self.drawList:
-            screen.blit(img, i)
+class rice: # 파일 따로 빼자,...
+    def __init__(self, img):
+        self.tilePos=[32 * playerTilePos[0], 32 * playerTilePos[1]]
+        self.growCount = 0
+        self.img = img
+        self.age = 0
+    def draw(self):
+        screen.blit(self.img, self.tilePos)
+    def grow(self):
+        self.growCount += random.randint(0,5)
+        if self.growCount == 3000:
+            self.img = pygame.image.load("file/asset/img/farm_rice_1.png")
+        if self.growCount == 6000:
+            self.img = pygame.image.load("file/asset/img/farm_rice_2.png")
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 playerClass = player.player(playerPos, screen, hw)
-riceClass = rice() # TODO:리스트화하기, 따로따로 자라게
+riceClass = []
 
 
 # 게임와일
@@ -83,22 +87,26 @@ while running:
             if event.key == pygame.K_d:
                 if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2):
                     # farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 3
-                    riceClass.addList()
+                    riceClass.append(rice(farmRiceImg))
                     print(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
-                else:
-                    print("실패 : 이미 심어져 있음.")
-            if event.key == pygame.K_f:
-                if (farm.tileMap[playerTilePos[1]][playerTilePos[0]] != 3) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] != 2):
+                elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
                     print(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
                 else:
-                    print("실패 : 이미 심어져 있거나 경작되어 있음.")
-            if event.key == pygame.K_0:
+                    print("실패 : 이미 심어져 있음.")
+            if event.key == pygame.K_f:
+                selectImg[0] = pygame.image.load("file/asset/img/farmland.png") # 괭이 이미지로 변경
+                selectImg[1] = 2
+            if event.key == pygame.K_z:
                 selectImg[0] = pygame.image.load("file/asset/img/none.png")
                 selectImg[1] = 0
-            elif event.key == pygame.K_1:
+            elif event.key == pygame.K_r:
                 selectImg[0] = pygame.image.load("file/asset/img/rice_seed.png")
                 selectImg[1] = 1
+            elif event.key == pygame.K_s:
+                selectImg[0] = pygame.image.load("file/asset/img/rice_seed.png") # 삽 이미지로 변경
+                selectImg[1] = 3
+            # todo:뼛가루 추가, 뼛가루와 씨앗은 소모되게, 수확하면 씨앗 나오게 둘다 기본으로 5게,씨, 뼛가루 등은 인벤토리를 만들어서아이템을 클릭하면 선택되게(미래의 내가 잘 만들어 주겠지?)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 dir = ""
@@ -125,14 +133,14 @@ while running:
             tilePos[0] += 32
         tilePos[1] += 32
         tilePos[0] = 0
-    # 식물 자라게
-    riceClass.draw(farmRiceImg)
-    riceCon += 1
-    
-    if riceCon == 10000:
-        farmRiceImg = pygame.image.load("file/asset/img/farm_rice_1.png")
-    if riceCon == 50000:
-        farmRiceImg = pygame.image.load("file/asset/img/farm_rice_2.png")
+    # 자라게
+
+
+    # 드로우
+    # riceClass.draw(farmRiceImg)
+    for i in range(len(riceClass)):
+        riceClass[i].draw()
+        riceClass[i].grow()
 
     
     # 이미지 그리기
@@ -146,6 +154,6 @@ while running:
 
     pygame.display.update() # 화면 업데이트
     playerClass.update(dir)
-    riceClass.update(playerClass.playerTilePos)
+    # riceClass.update(playerClass.playerTilePos)
 
 pygame.quit()
