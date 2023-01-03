@@ -4,6 +4,7 @@ import pygame
 import math
 import file.asset.tilemap.farm as farm
 import file.code.player as player
+import file.code.rice as rice
 import file.code.sfgchat as sfgchat
 import random
 
@@ -16,7 +17,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "alpha 1.1/4"
+var = "alpha 1.1/5"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -40,20 +41,7 @@ selectImg = [pygame.image.load("file/asset/img/rice_seed.png"), 1]
 # 좌표
 selectPos = [0,50]
 
-class rice: # 파일 따로 빼자,...
-    def __init__(self, img):
-        self.tilePos=[32 * playerTilePos[0], 32 * playerTilePos[1]]
-        self.growCount = 0
-        self.img = img
-        self.age = 0
-    def draw(self):
-        screen.blit(self.img, self.tilePos)
-    def grow(self):
-        self.growCount += random.randint(0,5)
-        if self.growCount == 3000:
-            self.img = pygame.image.load("file/asset/img/farm_rice_1.png")
-        if self.growCount == 6000:
-            self.img = pygame.image.load("file/asset/img/farm_rice_2.png")
+
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
@@ -87,7 +75,7 @@ while running:
             if event.key == pygame.K_d:
                 if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2):
                     # farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 3
-                    riceClass.append(rice(farmRiceImg))
+                    riceClass.append(rice.rice(farmRiceImg,screen,playerTilePos))
                     print(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
                 elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
