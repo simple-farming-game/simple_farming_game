@@ -1,12 +1,8 @@
-import sys
-import os
 import pygame
-import math
 import file.asset.tilemap.farm as farm
 import file.code.player as player
 import file.code.rice as rice
 import file.code.sfgchat as sfgchat
-import random
 
 sfgchat.runchat()
 
@@ -17,7 +13,7 @@ pygame.init()
 # 함수
 
 # 변수
-var = "alpha 1.1/5"
+var = "alpha 1.1/6"
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
