@@ -1,3 +1,9 @@
+'''
+newkini! - sfg
+만들꺼:
+언어 변경
+ide(?)
+'''
 import pygame
 import file.asset.tilemap.farm as farm
 import file.code.player as player
@@ -87,10 +93,13 @@ while running:
             elif event.key == pygame.K_r:
                 selectImg[0] = pygame.image.load("file/asset/img/rice_seed.png")
                 selectImg[1] = 1
-            elif event.key == pygame.K_s:
-                selectImg[0] = pygame.image.load("file/asset/img/rice_seed.png") # 삽 이미지로 변경
+            elif event.key == pygame.K_s: # 지우기 심어진 상태 > 안심어진상태 > 흙
+                selectImg[0] = pygame.image.load("file/asset/img/shovel.png")
                 selectImg[1] = 3
-            # todo:뼛가루 추가, 뼛가루와 씨앗은 소모되게, 수확하면 씨앗 나오게 둘다 기본으로 5게,씨, 뼛가루 등은 인벤토리를 만들어서아이템을 클릭하면 선택되게(미래의 내가 잘 만들어 주겠지?)
+            elif event.key == pygame.K_e: # 캐기
+                selectImg[0] = pygame.image.load("file/asset/img/shovel.png") # 낫으로 변경
+                selectImg[1] = 4
+            # todo:뼛가루 추가, 뼛가루와 씨앗은 소모되게, 수확하면 씨앗 나오게 둘다 기본으로 5게,씨, 뼛가루 등은 인벤토리를 만들어서아이템을 클릭하면 선택되게(미래의 내가 잘 만들어 주겠지?) 만들다가 포기했네...
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 dir = ""

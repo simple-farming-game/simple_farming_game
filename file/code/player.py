@@ -7,6 +7,7 @@ class player:
         self.hw = hw
         self.speed = 1
         self.playerTilePos = []
+        self.inventory = {}
     def move(self):
         if self.dir == "l":
             self.pos[0] -= self.speed
