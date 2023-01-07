@@ -21,7 +21,7 @@ def stop():
     global running
     running = False
 # 변수
-var = "alpha 1.0/7"
+var = "alpha 1.0/8" # 9에서 언어변경 1.1에서 클릭 인벤토리
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -43,7 +43,7 @@ lsFont = pygame.font.Font( "file/asset/font/Galmuri.ttf", 20)
 # 이미지
 selectImg = [pygame.image.load("file/asset/img/rice_seed.png"), 1]
 # 좌표
-selectPos = [0,50]
+selectPos = [10,60]
 
 
 
@@ -57,8 +57,12 @@ riceClass = []
 while running:
     clock.tick(100)
     playerTilePos = playerClass.playerTilePos
-    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {playerTilePos}", True, BLACK)
-    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!                                                {playerTilePos}", True, WHITE)
+    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
+    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
+    posText = lsFont.render(f"{playerTilePos}", True, BLACK)
+    posTextOutline = lsFont.render(f"{playerTilePos}", True, WHITE)
+    invText = lsFont.render(f"inventory : {playerClass.inventory}", True, BLACK)
+    invTextOutline = lsFont.render(f"inventory : {playerClass.inventory}", True, WHITE)
 
     screen.fill(SKYBLUE) # 화면 채우기
     
@@ -92,7 +96,7 @@ while running:
         tilePos[0] = 0
     # 자라게
 
-    keyin.key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delRice,riceSerci)
+    keyin.key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delRice,riceSerci,playerClass)
 
     # 드로우
     # riceClass.draw(farmRiceImg)
@@ -109,6 +113,16 @@ while running:
     screen.blit(verTextOutline, (10,10+2))
     screen.blit(verTextOutline, (10,10-2))
     screen.blit(verText, (10,10))
+    screen.blit(posTextOutline, (850+2,10))
+    screen.blit(posTextOutline, (850-2,10))
+    screen.blit(posTextOutline, (850,10+2))
+    screen.blit(posTextOutline, (850,10-2))
+    screen.blit(posText, (850,10))
+    screen.blit(invTextOutline, (10+2,35))
+    screen.blit(invTextOutline, (10-2,35))
+    screen.blit(invTextOutline, (10,35+2))
+    screen.blit(invTextOutline, (10,35-2))
+    screen.blit(invText, (10,35))
 
     pygame.display.update() # 화면 업데이트
     playerClass.update(keyin.dir)
