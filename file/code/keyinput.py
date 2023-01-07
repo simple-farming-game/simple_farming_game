@@ -38,7 +38,7 @@ def key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delrice,riceSe
                 else:
                     print("실패 : 이미 심어져 있음.")
             if event.key == pygame.K_f:
-                selectImg[0] = pygame.image.load("file/asset/img/farmland.png") # 괭이 이미지로 변경
+                selectImg[0] = pygame.image.load("file/asset/img/hoe.png") # 괭이 이미지로 변경
                 selectImg[1] = 2
             if event.key == pygame.K_z:
                 selectImg[0] = pygame.image.load("file/asset/img/none.png")
@@ -50,7 +50,7 @@ def key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delrice,riceSe
                 selectImg[0] = pygame.image.load("file/asset/img/shovel.png")
                 selectImg[1] = 3
             elif event.key == pygame.K_e: # 수확
-                selectImg[0] = pygame.image.load("file/asset/img/shovel.png") # 낫으로 변경
+                selectImg[0] = pygame.image.load("file/asset/img/sickle.png") # 낫으로 변경
                 selectImg[1] = 4
             # todo:뼛가루 추가, 뼛가루 소모되게, 씨, 뼛가루 등은 인벤토리를 만들어서아이템을 클릭하면 선택되게(미래의 내가 잘 만들어 주겠지?) 아 언어변경도
         if event.type == pygame.KEYUP:
