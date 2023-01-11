@@ -10,6 +10,10 @@ import file.code.player as player
 import file.code.sfgchat as sfgchat
 import file.code.keyinput as keyin
 
+a=input("아무거나 입력하세요")
+if a == 2038629:
+    print("993710040637652437")
+
 sfgchat.runchat()
 
 print("TESTER : OTTO\nIF MACOS : SYSTEM SETING > KEYBORD > INPUT SOURCE > CAPS LOOK KEY ABC INPUT SOURCE TRANSFORM OFF")
