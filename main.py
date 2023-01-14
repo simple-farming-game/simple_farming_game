@@ -21,7 +21,7 @@ def stop():
     global running
     running = False
 # 변수
-var = "alpha 1.0/8" # 9에서 언어변경 1.1에서 클릭 인벤토리
+var = "alpha 1.1" # 1.1.1에서 언어변경,클릭 인벤토리
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
