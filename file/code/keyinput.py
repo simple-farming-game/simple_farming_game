@@ -27,7 +27,7 @@ def key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delrice,riceSe
                 elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
                     print(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
-                elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1],playerTilePos[0]).age==3):
+                elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1],playerTilePos[0]).age==2):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
                     delrice(playerTilePos[1],playerTilePos[0])
                     playerClass.inventory["rice"]+=random.randint(0,4)

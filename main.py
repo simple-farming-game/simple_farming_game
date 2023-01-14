@@ -42,6 +42,7 @@ farmRiceImg = pygame.image.load("file/asset/img/farm_rice_0.png")
 lsFont = pygame.font.Font( "file/asset/font/Galmuri.ttf", 20)
 # 이미지
 selectImg = [pygame.image.load("file/asset/img/rice_seed.png"), 1]
+pygameIcon = pygame.image.load('file/asset/img/icon.png')
 # 좌표
 selectPos = [10,60]
 
@@ -49,6 +50,7 @@ selectPos = [10,60]
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
+pygame.display.set_icon(pygameIcon)
 playerClass = player.player(playerPos, screen, hw)
 riceClass = []
 
