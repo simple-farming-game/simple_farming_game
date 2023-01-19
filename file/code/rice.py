@@ -11,7 +11,7 @@ class rice: # 파일 따로 빼자,...
     def draw(self):
         self.screen.blit(self.img, self.tilePos)
     def grow(self):
-        self.growCount += random.randint(1999,5000)
+        self.growCount += random.randint(0,5)
         if (self.growCount >= 10000) and (self.age==0):
             print(self.growCount, self.age) 
             self.img = pygame.image.load("file/asset/img/farm_rice_1.png")
