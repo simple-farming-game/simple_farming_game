@@ -69,12 +69,12 @@ if __name__ == "__main__":
         screen.fill(SKYBLUE) # 화면 채우기
         
         # 함수
-        def delRice(x,y):
+        def delRice(x,y): # x,y위치에 있는 쌀을 제거
             global riceClass
             for i in range(len(riceClass)):
                 if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
                     riceClass.pop(i)
-        def riceSerci(x,y):
+        def riceSerci(x,y): # 쌀이 심어진 위치를 리턴하는 함수
             global riceClass
             for i in range(len(riceClass)):
                 if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
@@ -82,7 +82,6 @@ if __name__ == "__main__":
         
         
         # 플래이어
-        # 경계
         # 움직이기
         playerClass.move()
         # 타일맵
@@ -90,9 +89,9 @@ if __name__ == "__main__":
         for line in farm.tileMap:
             for tile in line:
                 if tile == 1:
-                    screen.blit(dirtImg, tilePos)
+                    screen.blit(dirtImg, tilePos) # 1은 흙
                 if tile == 2:
-                    screen.blit(farmlandImg, tilePos)
+                    screen.blit(farmlandImg, tilePos) # 2는 경작지
                 tilePos[0] += 32
             tilePos[1] += 32
             tilePos[0] = 0
