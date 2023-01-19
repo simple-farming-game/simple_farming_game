@@ -20,7 +20,7 @@ def stop():
     global running
     running = False
 # 변수
-var = "alpha 1.1/1" # 1.1.1에서 언어변경,클릭 인벤토리 1.2에서 모드추가
+var = "alpha 1.1/2" # 1.1.1에서 언어변경,클릭 인벤토리 1.2에서 모드추가 1.2.1에서 노션db로 계정기능 추가, 농작물 추가
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
