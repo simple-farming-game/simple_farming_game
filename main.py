@@ -55,7 +55,7 @@ riceClass = []
 
 
 # 게임와일
-def run():
+if __name__ == "__main__":
     while running:
         clock.tick(100)
         playerTilePos = playerClass.playerTilePos
@@ -130,4 +130,6 @@ def run():
         playerClass.update(keyin.dir)
         # riceClass.update(playerClass.playerTilePos)
 
+    pygame.quit()
+else:
     pygame.quit()

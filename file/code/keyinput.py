@@ -19,19 +19,22 @@ def key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delrice,riceSe
             elif event.key == pygame.K_DOWN:
                 dir = "d"
             if event.key == pygame.K_d:
-                if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2) and (playerClass.inventory["rice"] > 0):
+                if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2) and (playerClass.inventory["riceSeed"] > 0): # 심기
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 3
                     riceClass.append(rice.rice(farmRiceImg,screen,playerTilePos))
-                    playerClass.inventory["rice"]-=1
+                    playerClass.inventory["riceSeed"]-=1
                     print(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
-                elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1):
+
+                elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1): # 경작
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
                     print(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
-                elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1],playerTilePos[0]).age==2):
+
+                elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1],playerTilePos[0]).age==2): # 캐기
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
                     delrice(playerTilePos[1],playerTilePos[0])
                     playerClass.inventory["riceSeed"]+=random.randint(0,4)
                     playerClass.inventory["rice"]+=random.randint(0,4)
+
                 elif (selectImg[1] == 3) and ((farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) or (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2)):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 1
                     delrice(playerTilePos[1],playerTilePos[0])
