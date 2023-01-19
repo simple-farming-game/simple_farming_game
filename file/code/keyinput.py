@@ -30,6 +30,7 @@ def key(selectImg,riceClass,farmRiceImg,screen,playerTilePos,stop,delrice,riceSe
                 elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1],playerTilePos[0]).age==2):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
                     delrice(playerTilePos[1],playerTilePos[0])
+                    playerClass.inventory["riceSeed"]+=random.randint(0,4)
                     playerClass.inventory["rice"]+=random.randint(0,4)
                 elif (selectImg[1] == 3) and ((farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) or (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2)):
                     farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 1
