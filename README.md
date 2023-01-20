@@ -2,10 +2,6 @@
 
 마인크래프트의 농사를 2d로 만든게임입니다.
 
-## 도와주신분
-
-ky0422 - 리드미추가
-
 ## 설치
 
 ```console
@@ -24,3 +20,8 @@ $ python main.py
 -   `R`: 씨앗 선택
 -   `Z`: 선택 해제
 -   `D`: 선택 항목 사용
+
+## 기여자
+
+-   [newkincode](https://github.com/newkincode) - 메인테이너
+-   [ky0422](https://github.com/ky0422) - `README.md` 작성
