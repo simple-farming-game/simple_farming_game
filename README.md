@@ -31,4 +31,4 @@ $ python main.py
 ## 기여자
 
 -   [newkincode](https://github.com/newkincode) - 메인테이너
--   [ky0422](https://github.com/ky0422) - `README.md` 작성
+-   [ky0422](https://github.com/ky0422) - `README.md` 작성, 그 외 버그 수정
