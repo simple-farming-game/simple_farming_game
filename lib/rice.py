@@ -1,9 +1,8 @@
 import pygame
 import random
-import lib.farm as farm
 
 
-class rice:  # 파일 따로 빼자,...
+class rice:
     def __init__(self, img, screen, playerTilePos):
         self.tilePos = [32 * playerTilePos[0], 32 * playerTilePos[1]]
         self.growCount = 0
