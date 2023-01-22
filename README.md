@@ -12,6 +12,15 @@ $ (pip) install -r requirements.txt
 $ python main.py
 ```
 
+## 빌드
+
+pyinstaller라이브러리가 필요합니다.
+
+```console
+$ pyinstaller main.py
+```
+이후 lib 폴더를 dist/main 폴더에 넣습니다.
+
 ## 조작법
 
 -   방향키: 이동
