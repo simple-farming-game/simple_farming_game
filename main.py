@@ -55,86 +55,84 @@ pygame.display.set_caption(f"sfg {var}! - by newkin")
 pygame.display.set_icon(pygameIcon)
 playerClass = player.player(playerPos, screen, hw)
 riceClass = []
-
+if __name__ != "__main__":
+    running=False
 
 # 게임와일
-if __name__ == "__main__":
-    while running:
-        clock.tick(100)
-        playerTilePos = playerClass.playerTilePos
-        verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
-        verTextOutline = lsFont.render(
-            f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
-        posText = lsFont.render(f"{playerTilePos}", True, BLACK)
-        posTextOutline = lsFont.render(f"{playerTilePos}", True, WHITE)
-        invText = lsFont.render(
-            f"inventory : {playerClass.inventory}", True, BLACK)
-        invTextOutline = lsFont.render(
-            f"inventory : {playerClass.inventory}", True, WHITE)
+while running:
+    clock.tick(100)
+    playerTilePos = playerClass.playerTilePos
+    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
+    verTextOutline = lsFont.render(
+        f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
+    posText = lsFont.render(f"{playerTilePos}", True, BLACK)
+    posTextOutline = lsFont.render(f"{playerTilePos}", True, WHITE)
+    invText = lsFont.render(
+        f"inventory : {playerClass.inventory}", True, BLACK)
+    invTextOutline = lsFont.render(
+        f"inventory : {playerClass.inventory}", True, WHITE)
 
-        screen.fill(SKYBLUE)  # 화면 채우기
+    screen.fill(SKYBLUE)  # 화면 채우기
 
-        # 함수
-        def delRice(x, y):  # x,y위치에 있는 쌀을 제거
-            global riceClass
-            for i in range(len(riceClass)):
-                if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
-                    riceClass.pop(i)
-
-        def riceSerci(x, y):  # 쌀이 심어진 위치를 리턴하는 함수
-            global riceClass
-            for i in range(len(riceClass)):
-                if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
-                    return riceClass[i]
-
-        # 플래이어
-        # 움직이기
-        playerClass.move()
-        # 타일맵
-        tilePos = [0, 0]
-        for line in farm.tileMap:
-            for tile in line:
-                if tile == 1:
-                    screen.blit(dirtImg, tilePos)  # 1은 흙
-                if tile == 2:
-                    screen.blit(farmlandImg, tilePos)  # 2는 경작지
-                tilePos[0] += 32
-            tilePos[1] += 32
-            tilePos[0] = 0
-        # 자라게
-
-        keyin.key(selectImg, riceClass, farmRiceImg, screen,
-                  playerTilePos, stop, delRice, riceSerci, playerClass)
-
-        # 드로우
-        # riceClass.draw(farmRiceImg)
+    # 함수
+    def delRice(x, y):  # x,y위치에 있는 쌀을 제거
+        global riceClass
         for i in range(len(riceClass)):
-            riceClass[i].draw()
-            riceClass[i].grow()
+            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
+                riceClass.pop(i)
 
-        # 이미지 그리기
-        playerClass.draw(playerImg)
-        screen.blit(selectImg[0], selectPos)
-        screen.blit(verTextOutline, (10+2, 10))
-        screen.blit(verTextOutline, (10-2, 10))
-        screen.blit(verTextOutline, (10, 10+2))
-        screen.blit(verTextOutline, (10, 10-2))
-        screen.blit(verText, (10, 10))
-        screen.blit(posTextOutline, (850+2, 10))
-        screen.blit(posTextOutline, (850-2, 10))
-        screen.blit(posTextOutline, (850, 10+2))
-        screen.blit(posTextOutline, (850, 10-2))
-        screen.blit(posText, (850, 10))
-        screen.blit(invTextOutline, (10+2, 35))
-        screen.blit(invTextOutline, (10-2, 35))
-        screen.blit(invTextOutline, (10, 35+2))
-        screen.blit(invTextOutline, (10, 35-2))
-        screen.blit(invText, (10, 35))
+    def riceSerci(x, y):  # 쌀이 심어진 위치를 리턴하는 함수
+        global riceClass
+        for i in range(len(riceClass)):
+            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
+                return riceClass[i]
 
-        pygame.display.update()  # 화면 업데이트
-        playerClass.update(keyin.dir)
-        # riceClass.update(playerClass.playerTilePos)
+    # 플래이어
+    # 움직이기
+    playerClass.move()
+    # 타일맵
+    tilePos = [0, 0]
+    for line in farm.tileMap:
+        for tile in line:
+            if tile == 1:
+                screen.blit(dirtImg, tilePos)  # 1은 흙
+            if tile == 2:
+                screen.blit(farmlandImg, tilePos)  # 2는 경작지
+            tilePos[0] += 32
+        tilePos[1] += 32
+        tilePos[0] = 0
+    # 자라게
 
-    pygame.quit()
-else:
-    pygame.quit()
+    keyin.key(selectImg, riceClass, farmRiceImg, screen,
+            playerTilePos, stop, delRice, riceSerci, playerClass)
+
+    # 드로우
+    # riceClass.draw(farmRiceImg)
+    for i in range(len(riceClass)):
+        riceClass[i].draw()
+        riceClass[i].grow()
+
+    # 이미지 그리기
+    playerClass.draw(playerImg)
+    screen.blit(selectImg[0], selectPos)
+    screen.blit(verTextOutline, (10+2, 10))
+    screen.blit(verTextOutline, (10-2, 10))
+    screen.blit(verTextOutline, (10, 10+2))
+    screen.blit(verTextOutline, (10, 10-2))
+    screen.blit(verText, (10, 10))
+    screen.blit(posTextOutline, (850+2, 10))
+    screen.blit(posTextOutline, (850-2, 10))
+    screen.blit(posTextOutline, (850, 10+2))
+    screen.blit(posTextOutline, (850, 10-2))
+    screen.blit(posText, (850, 10))
+    screen.blit(invTextOutline, (10+2, 35))
+    screen.blit(invTextOutline, (10-2, 35))
+    screen.blit(invTextOutline, (10, 35+2))
+    screen.blit(invTextOutline, (10, 35-2))
+    screen.blit(invText, (10, 35))
+
+    pygame.display.update()  # 화면 업데이트
+    playerClass.update(keyin.dir)
+    # riceClass.update(playerClass.playerTilePos)
+
+pygame.quit()

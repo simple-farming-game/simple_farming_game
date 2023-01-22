@@ -46,17 +46,16 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                     selectImg[0] = pygame.image.load("assets/img/none.png")
                     selectImg[1] = 0
                 case pygame.K_r:  # 씨앗 선택
-                    selectImg[0] = pygame.image.load(
-                        "assets/img/rice_seed.png")
+                    selectImg[0] = pygame.image.load("assets/img/rice_seed.png")
                     selectImg[1] = 1
                 case pygame.K_f:  # 낫 선택
-                    selectImg[0] = pygame.image.load("assets/img/sickle.png")
+                    selectImg[0] = pygame.image.load("assets/img/hoe.png")
                     selectImg[1] = 2
                 case pygame.K_s:  # 삽 선택
                     selectImg[0] = pygame.image.load("assets/img/shovel.png")
                     selectImg[1] = 3
                 case pygame.K_e:  # 괭이 선택
-                    selectImg[0] = pygame.image.load("assets/img/hoe.png")
+                    selectImg[0] = pygame.image.load("assets/img/sickle.png")
                     selectImg[1] = 4
 
         if event.type == pygame.KEYUP:

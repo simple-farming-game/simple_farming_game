@@ -6,16 +6,9 @@ with open('data/price_tag.json') as f:
 
 
 def sail(item, number):
+    print(item,number)
     playerClass = main.playerClass
     if playerClass.inventory[item] >= number:
         playerClass.inventory[item] -= number
-        playerClass.inventory["gold"] -= price["rice"]*number
-
-
-def store():
-    main = tkinter.Tk()
-    main.title("스토어")
-    main.mainloop()
-
-
-store()
+        playerClass.inventory["gold"] -= price[item]*number
+    else:print("겟수가 부족합니다")
