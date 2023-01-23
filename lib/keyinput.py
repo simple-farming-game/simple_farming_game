@@ -65,10 +65,23 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                 case pygame.K_y:
                     save = open("save.sfgsave","r")
                     saveData = save.readlines()
-                    playerClass.inventory=saveData[1]
-                    farm.tileMap=saveData[0]
+                    playerClass.inventory=eval(saveData[1])
+                    farm.tileMap=eval(saveData[0])
                     print(farm.tileMap)
                     reload()
+                    pos = [0, 0]
+                    tilePos=[0,0]
+                    for line in farm.tileMap:
+                        for tile in line: 
+                            if tile == 3:
+                                riceClass.append(rice.rice(farmRiceImg, screen, tilePos))
+                                print(tilePos)
+                            pos[0] += 32
+                            tilePos[0] += 1
+                        pos[1] += 32
+                        tilePos[1] += 1
+                        pos[0] = 0
+                        tilePos[0]=0
 
         if event.type == pygame.KEYUP:
             match event.key:

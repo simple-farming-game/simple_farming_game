@@ -25,7 +25,7 @@ def stop():
 
 
 # 변수1
-var = "alpha 1.1/4"  # 1.1.1에서저장만들기 1.1.2에서 언어변경,클릭 인벤토리,오프닝,처음매뉴,디코접속버튼만들기 1.2에서 모드추가 1.2.1에서 노션db로 계정기능 추가, 농작물 추가
+var = "alpha 1.1.1"  # 1.1.1에서저장만들기 1.1.2에서 언어변경,클릭 인벤토리,오프닝,처음매뉴,디코접속버튼만들기 1.2에서 모드추가 1.2.1에서 노션db로 계정기능 추가, 농작물 추가
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -85,7 +85,6 @@ while running:
                 return riceClass[i]
     
     def reload():
-        print("reload")
         tilePos = [0, 0]
         for line in farm.tileMap:
             for tile in line:
