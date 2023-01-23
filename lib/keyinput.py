@@ -25,9 +25,8 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
             playerClass.inventory["riceSeed"] += random.randint(0, 4)
             playerClass.inventory["rice"] += random.randint(0, 4)
 
-        elif (selectImg[1] == 3) and ((farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) or (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2)):
+        elif (selectImg[1] == 3) and ((farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2)): # 삽 
             farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 1
-            delrice(playerTilePos[1], playerTilePos[0])
 
         else:
             print("실패 : 이미 심어져 있거나, 심을 수 있는 타입이 아님")
