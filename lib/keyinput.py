@@ -67,7 +67,6 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                     saveData = save.readlines()
                     playerClass.inventory=eval(saveData[1])
                     farm.tileMap=eval(saveData[0])
-                    print(farm.tileMap)
                     reload()
                     pos = [0, 0]
                     tilePos=[0,0]
@@ -75,7 +74,6 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                         for tile in line: 
                             if tile == 3:
                                 riceClass.append(rice.rice(farmRiceImg, screen, tilePos))
-                                print(tilePos)
                             pos[0] += 32
                             tilePos[0] += 1
                         pos[1] += 32
