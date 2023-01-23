@@ -4,7 +4,7 @@ import random
 import pygame
 dir = ""
 
-def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass):
+def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload):
     global dir
 
     def key_d():
@@ -57,7 +57,23 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                 case pygame.K_e:  # 괭이 선택
                     selectImg[0] = pygame.image.load("assets/img/sickle.png")
                     selectImg[1] = 4
+                case pygame.K_SPACE:  # 괭이 선택
+                    playerClass.speed=2.5
+                case pygame.K_t:
+                    save = open("save.sfgsave","w")
+                    save.write(f"{farm.tileMap}\n{playerClass.inventory}")
+                    save.close()
+                case pygame.K_y:
+                    save = open("save.sfgsave","r")
+                    saveData = save.readlines()
+                    playerClass.inventory=saveData[1]
+                    farm.tileMap=saveData[0]
+                    print(farm.tileMap)
+                    reload()
 
         if event.type == pygame.KEYUP:
             match event.key:
-                case pygame.K_UP | pygame.K_DOWN | pygame.K_LEFT | pygame.K_RIGHT: dir = ""
+                case pygame.K_UP | pygame.K_DOWN | pygame.K_LEFT | pygame.K_RIGHT:
+                    dir = ""
+                case pygame.K_SPACE:
+                    playerClass.speed = 1

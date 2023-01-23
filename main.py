@@ -5,6 +5,7 @@ newkini! - sfg
 ide(?)
 '''
 import pygame
+import webbrowser
 import lib.farm as farm
 import lib.player as player
 import lib.sfgchat as sfgchat
@@ -23,8 +24,8 @@ def stop():
     running = False
 
 
-# 변수
-var = "alpha 1.1/2"  # 1.1.1에서 언어변경,클릭 인벤토리 1.2에서 모드추가 1.2.1에서 노션db로 계정기능 추가, 농작물 추가
+# 변수1
+var = "alpha 1.1/3"  # 1.1.1에서저장만들기 1.1.2에서 언어변경,클릭 인벤토리,오프닝,처음매뉴,디코접속버튼만들기 1.2에서 모드추가 1.2.1에서 노션db로 계정기능 추가, 농작물 추가
 hw = (960, 640)
 running = True
 screen = pygame.display.set_mode(hw)
@@ -32,8 +33,8 @@ clock = pygame.time.Clock()
 riceCon = 0
 # 색변수
 SKYBLUE = (113, 199, 245)
-BLACK = (255, 255, 255)
-WHITE = (0, 0, 0)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 # 플래이어 변수
 playerImg = pygame.image.load("assets/img/player.png")
 playerPos = [900, 100]
@@ -49,7 +50,6 @@ pygameIcon = pygame.image.load('assets/img/icon.png')
 # 좌표
 selectPos = [10, 60]
 
-
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 pygame.display.set_icon(pygameIcon)
@@ -62,15 +62,12 @@ if __name__ != "__main__":
 while running:
     clock.tick(100)
     playerTilePos = playerClass.playerTilePos
-    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
-    verTextOutline = lsFont.render(
-        f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
-    posText = lsFont.render(f"{playerTilePos}", True, BLACK)
-    posTextOutline = lsFont.render(f"{playerTilePos}", True, WHITE)
-    invText = lsFont.render(
-        f"inventory : {playerClass.inventory}", True, BLACK)
-    invTextOutline = lsFont.render(
-        f"inventory : {playerClass.inventory}", True, WHITE)
+    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
+    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
+    posText = lsFont.render(f"{playerTilePos}", True, WHITE)
+    posTextOutline = lsFont.render(f"{playerTilePos}", True, BLACK)
+    invText = lsFont.render(f"inventory : {playerClass.inventory}", True, WHITE)
+    invTextOutline = lsFont.render(f"inventory : {playerClass.inventory}", True, BLACK)
 
     screen.fill(SKYBLUE)  # 화면 채우기
 
@@ -86,27 +83,30 @@ while running:
         for i in range(len(riceClass)):
             if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
                 return riceClass[i]
+    
+    def reload():
+        print("reload")
+        tilePos = [0, 0]
+        for line in farm.tileMap:
+            for tile in line:
+                if tile == 1:
+                    screen.blit(dirtImg, tilePos)  # 1은 흙
+                if tile == 2:
+                    screen.blit(farmlandImg, tilePos)  # 2는 경작지
+                tilePos[0] += 32
+            tilePos[1] += 32
+            tilePos[0] = 0
 
     # 플래이어
     # 움직이기
     playerClass.move()
     # 타일맵
-    tilePos = [0, 0]
-    for line in farm.tileMap:
-        for tile in line:
-            if tile == 1:
-                screen.blit(dirtImg, tilePos)  # 1은 흙
-            if tile == 2:
-                screen.blit(farmlandImg, tilePos)  # 2는 경작지
-            tilePos[0] += 32
-        tilePos[1] += 32
-        tilePos[0] = 0
     # 자라게
 
-    keyin.key(selectImg, riceClass, farmRiceImg, screen,
-            playerTilePos, stop, delRice, riceSerci, playerClass)
+    keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, delRice, riceSerci, playerClass,reload)
 
     # 드로우
+    reload()
     # riceClass.draw(farmRiceImg)
     for i in range(len(riceClass)):
         riceClass[i].draw()
