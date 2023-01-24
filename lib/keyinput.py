@@ -1,5 +1,6 @@
 import lib.rice as rice
 import lib.farm as farm
+import json
 import random
 import pygame
 dir = ""
@@ -60,26 +61,33 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                     playerClass.speed=2.5
                 case pygame.K_t:
                     save = open("save.sfgsave","w")
-                    save.write(f"{farm.tileMap}\n{playerClass.inventory}")
+                    save.write(json.dumps({"tile":farm.tileMap,"inv":playerClass.inventory,"pos":playerClass.pos}))
                     save.close()
+                    print("저장")
                 case pygame.K_y:
-                    save = open("save.sfgsave","r")
-                    saveData = save.readlines()
-                    playerClass.inventory=eval(saveData[1])
-                    farm.tileMap=eval(saveData[0])
-                    reload()
-                    pos = [0, 0]
-                    tilePos=[0,0]
-                    for line in farm.tileMap:
-                        for tile in line: 
-                            if tile == 3:
-                                riceClass.append(rice.rice(farmRiceImg, screen, tilePos))
-                            pos[0] += 32
-                            tilePos[0] += 1
-                        pos[1] += 32
-                        tilePos[1] += 1
-                        pos[0] = 0
-                        tilePos[0]=0
+                    try:
+                        save = open("save.sfgsave","r")
+                        saveData = json.load(save)
+                        playerClass.inventory=saveData["inv"]
+                        farm.tileMap=saveData["tile"]
+                        playerClass.pos=saveData["pos"]
+                        reload()
+                        pos = [0, 0]
+                        tilePos=[0,0]
+                        for line in farm.tileMap:
+                            for tile in line: 
+                                if tile == 3:
+                                    riceClass.append(rice.rice(farmRiceImg, screen, tilePos))
+                                pos[0] += 32
+                                tilePos[0] += 1
+                            pos[1] += 32
+                            tilePos[1] += 1
+                            pos[0] = 0
+                            tilePos[0]=0
+                        save.close()
+                        print("불러오기")
+                    except:
+                        print("저장파일이 없음")
 
         if event.type == pygame.KEYUP:
             match event.key:
