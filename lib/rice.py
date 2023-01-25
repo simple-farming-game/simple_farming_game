@@ -16,7 +16,6 @@ class rice:
     def grow(self):
         self.growCount += random.randint(0, 5)
         if (self.growCount >= 10000) and (self.age == 0):
-            print(self.growCount, self.age)
             self.img = pygame.image.load("assets/img/farm_rice_1.png")
             self.age = 1
         if (self.growCount >= 25000) and (self.age == 1):

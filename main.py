@@ -75,8 +75,10 @@ while running:
     def delRice(x, y):  # x,y위치에 있는 쌀을 제거
         global riceClass
         for i in range(len(riceClass)):
-            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
-                riceClass.pop(i)
+            try:
+                if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y): # 작동은 잘되는데 out of list오류가 남;;
+                    riceClass.pop(i)
+            except:pass
 
     def riceSerci(x, y):  # x,y위치에 있는 쌀을 알려드림!
         global riceClass
