@@ -32,7 +32,7 @@ $ pyinstaller main.py
 -   `E`: 괭이 선택
 -   `SPACE`: 달리기
 -   `K`: 저장
--   `Y`: 불러오기(오류있음)
+-   `Y`: 불러오기
 
 ## TODO
 
