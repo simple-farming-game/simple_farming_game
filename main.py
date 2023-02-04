@@ -10,6 +10,16 @@ import lib.farm as farm
 import lib.player as player
 import lib.sfgchat as sfgchat
 import lib.keyinput as keyin
+import json
+
+# 세팅 불러오기
+lang=""
+setting = open("data/setting.json", 'r', encoding='utf8')
+setting = json.load(setting)
+match setting["lang"]:
+    case "ko-kr":
+        lang = open("data/lang/ko-kr.json", 'r', encoding='utf8')
+        lang=json.load(lang)
 sfgchat.runchat()
 
 print("TESTER : OTTO\nIF MACOS : SYSTEM SETTING > KEYBORD > INPUT SOURCE > CAPS LOOK KEY ABC INPUT SOURCE TRANSFORM OFF")
@@ -57,13 +67,12 @@ playerClass = player.player(playerPos, screen, hw)
 riceClass = []
 if __name__ != "__main__":
     running=False
-
 # 게임와일
 while running:
     clock.tick(100)
     playerTilePos = playerClass.playerTilePos
-    verText = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, WHITE)
-    verTextOutline = lsFont.render(f"SFG {var}!  플래이어 왼쪽위가 기준입니다!", True, BLACK)
+    verText = lsFont.render(f"SFG {var}!  {lang['guid']}", True, WHITE)
+    verTextOutline = lsFont.render(f"SFG {var}!  {lang['guid']}", True, BLACK)
     posText = lsFont.render(f"{playerTilePos}", True, WHITE)
     posTextOutline = lsFont.render(f"{playerTilePos}", True, BLACK)
     invText = lsFont.render(f"inventory : {playerClass.inventory}", True, WHITE)
@@ -104,14 +113,14 @@ while running:
     # 타일맵
     # 자라게
 
-    keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, delRice, riceSerci, playerClass,reload)
+    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, delRice, riceSerci, playerClass,reload)
 
     # 드로우
     reload()
     # riceClass.draw(farmRiceImg)
     for i in range(len(riceClass)):
         riceClass[i].draw()
-        riceClass[i].grow()
+        riceClass[i].grow(growCount)
 
     # 이미지 그리기
     playerClass.draw(playerImg)
