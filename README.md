@@ -7,7 +7,7 @@
 ```console
 $ git clone https://github.com/newkincode/simple_farming_game.git
 $ cd simple_farming_game
-$ (pip) install -r requirements.txt
+$ (pip) install -r Pipfile
 
 $ python main.py
 ```
@@ -19,7 +19,6 @@ pyinstaller라이브러리가 필요합니다.
 ```console
 $ pyinstaller main.py
 ```
-이후 lib 폴더를 dist/main 폴더에 넣습니다.
 
 ## 조작법
 
