@@ -13,7 +13,13 @@ import lib.keyinput as keyin
 import json
 
 # 세팅 불러오기
-lang=""
+lang={
+    "guid":"",
+    "fail":{
+        "d":"",
+        "save":""
+    }
+}
 setting = open("data/setting.json", 'r', encoding='utf8')
 setting = json.load(setting)
 match setting["lang"]:
