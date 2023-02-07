@@ -12,16 +12,6 @@ import lib.sfgchat as sfgchat
 import lib.keyinput as keyin
 import json
 
-<<<<<<< HEAD
-# 세팅 불러오기
-lang={
-    "guid":"",
-    "fail":{
-        "d":"",
-        "save":""
-    }
-}
-=======
 # 로딩메시지
 var = "alpha 1.1.1"
 print(f'''
@@ -39,8 +29,13 @@ loding...
 ''',end="")
 
 # 세팅 불러오기
-lang=""
->>>>>>> origin/main
+lang={
+    "guid":"",
+    "fail":{
+        "d":"",
+        "save":""
+    }
+}
 setting = open("data/setting.json", 'r', encoding='utf8')
 setting = json.load(setting)
 match setting["lang"]:
