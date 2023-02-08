@@ -24,7 +24,8 @@ print(f'''
 / ___|       |  ___|       / ___|
 \\___ \\       | |_         | |  _
  ___) |      |  _|        | |_| |
-|____/ imple |_|  farming  \\____|ame V. {var}
+|____/ imple |_|  farming  \____|ame V. {var}
+최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''',end="")
 
@@ -42,6 +43,7 @@ match setting["lang"]:
     case "ko-kr":
         lang = open("data/lang/ko-kr.json", 'r', encoding='utf8')
         lang=json.load(lang)
+print("import lang")
 sfgchat.runchat()
 
 
@@ -89,6 +91,7 @@ playerClass = player.player(playerPos, screen, hw)
 riceClass = []
 if __name__ != "__main__":
     running=False
+print("loding end!")
 # 게임와일
 while running:
     clock.tick(100)
