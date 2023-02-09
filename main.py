@@ -6,14 +6,15 @@ ide(?)
 '''
 import pygame
 import webbrowser
-import lib.farm as farm
 import lib.player as player
 import lib.sfgchat as sfgchat
 import lib.keyinput as keyin
+import lib.draw as draw
+import lib.fun as fun
 import json
 
 # 로딩메시지
-var = "alpha 1.1.1"
+var = "alpha 1.1.1/1"
 print(f'''
                      _    ___       ___
  _ __   _____      _| | _|_ _|_ __ |_ _|
@@ -81,6 +82,8 @@ selectImg = [pygame.image.load("assets/img/rice_seed.png"), 1]
 pygameIcon = pygame.image.load('assets/img/icon.png')
 # 좌표
 selectPos = [10, 60]
+# ...
+seedList = [3]
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
@@ -89,9 +92,11 @@ playerClass = player.player(playerPos, screen, hw)
 riceClass = []
 if __name__ != "__main__":
     running=False
+
 # 게임와일
 while running:
     clock.tick(100)
+    
     playerTilePos = playerClass.playerTilePos
     verText = lsFont.render(f"SFG {var}!  {lang['guid']}", True, WHITE)
     verTextOutline = lsFont.render(f"SFG {var}!  {lang['guid']}", True, BLACK)
@@ -101,70 +106,12 @@ while running:
     invTextOutline = lsFont.render(f"inventory : {playerClass.inventory}", True, BLACK)
 
     screen.fill(SKYBLUE)  # 화면 채우기
-
-    # 함수
-    def delRice(x, y):  # x,y위치에 있는 쌀을 제거
-        global riceClass
-        for i in range(len(riceClass)):
-            try:
-                if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y): # 작동은 잘되는데 out of list오류가 남;;
-                    riceClass.pop(i)
-            except:pass
-
-    def riceSerci(x, y):  # x,y위치에 있는 쌀을 알려드림!
-        global riceClass
-        for i in range(len(riceClass)):
-            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
-                return riceClass[i]
-    
-    def reload():
-        tilePos = [0, 0]
-        for line in farm.tileMap:
-            for tile in line:
-                if tile == 1:
-                    screen.blit(dirtImg, tilePos)  # 1은 흙
-                if tile == 2:
-                    screen.blit(farmlandImg, tilePos)  # 2는 경작지
-                tilePos[0] += 32
-            tilePos[1] += 32
-            tilePos[0] = 0
-
-    # 플래이어
-    # 움직이기
     playerClass.move()
-    # 타일맵
-    # 자라게
-
-    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, delRice, riceSerci, playerClass,reload)
-
-    # 드로우
-    reload()
-    # riceClass.draw(farmRiceImg)
-    for i in range(len(riceClass)):
-        riceClass[i].draw()
-        riceClass[i].grow(growCount)
-
-    # 이미지 그리기
-    playerClass.draw(playerImg)
-    screen.blit(selectImg[0], selectPos)
-    screen.blit(verTextOutline, (10+2, 10))
-    screen.blit(verTextOutline, (10-2, 10))
-    screen.blit(verTextOutline, (10, 10+2))
-    screen.blit(verTextOutline, (10, 10-2))
-    screen.blit(verText, (10, 10))
-    screen.blit(posTextOutline, (850+2, 10))
-    screen.blit(posTextOutline, (850-2, 10))
-    screen.blit(posTextOutline, (850, 10+2))
-    screen.blit(posTextOutline, (850, 10-2))
-    screen.blit(posText, (850, 10))
-    screen.blit(invTextOutline, (10+2, 35))
-    screen.blit(invTextOutline, (10-2, 35))
-    screen.blit(invTextOutline, (10, 35+2))
-    screen.blit(invTextOutline, (10, 35-2))
-    screen.blit(invText, (10, 35))
-
+    growCount = 0
+    fun.inVar(riceClass,playerClass,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText,seedList)
+    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, fun.delRice, fun.riceSerci, playerClass,fun.reload)
+    draw.draw(fun.reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)
     # riceClass.update(playerClass.playerTilePos)
-
 pygame.quit()
