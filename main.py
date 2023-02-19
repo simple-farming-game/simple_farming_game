@@ -24,7 +24,7 @@ print(f'''
 / ___|       |  ___|       / ___|
 \\___ \\       | |_         | |  _
  ___) |      |  _|        | |_| |
-|____/ imple |_|  farming  \____|ame V. {var}
+|____/ imple |_|  arming  \____|ame V. {var}
 최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''',end="")
@@ -58,6 +58,7 @@ def stop():
     running = False
 
 
+
 # 변수1
 # 1.1.1에서저장만들기 1.2에서 언어변경,클릭 인벤토리,오프닝,처음매뉴,디코접속버튼,모드,(노션db로 계정기능 추가), 농작물 추가
 hw = (960, 640)
@@ -83,7 +84,6 @@ selectImg = [pygame.image.load("assets/img/rice_seed.png"), 1]
 pygameIcon = pygame.image.load('assets/img/icon.png')
 # 좌표
 selectPos = [10, 60]
-
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 pygame.display.set_icon(pygameIcon)
@@ -146,6 +146,7 @@ while running:
     for i in range(len(riceClass)):
         riceClass[i].draw()
         riceClass[i].grow(growCount)
+
 
     # 이미지 그리기
     playerClass.draw(playerImg)
