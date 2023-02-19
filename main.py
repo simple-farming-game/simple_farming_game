@@ -6,14 +6,27 @@ ide(?)
 '''
 import pygame
 import webbrowser
-import lib.farm as farm
 import lib.player as player
 import lib.sfgchat as sfgchat
 import lib.keyinput as keyin
+import lib.draw as draw
+import lib.fun as fun
 import json
-
+# https://inspireman.tistory.com/16
+import os
+from tkinter import filedialog 
+from tkinter import messagebox
+# https://mishuni.tistory.com/55
+import os , platform , socket
 # 로딩메시지
-var = "alpha 1.1.1"
+var = "alpha 1.1.1/1"
+# 음악파일 선택 https://inspireman.tistory.com/16
+musicFile = []
+file = filedialog.askopenfilenames(initialdir="/",\
+                 title = "파일을 선택 해 주세요",\
+                    filetypes = (("*.mp3","*.mp3"),(".",".")))
+if file == '':
+    messagebox.showwarning("파일선택 안함", "음악을 재생하지 않습니다.")
 print(f'''
                      _    ___       ___
  _ __   _____      _| | _|_ _|_ __ |_ _|
@@ -24,10 +37,24 @@ print(f'''
 / ___|       |  ___|       / ___|
 \\___ \\       | |_         | |  _
  ___) |      |  _|        | |_| |
-|____/ imple |_|  arming  \____|ame V. {var}
+|____/ imple |_|  arming  \\____|ame V. {var}
 최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''',end="")
+
+comInfo = {
+    "core":os.cpu_count(),
+    "os":platform.system(),
+    "processor":platform.processor(),
+    "osvar":platform.version()
+}
+
+# https://mishuni.tistory.com/55
+print(f"core : {comInfo['core']}") # cpu 갯수 : 8
+print(f"os : {comInfo['os']}") # os 이름 : Linux
+print(f"processor : {comInfo['processor']}") # processor 종류 : x86_64
+print(f"os var : {comInfo['osvar']}") # 44~18.04.2-Ubuntu SMP Thu Apr 23 14:27:18 UTC 2020
+# print("socket.gethostname()") # host 이름 : 
 
 # 세팅 불러오기
 lang={
@@ -45,11 +72,14 @@ match setting["lang"]:
         lang=json.load(lang)
 print("import lang")
 sfgchat.runchat()
-
-
-
 pygame.init()
-
+# 음악재생 https://inspireman.tistory.com/16
+if file == '':
+    #messagebox.showwarning("파일선택 안함", "음악을 재생하지 않습니다.")
+    pass
+else:
+    music = pygame.mixer.Sound(file[0])
+    music.play()
 # 함수
 
 
@@ -84,6 +114,10 @@ selectImg = [pygame.image.load("assets/img/rice_seed.png"), 1]
 pygameIcon = pygame.image.load('assets/img/icon.png')
 # 좌표
 selectPos = [10, 60]
+# ...
+seedList = [3]
+webSiteBtnText=lsFont.render("SFG site!", True, WHITE)
+
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkin")
 pygame.display.set_icon(pygameIcon)
@@ -92,9 +126,15 @@ riceClass = []
 if __name__ != "__main__":
     running=False
 print("loding end!")
+if comInfo["os"] == "Windows":
+    os.system("cls")
+else:
+    os.system('clear')
 # 게임와일
+#webbrowser.open("https://newkini-dev.com/sfg")
 while running:
     clock.tick(100)
+    
     playerTilePos = playerClass.playerTilePos
     verText = lsFont.render(f"SFG {var}!  {lang['guid']}", True, WHITE)
     verTextOutline = lsFont.render(f"SFG {var}!  {lang['guid']}", True, BLACK)
@@ -104,71 +144,15 @@ while running:
     invTextOutline = lsFont.render(f"inventory : {playerClass.inventory}", True, BLACK)
 
     screen.fill(SKYBLUE)  # 화면 채우기
-
-    # 함수
-    def delRice(x, y):  # x,y위치에 있는 쌀을 제거
-        global riceClass
-        for i in range(len(riceClass)):
-            try:
-                if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y): # 작동은 잘되는데 out of list오류가 남;;
-                    riceClass.pop(i)
-            except:pass
-
-    def riceSerci(x, y):  # x,y위치에 있는 쌀을 알려드림!
-        global riceClass
-        for i in range(len(riceClass)):
-            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
-                return riceClass[i]
-    
-    def reload():
-        tilePos = [0, 0]
-        for line in farm.tileMap:
-            for tile in line:
-                if tile == 1:
-                    screen.blit(dirtImg, tilePos)  # 1은 흙
-                if tile == 2:
-                    screen.blit(farmlandImg, tilePos)  # 2는 경작지
-                tilePos[0] += 32
-            tilePos[1] += 32
-            tilePos[0] = 0
-
-    # 플래이어
-    # 움직이기
     playerClass.move()
-    # 타일맵
-    # 자라게
-
-    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, delRice, riceSerci, playerClass,reload)
-
-    # 드로우
-    reload()
-    # riceClass.draw(farmRiceImg)
-    for i in range(len(riceClass)):
-        riceClass[i].draw()
-        riceClass[i].grow(growCount)
-
-
-    # 이미지 그리기
-    playerClass.draw(playerImg)
-    screen.blit(selectImg[0], selectPos)
-    screen.blit(verTextOutline, (10+2, 10))
-    screen.blit(verTextOutline, (10-2, 10))
-    screen.blit(verTextOutline, (10, 10+2))
-    screen.blit(verTextOutline, (10, 10-2))
-    screen.blit(verText, (10, 10))
-    screen.blit(posTextOutline, (850+2, 10))
-    screen.blit(posTextOutline, (850-2, 10))
-    screen.blit(posTextOutline, (850, 10+2))
-    screen.blit(posTextOutline, (850, 10-2))
-    screen.blit(posText, (850, 10))
-    screen.blit(invTextOutline, (10+2, 35))
-    screen.blit(invTextOutline, (10-2, 35))
-    screen.blit(invTextOutline, (10, 35+2))
-    screen.blit(invTextOutline, (10, 35-2))
-    screen.blit(invText, (10, 35))
-
+    growCount = 0
+    fun.classVar(riceClass,playerClass)
+    fun.textVar(verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
+    fun.imgVar(playerImg,selectImg)
+    fun.etcVar(growCount,selectPos,seedList)
+    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, fun.delRice, fun.riceSerci, playerClass,fun.reload)
+    draw.draw(fun.reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)
     # riceClass.update(playerClass.playerTilePos)
-
 pygame.quit()
