@@ -20,13 +20,7 @@ from tkinter import messagebox
 import os , platform , socket
 # 로딩메시지
 var = "alpha 1.1.1/1"
-# 음악파일 선택 https://inspireman.tistory.com/16
-musicFile = []
-file = filedialog.askopenfilenames(initialdir="/",\
-                 title = "파일을 선택 해 주세요",\
-                    filetypes = (("*.mp3","*.mp3"),(".",".")))
-if file == '':
-    messagebox.showwarning("파일선택 안함", "음악을 재생하지 않습니다.")
+
 print(f'''
                      _    ___       ___
  _ __   _____      _| | _|_ _|_ __ |_ _|
@@ -54,9 +48,9 @@ print(f"core : {comInfo['core']}") # cpu 갯수 : 8
 print(f"os : {comInfo['os']}") # os 이름 : Linux
 print(f"processor : {comInfo['processor']}") # processor 종류 : x86_64
 print(f"os var : {comInfo['osvar']}") # 44~18.04.2-Ubuntu SMP Thu Apr 23 14:27:18 UTC 2020
-# print("socket.gethostname()") # host 이름 : 
 
 # 세팅 불러오기
+print("import setting...")
 lang={
     "guid":"",
     "fail":{
@@ -71,18 +65,25 @@ match setting["lang"]:
         lang = open("data/lang/ko-kr.json", 'r', encoding='utf8')
         lang=json.load(lang)
 print("import lang")
+if setting["musicStart"]==True:
+    print("music start...")
+    # 음악파일 선택 https://inspireman.tistory.com/16
+    musicFile = []
+    file = filedialog.askopenfilenames(initialdir="/",\
+                    title = "파일을 선택 해 주세요",\
+                        filetypes = (("*.mp3","*.mp3"),(".",".")))
+    
+    if file == '':
+        messagebox.showwarning("파일선택 안함", "음악을 재생하지 않습니다.")
+    else:
+        # 음악재생 https://inspireman.tistory.com/16
+        music = pygame.mixer.Sound(file[0])
+        music.play()
+else:print("music no start")
 sfgchat.runchat()
 pygame.init()
-# 음악재생 https://inspireman.tistory.com/16
-if file == '':
-    #messagebox.showwarning("파일선택 안함", "음악을 재생하지 않습니다.")
-    pass
-else:
-    music = pygame.mixer.Sound(file[0])
-    music.play()
+     
 # 함수
-
-
 def stop():
     global running
     running = False
