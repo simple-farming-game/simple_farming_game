@@ -82,6 +82,9 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                 case pygame.K_e:  # 낫 선택
                     selectImg[0] = pygame.image.load("assets/img/sickle.png")
                     selectImg[1] = 4
+                case pygame.K_b:  # 낫 선택
+                    selectImg[0] = pygame.image.load("assets/img/rice.png")
+                    selectImg[1] = 5
                 case pygame.K_SPACE:  # 괭이 선택
                     playerClass.speed=2.5
                 case pygame.K_t:

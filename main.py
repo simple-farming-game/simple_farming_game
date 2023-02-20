@@ -156,4 +156,5 @@ while running:
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)
     # riceClass.update(playerClass.playerTilePos)
+print("quit")
 pygame.quit()
