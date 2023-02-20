@@ -6,6 +6,9 @@ class log:
     def __init__(self):
         self.now = datetime.datetime.now()
         self.log = []
+    def custem(self,text):
+        self.log.append(f"{text}")
+        print(self.log[len(self.log)-1])
     def debug(self,text):
         self.log.append(f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - DEBUG - {text}")
         print(self.log[len(self.log)-1])

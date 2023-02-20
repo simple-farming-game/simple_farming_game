@@ -11,6 +11,7 @@ import lib.sfgchat as sfgchat
 import lib.keyinput as keyin
 import lib.draw as draw
 import lib.fun as fun
+import lib.log as log
 import json
 # https://inspireman.tistory.com/16
 import os
@@ -35,7 +36,7 @@ print(f'''
 최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''',end="")
-
+logs = log.log()
 comInfo = {
     "core":os.cpu_count(),
     "os":platform.system(),
@@ -44,13 +45,13 @@ comInfo = {
 }
 
 # https://mishuni.tistory.com/55
-print(f"core : {comInfo['core']}") # cpu 갯수 : 8
-print(f"os : {comInfo['os']}") # os 이름 : Linux
-print(f"processor : {comInfo['processor']}") # processor 종류 : x86_64
-print(f"os var : {comInfo['osvar']}") # 44~18.04.2-Ubuntu SMP Thu Apr 23 14:27:18 UTC 2020
+logs.custem(f"core : {comInfo['core']}") # cpu 갯수 : 8
+logs.custem(f"os : {comInfo['os']}") # os 이름 : Linux
+logs.custem(f"processor : {comInfo['processor']}") # processor 종류 : x86_64
+logs.custem(f"os var : {comInfo['osvar']}") # 44~18.04.2-Ubuntu SMP Thu Apr 23 14:27:18 UTC 2020
 
 # 세팅 불러오기
-print("import setting...")
+logs.info("import setting...")
 lang={
     "guid":"",
     "fail":{
@@ -64,9 +65,9 @@ match setting["lang"]:
     case "ko-kr":
         lang = open("data/lang/ko-kr.json", 'r', encoding='utf8')
         lang=json.load(lang)
-print("import lang")
+logs.info("import lang")
 if setting["musicStart"]==True:
-    print("music start...")
+    logs.info("music start...")
     # 음악파일 선택 https://inspireman.tistory.com/16
     musicFile = []
     file = filedialog.askopenfilenames(initialdir="/",\
@@ -75,11 +76,12 @@ if setting["musicStart"]==True:
     
     if file == '':
         messagebox.showwarning("파일선택 안함", "음악을 재생하지 않습니다.")
+        logs.info("music no start")
     else:
         # 음악재생 https://inspireman.tistory.com/16
         music = pygame.mixer.Sound(file[0])
         music.play()
-else:print("music no start")
+else:logs.info("music no start")
 sfgchat.runchat()
 pygame.init()
      
@@ -126,7 +128,7 @@ playerClass = player.player(playerPos, screen, hw)
 riceClass = []
 if __name__ != "__main__":
     running=False
-print("loding end!")
+logs.info("loding end!")
 if comInfo["os"] == "Windows":
     os.system("cls")
 else:
@@ -156,5 +158,6 @@ while running:
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)
     # riceClass.update(playerClass.playerTilePos)
-print("quit")
+logs.info("quit")
+logs.save()
 pygame.quit()
