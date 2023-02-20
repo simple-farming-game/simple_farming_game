@@ -10,8 +10,8 @@ import lib.player as player
 import lib.sfgchat as sfgchat
 import lib.keyinput as keyin
 import lib.draw as draw
+import lib.fun as fun
 import lib.log as log
-import lib.farm as farm
 import json
 # https://inspireman.tistory.com/16
 import os
@@ -89,31 +89,7 @@ pygame.init()
 def stop():
     global running
     running = False
-def delRice(x, y):  # x,y위치에 있는 쌀을 제거
-    for i in range(len(riceClass)):
-        try:
-            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y): # 작동은 잘되는데 out of list오류가 남;;
-                riceClass.pop(i)
-        except:pass
 
-def riceSerci(x, y):  # x,y위치에 있는 쌀을 알려드림!
-    for i in range(len(riceClass)):
-        try:
-            if (riceClass[i].tilePos[1]/32 == x) and (riceClass[i].tilePos[0]/32 == y):
-                return riceClass[i]
-        except:pass
-
-def reload(screen):
-    tilePos = [0, 0]
-    for line in farm.tileMap:
-        for tile in line:
-            if tile == 1:
-                screen.blit(dirtImg, tilePos)  # 1은 흙
-            if (tile == 2) or (tile in seedList):
-                screen.blit(farmlandImg, tilePos)  # 2는 경작지
-            tilePos[0] += 32
-        tilePos[1] += 32
-        tilePos[0] = 0
 
 
 # 변수1
@@ -173,12 +149,15 @@ while running:
     screen.fill(SKYBLUE)  # 화면 채우기
     playerClass.move()
     growCount = 0
-    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, delRice, riceSerci, playerClass,reload, logs)
-    draw.draw(reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
+    fun.classVar(riceClass,playerClass)
+    fun.textVar(verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
+    fun.imgVar(playerImg,selectImg)
+    fun.etcVar(growCount,selectPos,seedList)
+    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, fun.delRice, fun.riceSerci, playerClass,fun.reload)
+    draw.draw(fun.reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)
     # riceClass.update(playerClass.playerTilePos)
-    logs.save()
 logs.info("quit")
 logs.save()
 pygame.quit()
