@@ -1,12 +1,12 @@
 import lib.rice as rice
 import lib.farm as farm
+import lib.log as log
 import json
 import random
 import pygame
 dir = ""
 growCount = random.randint(0,5)
-
-def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload):
+def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload,logs):
     global dir,growCount
     turboMode=False
     def key_d():
@@ -15,23 +15,25 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
             riceClass.append(
                 rice.rice(farmRiceImg, screen, playerTilePos))
             playerClass.inventory["riceSeed"] -= 1
-            print(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+            logs.info(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
         elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1):  # 경작
             farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
-            print(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+            logs.info(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
         elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1], playerTilePos[0]).age == 2):  # 캐기
             farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
             delrice(playerTilePos[1], playerTilePos[0])
             playerClass.inventory["riceSeed"] += random.randint(0, 4)
             playerClass.inventory["rice"] += random.randint(0, 4)
+            logs.info(f"캐기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
         elif (selectImg[1] == 3) and ((farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2)): # 삽 
             farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 1
+            logs.info(f"삽 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
         else:
-            print("실패")
+            logs.info("실패")
     def importSave():
         try:
             save = open("save.sfgsave","r")
@@ -53,9 +55,9 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                 pos[0] = 0
                 tilePos[0]=0
             save.close()
-            print("불러오기")
+            logs.info("불러오기")
         except:
-            print("불러오기 실패")
+            logs.info("불러오기 실패")
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -91,7 +93,7 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                     save = open("save.sfgsave","w")
                     save.write(json.dumps({"tile":farm.tileMap,"inv":playerClass.inventory,"pos":playerClass.pos}))
                     save.close()
-                    print("저장")
+                    logs.info("저장")
                 case pygame.K_y:importSave()
                 case pygame.K_0:
                     if int(input("dev code\n")) == 20121029:
@@ -100,7 +102,7 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                         growCount = 5000
         if (selectImg[1] == 2) and (turboMode == True):
             farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
-            print(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+            logs.info(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
         if event.type == pygame.KEYUP:
             match event.key:

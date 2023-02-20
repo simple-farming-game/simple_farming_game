@@ -153,7 +153,7 @@ while running:
     fun.textVar(verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
     fun.imgVar(playerImg,selectImg)
     fun.etcVar(growCount,selectPos,seedList)
-    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, fun.delRice, fun.riceSerci, playerClass,fun.reload)
+    growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, fun.delRice, fun.riceSerci, playerClass,fun.reload,logs)
     draw.draw(fun.reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)

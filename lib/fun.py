@@ -15,23 +15,36 @@ invText = [0]
 seedList = [0]
 dirtImg = pygame.image.load("assets/img/dirt.png")
 farmlandImg = pygame.image.load("assets/img/farmland.png")
-def classVar(riceClass,playerClass):
-    riceClass = riceClass
-    playerClass = playerClass
-def textVar(verTextOutline,verText,posTextOutline,posText,invTextOutline,invText):
-    verTextOutline = verTextOutline
-    verText = verText
-    posTextOutline = posTextOutline
-    posText = posText
-    invTextOutline = invTextOutline
-    invText = invText
-def imgVar(playerImg,selectImg):
-    playerImg = playerImg
-    selectImg = selectImg
-def etcVar(growCount,selectPos,seedList):
-    growCount = growCount
-    selectPos = selectPos
-    seedList = seedList
+def classVar(iceClass,layerClass):
+    global riceClass
+    global playerClass
+    riceClass = iceClass
+    playerClass = layerClass
+def textVar(erTextOutline,erText,osTextOutline,osText,nvTextOutline,nvText):
+    global verTextOutline
+    global verText
+    global posTextOutline
+    global posText
+    global invTextOutline
+    global invText
+    verTextOutline = erTextOutline
+    verText = erText
+    posTextOutline = osTextOutline
+    posText = osText
+    invTextOutline = nvTextOutline
+    invText = nvText
+def imgVar(layerImg,electImg):
+    global playerImg
+    global selectImg
+    playerImg = layerImg
+    selectImg = electImg
+def etcVar(rowCount,electPos,eedList):
+    global growCount
+    global selectPos
+    global seedList
+    growCount = rowCount
+    selectPos = electPos
+    seedList = eedList
 def delRice(x, y):  # x,y위치에 있는 쌀을 제거
     for i in range(len(riceClass)):
         try:
