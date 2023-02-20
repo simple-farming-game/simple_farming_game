@@ -31,7 +31,7 @@ print(f'''
 / ___|       |  ___|       / ___|
 \\___ \\       | |_         | |  _
  ___) |      |  _|        | |_| |
-|____/ imple |_|  farming  \\____|ame V. {var}
+|____/ imple |_|  arming  \\____|ame V. {var}
 최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''',end="")
@@ -87,6 +87,7 @@ pygame.init()
 def stop():
     global running
     running = False
+
 
 
 # 변수1
