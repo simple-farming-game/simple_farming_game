@@ -67,7 +67,6 @@ def reload(screen):
                 screen.blit(dirtImg, tilePos)  # 1은 흙
             if (tile == 2) or (tile in seedList):
                 screen.blit(farmlandImg, tilePos)  # 2는 경작지
-                print("a")
             tilePos[0] += 32
         tilePos[1] += 32
         tilePos[0] = 0

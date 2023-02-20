@@ -20,7 +20,7 @@ from tkinter import messagebox
 # https://mishuni.tistory.com/55
 import os , platform , socket
 # 로딩메시지
-var = "alpha 1.1.1/1"
+var = "alpha 1.1.1/2"
 
 print(f'''
                      _    ___       ___
