@@ -29,10 +29,10 @@ def imgVar(playerImg,selectImg):
     playerImg = playerImg
     selectImg = selectImg
 def etcVar(growCount,selectPos,seedList):
-    nonlocal seedList
     growCount = growCount
     selectPos = selectPos
     seedList = seedList
+    print(seedList)
 def delRice(x, y):  # x,y위치에 있는 쌀을 제거
     for i in range(len(riceClass)):
         try:
