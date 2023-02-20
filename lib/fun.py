@@ -28,11 +28,11 @@ def textVar(verTextOutline,verText,posTextOutline,posText,invTextOutline,invText
 def imgVar(playerImg,selectImg):
     playerImg = playerImg
     selectImg = selectImg
-def etcVar(growCount,selectPos,seedList):
+def etcVar(growCount,selectPos,seeList):
     growCount = growCount
     selectPos = selectPos
-    seedList = seedList
-    print(seedList)
+    seedList = seeList
+print(seedList)
 def delRice(x, y):  # x,y위치에 있는 쌀을 제거
     for i in range(len(riceClass)):
         try:
