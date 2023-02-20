@@ -33,6 +33,7 @@ $ pyinstaller main.py
 -   `K`: 저장
 -   `Y`: 불러오기
 -   `G`: 손에든 아이템 판매(미구현)
+-   `B`: 쌀 선택
 
 ## TODO
 

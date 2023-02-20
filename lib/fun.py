@@ -29,6 +29,7 @@ def imgVar(playerImg,selectImg):
     playerImg = playerImg
     selectImg = selectImg
 def etcVar(growCount,selectPos,seedList):
+    nonlocal seedList
     growCount = growCount
     selectPos = selectPos
     seedList = seedList
