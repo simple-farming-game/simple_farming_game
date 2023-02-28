@@ -35,6 +35,5 @@ class player:
         self.screen.blit(img, self.pos)
 
     def update(self, dir):
-        self.playerTilePos = [math.trunc(
-            self.pos[0]/32), math.trunc(self.pos[1]/32)]
+        self.playerTilePos = [math.trunc(self.pos[0]/32), math.trunc(self.pos[1]/32)]
         self.dir = dir

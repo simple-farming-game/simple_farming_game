@@ -20,7 +20,7 @@ from tkinter import messagebox
 # https://mishuni.tistory.com/55
 import os , platform , socket
 # 로딩메시지
-var = "alpha 1.1.1/2"
+var = "alpha 1.1.1/3"
 
 print(f'''
                      _    ___       ___
@@ -122,7 +122,7 @@ seedList = [3]
 webSiteBtnText=lsFont.render("SFG site!", True, WHITE)
 
 # 세팅
-pygame.display.set_caption(f"sfg {var}! - by newkin")
+pygame.display.set_caption(f"sfg {var}! - by newkini")
 pygame.display.set_icon(pygameIcon)
 playerClass = player.player(playerPos, screen, hw)
 riceClass = []
