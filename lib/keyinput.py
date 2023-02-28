@@ -5,10 +5,11 @@ import json
 import random
 import pygame
 dir = ""
+# 아 진짜 코드 다!시!짜!고!싶!다! ㅅㅂ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 growCount = random.randint(0,5)
 def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload,logs):
     global dir,growCount
-    turboMode=False
+
     def key_d():
         if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2) and (playerClass.inventory["riceSeed"] > 0):  # 심기
             farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 3
@@ -100,9 +101,6 @@ def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice,
                         playerClass.speed = 3
                         playerClass.inventory = {"rice": 20121029, "riceSeed": 20121029, "gold": 20121029}
                         growCount = 5000
-        if (selectImg[1] == 2) and (turboMode == True):
-            farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
-            logs.info(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
         if event.type == pygame.KEYUP:
             match event.key:
