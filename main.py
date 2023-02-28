@@ -82,7 +82,6 @@ if setting["musicStart"]==True:
         music = pygame.mixer.Sound(file[0])
         music.play()
 else:logs.info("music no start")
-sfgchat.runchat()
 pygame.init()
      
 # 함수

@@ -1,7 +1,6 @@
 import datetime
 import os
-now = datetime.datetime.now()
-now.strftime('%Y-%m-%d %H:%M:%S')
+
 class log:
     def __init__(self):
         self.now = datetime.datetime.now()
@@ -36,7 +35,3 @@ class log:
             for i in self.log:
                 f.write(f"{i}\n")
             f.close
-logs = log()
-logs.debug("helo")
-logs.debug("helo")
-logs.save()

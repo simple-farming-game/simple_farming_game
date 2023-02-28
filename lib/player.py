@@ -1,5 +1,5 @@
 import math
-
+# 완전 스파게티 코드다.... 하....
 
 class player:
     def __init__(self, pos, screen, hw):

@@ -1,7 +1,6 @@
 import pygame
 import random
-
-
+# 아진짜 코드 다시짜고싶다....
 class rice:
     def __init__(self, img, screen, playerTilePos):
         self.tilePos = [32 * playerTilePos[0], 32 * playerTilePos[1]]
