@@ -5,7 +5,7 @@ import json
 import random
 import pygame
 dir = ""
-# 아 진짜 코드 다!시!짜!고!싶!다! ㅅㅂ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 growCount = random.randint(0,5)
 def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload,logs):
     global dir,growCount
