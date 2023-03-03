@@ -1,39 +1,42 @@
 import math
-# 완전 스파게티 코드다.... 하....
+from typing import Dict
+import pygame
 
-class player:
-    def __init__(self, pos, screen, hw):
-        self.dir = "l"
-        self.pos = pos
-        self.screen = screen
-        self.hw = hw
-        self.speed = 1
-        self.playerTilePos = []
-        self.inventory = {"rice": 0, "riceSeed": 5, "gold": 0}
+from lib.types.Direction import Direction
+from lib.types.Image import Image
+from lib.Object import Object
 
-    def move(self):
-        match self.dir:
-            case "l":
-                self.pos[0] -= self.speed
-            case "r":
-                self.pos[0] += self.speed
-            case "u":
-                self.pos[1] -= self.speed
-            case "d":
-                self.pos[1] += self.speed
 
-        if self.pos[0] >= self.hw[0]-32:
-            self.pos[0] = self.hw[0]-33
-        if self.pos[0] <= 0:
-            self.pos[0] = 1
-        if self.pos[1] >= self.hw[1]-32:
-            self.pos[1] = self.hw[1]-32
-        if self.pos[1] <= 1:
-            self.pos[1] = 1
+class player(Object):
+    speed = 1
+    inventory: Dict[str, int]
 
-    def draw(self, img):
-        self.screen.blit(img, self.pos)
+    def __init__(self, image: Image, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
+        super().__init__(image, pos, screen)
+        self.window_size = window_size
 
-    def update(self, dir):
-        self.playerTilePos = [math.trunc(self.pos[0]/32), math.trunc(self.pos[1]/32)]
-        self.dir = dir
+    def move(self, direction: Direction):
+        match direction:
+            case Direction.LEFT:
+                self.pos.x -= self.speed
+            case Direction.RIGHT:
+                self.pos.x += self.speed
+            case Direction.UP:
+                self.pos.y -= self.speed
+            case Direction.DOWN:
+                self.pos.y += self.speed
+
+        if self.pos.x >= self.window_size[0]-32:
+            self.pos.x = self.window_size[0]-33
+        if self.pos.x <= 0:
+            self.pos.x = 1
+        if self.pos.y >= self.window_size[1]-32:
+            self.pos.y = self.window_size[1]-32
+        if self.pos.y <= 1:
+            self.pos.y = 1
+
+    def get_tile_pos(self) -> pygame.math.Vector2:
+        return pygame.math.Vector2(
+            math.trunc(self.pos.x/32),
+            math.trunc(self.pos.y/32)
+        )
