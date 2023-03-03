@@ -6,9 +6,9 @@ import random
 import pygame
 dir = ""
 
-growCount = random.randint(0,5)
 def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload,logs):
-    global dir,growCount
+    growCount = random.randint(0,5)
+    global dir
 
     def key_d():
         if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2) and (playerClass.inventory["riceSeed"] > 0):  # 심기

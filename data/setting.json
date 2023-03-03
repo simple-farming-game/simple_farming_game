@@ -1,4 +1,5 @@
 {
     "lang":"ko-kr",
-    "musicStart":false
+    "musicStart":false,
+    "texture":"basic"
 }

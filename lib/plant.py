@@ -3,7 +3,7 @@ import random
 
 # 하 진짜 코드 다시짤까
 class plant:
-    def __init__(self, img, screen, playerTilePos):
+    def __init__(self, img, screen, playerTilePos, step):
         self.tilePos = [32 * playerTilePos[0], 32 * playerTilePos[1]]
         self.growCount = 0
         self.img = img
