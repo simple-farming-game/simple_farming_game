@@ -3,8 +3,8 @@ import random
 from .plants_data import Plants
 
 
-class rice(Plants):
-    name = "rice"
+class potato(Plants):
+    name = "potato"
     growCount = 0
     age = 0
 

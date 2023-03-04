@@ -1,23 +1,26 @@
-def draw(reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText):
-    # 드로우
-    reload(screen)
-    for i in range(len(riceClass)):
-        riceClass[i].draw()
-        riceClass[i].grow(growCount)
-    playerClass.draw(playerImg)
-    screen.blit(selectImg[0], selectPos)
-    screen.blit(verTextOutline, (10+2, 10))
-    screen.blit(verTextOutline, (10-2, 10))
-    screen.blit(verTextOutline, (10, 10+2))
-    screen.blit(verTextOutline, (10, 10-2))
-    screen.blit(verText, (10, 10))
-    screen.blit(posTextOutline, (850+2, 35))
-    screen.blit(posTextOutline, (850-2, 35))
-    screen.blit(posTextOutline, (850, 35+2))
-    screen.blit(posTextOutline, (850, 35-2))
-    screen.blit(posText, (850, 35))
-    screen.blit(invTextOutline, (10+2, 35))
-    screen.blit(invTextOutline, (10-2, 35))
-    screen.blit(invTextOutline, (10, 35+2))
-    screen.blit(invTextOutline, (10, 35-2))
-    screen.blit(invText, (10, 35))
+import pygame
+
+from lib import farm
+
+images: dict[farm.Tiles, pygame.Surface] = {
+    farm.Tiles.DIRT: pygame.image.load("assets/img/dirt.png"),
+    farm.Tiles.FARMLAND: pygame.image.load("assets/img/farmland.png")
+}
+
+
+def draw_ground(screen):
+    tilePos = pygame.math.Vector2(0, 0)
+    for line in farm.tileMap:
+        for tile in line:
+            if tile in farm.Plants_type:
+                screen.blit(images[farm.Tiles.FARMLAND], tilePos)
+            if tile in farm.Tiles:
+                screen.blit(images[tile], tilePos)
+
+            # if tile == lib.farm.Tiles.DIRT:
+            #     screen.blit(, tilePos)
+            # if (tile == lib.farm.Tiles.FARMLAND) or (tile in Plants_type):
+            #     screen.blit(farmlandImg, tilePos)
+            tilePos.x += 32
+        tilePos.y += 32
+        tilePos.x = 0

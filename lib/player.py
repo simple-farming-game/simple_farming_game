@@ -1,17 +1,25 @@
+from enum import Enum, auto
 import math
 from typing import Dict
 import pygame
 
-from lib.types.Direction import Direction
-from lib.types.Image import Image
 from lib.Object import Object
+from lib.farm import tileMap, Plants_type, Tiles
+
+
+class Direction(Enum):
+    UP = auto()
+    DOWN = auto()
+    LEFT = auto()
+    RIGHT = auto()
+    STOP = auto()
 
 
 class player(Object):
     speed = 1
     inventory: Dict[str, int]
 
-    def __init__(self, image: Image, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
+    def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
         super().__init__(image, pos, screen)
         self.window_size = window_size
 
@@ -40,3 +48,11 @@ class player(Object):
             math.trunc(self.pos.x/32),
             math.trunc(self.pos.y/32)
         )
+
+    def farm_plant(self):
+        tPos = self.get_tile_pos()
+        tile = tileMap[int(tPos.x)][int(tPos.y)]
+        if tile in Plants_type:
+            self.inventory[tile.name] += 1
+            self.inventory[f"{tile.name}_seed"] += 1
+            tileMap[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND

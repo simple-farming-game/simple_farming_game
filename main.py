@@ -1,20 +1,14 @@
-from lib.types.Image import Image
 import pygame
-# import webbrowser
-import lib.player as player
-import lib.keyinput as keyinput
-import lib.draw as draw
-import lib.fun as fun
-import lib.logger as logger
 import json
-# https://inspireman.tistory.com/16
 import os
-from tkinter import filedialog
-from tkinter import messagebox
-# https://mishuni.tistory.com/55
 import os
 import platform
-import socket
+
+import lib.player
+import lib.keyinput
+import lib.draw
+import lib.farm
+from lib.logger import logger
 # 로딩메시지
 var = "alpha 1.1.1/3"
 
@@ -32,7 +26,7 @@ print(f'''
 최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''', end="")
-logs = logger.logger()
+logs = logger()
 comInfo = {
     "core": os.cpu_count(),
     "os": platform.system(),
@@ -46,18 +40,12 @@ with open(f"data/lang/{setting['lang']}.json", 'r', encoding='utf8') as lang_fil
     lang = json.load(lang_file)
 
 
-# 함수
-
-
 running = True
-
-
-def stop():
-    running = False
 
 
 # 변수1
 # 1.1.1에서저장만들기 1.2에서 언어변경,클릭 인벤토리,오프닝,처음매뉴,디코접속버튼,모드,(노션db로 계정기능 추가), 농작물 추가
+
 
 pygame.init()
 window_size = (960, 640)
@@ -67,49 +55,41 @@ clock = pygame.time.Clock()
 SKYBLUE = pygame.Color(113, 199, 245)
 BLACK = pygame.Color(0, 0, 0)
 WHITE = pygame.Color(255, 255, 255)
-# 플래이어 변수
-playerImg = Image(pygame.image.load("assets/img/player.png"))
-playerPos = pygame.math.Vector2(900, 100)
-# 타일맵
-dirtImg = pygame.image.load("assets/img/dirt.png")
-farmlandImg = pygame.image.load("assets/img/farmland.png")
-farmRiceImg = pygame.image.load("assets/img/farm_rice_0.png")
 # 글씨
 lsFont = pygame.font.Font("assets/font/Galmuri.ttf", 20)
-# 이미지
-selectImg = [pygame.image.load("assets/img/rice_seed.png"), 1]
-# 좌표
-selectPos = [10, 60]
-# ...
-seedList = [3]
-webSiteBtnText = lsFont.render("SFG site!", True, WHITE)
 
 # 세팅
 pygame.display.set_caption(f"sfg {var}! - by newkini")
 pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
-playerClass = player.player(playerImg, playerPos, screen, window_size)
-riceClass = []
+players: list[lib.player.player] = [
+    lib.player.player(
+        pygame.image.load("assets/img/player.png"),
+        pygame.math.Vector2(900, 100),
+        screen, window_size)
+]
+
 if __name__ != "__main__":
     running = False
 # 게임와일
 while running:
     clock.tick(100)
 
-    playerTilePos = playerClass.get_tile_pos()
-    verText = lsFont.render(f"SFG {var}!  {lang['guid']}", True, WHITE)
+    playerTilePos = players[0].get_tile_pos()
+    # verText = lsFont.render(f"SFG {var}!  {lang['guid']}", True, WHITE)
     verTextOutline = lsFont.render(f"SFG {var}!  {lang['guid']}", True, BLACK)
     posText = lsFont.render(f"{playerTilePos}", True, WHITE)
     posTextOutline = lsFont.render(f"{playerTilePos}", True, BLACK)
     invText = lsFont.render(
-        f"inventory : {playerClass.inventory}", True, WHITE)
+        f"inventory : {players[0].inventory}", True, WHITE)
     invTextOutline = lsFont.render(
-        f"inventory : {playerClass.inventory}", True, BLACK)
+        f"inventory : {players[0].inventory}", True, BLACK)
 
     screen.fill(SKYBLUE)  # 화면 채우기
-    playerClass.move(keyinput.dir)
     growCount = 0
 
     # TODO
+    lib.keyinput.process()
+    lib.draw.process()
     # growCount = keyinput.key(selectImg, riceClass, farmRiceImg, screen, playerTilePos,
     #                          stop, fun.delRice, fun.riceSerci, playerClass, fun.reload, logs)
     # draw.draw(fun.reload, riceClass, playerClass, screen, growCount, playerImg, selectImg,
