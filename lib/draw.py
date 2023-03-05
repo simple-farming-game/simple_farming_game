@@ -1,12 +1,13 @@
 import pygame
 
+from lib.window import players
 from lib import farm
 from lib.plants import plants_list
-from .. import main
 
-images: dict[farm.Tiles, pygame.Surface] = {
-    farm.Tiles.DIRT: pygame.image.load("assets/img/dirt.png"),
-    farm.Tiles.FARMLAND: pygame.image.load("assets/img/farmland.png")
+
+ground_images: dict[farm.Tiles, pygame.Surface] = {
+    farm.Tiles.DIRT: pygame.image.load("assets/img/ground/dirt.png"),
+    farm.Tiles.FARMLAND: pygame.image.load("assets/img/ground/farmland.png")
 }
 
 
@@ -15,9 +16,9 @@ def draw_ground(screen: pygame.Surface):
     for line in farm.tileMap:
         for tile in line:
             if isinstance(tile, plants_list.plants_list):  # type: ignore
-                screen.blit(images[farm.Tiles.FARMLAND], tilePos)
+                screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
             elif tile in farm.Tiles:
-                screen.blit(images[tile], tilePos)  # type: ignore
+                screen.blit(ground_images[tile], tilePos)  # type: ignore
             tilePos.x += 32
         tilePos.y += 32
         tilePos.x = 0
@@ -31,7 +32,7 @@ def draw_plants():
 
 
 def draw_players():
-    for player in main.players:
+    for player in players:
         player.draw()
 
 
