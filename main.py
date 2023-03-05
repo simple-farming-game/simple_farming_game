@@ -10,7 +10,7 @@ import lib.draw
 import lib.farm
 from lib.logger import logger
 # 로딩메시지
-var = "alpha 1.1.1/3"
+version = ("alpha",2,0,0)
 
 print(f'''
                      _    ___       ___
@@ -22,7 +22,7 @@ print(f'''
 / ___|       |  ___|       / ___|
 \\___ \\       | |_         | |  _
  ___) |      |  _|        | |_| |
-|____/ imple |_|  arming  \\____|ame V. {var}
+|____/ imple |_|  arming  \\____|ame V. {version}
 최고의 게발섭! mng커뮤니티! https://discord.gg/mng
 loding...
 ''', end="")
@@ -59,7 +59,7 @@ WHITE = pygame.Color(255, 255, 255)
 lsFont = pygame.font.Font("assets/font/Galmuri.ttf", 20)
 
 # 세팅
-pygame.display.set_caption(f"sfg {var}! - by newkini")
+pygame.display.set_caption(f"sfg {version}! - by newkini")
 pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
 players: list[lib.player.player] = [
     lib.player.player(
@@ -76,7 +76,7 @@ while running:
 
     playerTilePos = players[0].get_tile_pos()
     # verText = lsFont.render(f"SFG {var}!  {lang['guid']}", True, WHITE)
-    verTextOutline = lsFont.render(f"SFG {var}!  {lang['guid']}", True, BLACK)
+    verTextOutline = lsFont.render(f"SFG {version}!  {lang['guid']}", True, BLACK)
     posText = lsFont.render(f"{playerTilePos}", True, WHITE)
     posTextOutline = lsFont.render(f"{playerTilePos}", True, BLACK)
     invText = lsFont.render(

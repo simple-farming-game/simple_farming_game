@@ -1,15 +1,16 @@
 import pygame
 import random
-from .plants_data import Plants
+
+from . import Plants
 
 
-class potato(Plants):
+class potato(Plants.Plants):
     name = "potato"
     growCount = 0
     age = 0
 
-    def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface) -> None:
-        super().__init__(image, pos, screen)
+    # def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface) -> None:
+    #     super().__init__(image, pos, screen)
 
     def grow(self, growCount):
         self.growCount += random.randint(0, growCount)

@@ -1,9 +1,10 @@
 import pygame
 import random
-from .plants_data import Plants
+
+from . import Plants
 
 
-class rice(Plants):
+class rice(Plants.Plants):
     name = "rice"
     growCount = 0
     age = 0

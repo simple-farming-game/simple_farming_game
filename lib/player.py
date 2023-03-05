@@ -3,8 +3,8 @@ import math
 from typing import Dict
 import pygame
 
-from lib.Object import Object
-from lib.farm import tileMap, Plants_type, Tiles
+from .Object import Object
+# from lib.farm import tileMap, Plants_type, Tiles
 
 
 class Direction(Enum):
@@ -17,7 +17,7 @@ class Direction(Enum):
 
 class player(Object):
     speed = 1
-    inventory: Dict[str, int]
+    inventory: Dict[str, int] = {}
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
         super().__init__(image, pos, screen)
