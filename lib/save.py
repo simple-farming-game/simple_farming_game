@@ -3,17 +3,17 @@ from typing import Tuple
 
 from lib import farm
 from lib import draw
-from lib import window
+from lib import runtime_values
 
 
 def write_save():
     with open("save.sfgsave", "w") as save:
         save.write(json.dumps({
-            "version": window.version,
+            "version": runtime_values.version,
             "tile": farm.tileMap,
-            "player_data": window.players
+            "player_data": runtime_values.players
         }))
-    window.logs.info("저장")
+    runtime_values.logs.info("저장")
 
 
 def import_save() -> bool:
@@ -23,32 +23,32 @@ def import_save() -> bool:
         with open("save.sfgsave", "r") as saveFile:
             saveData = json.load(saveFile)
     except:
-        window.logs.info("불러오기 실패: 파일 불러오기 실패.")
+        runtime_values.logs.info("불러오기 실패: 파일 불러오기 실패.")
         return False
 
     # check version
-    version: window.version_type
+    version: runtime_values.version_type
     try:
         version = saveData["version"]
     except KeyError:
         return import_legacy_save(("non", 0, 0, 0), saveData)
-    if window.version != version:
+    if runtime_values.version != version:
         return import_legacy_save(version, saveData)
 
     # alpha 2.0.0
     farm.tileMap = saveData["tile"]
-    window.players = saveData["player_data"]
+    runtime_values.players = saveData["player_data"]
     return True
 
 
 def import_legacy_save(version: Tuple[str, int, int, int], saveData) -> bool:
     if version == ("non", 0, 0, 0):
         # alpha 1.1.1
-        window.players[0].inventory = saveData["inv"]
+        runtime_values.players[0].inventory = saveData["inv"]
         farm.tileMap = saveData["tile"]
-        window.players[0].pos = saveData["pos"]
-        draw.draw_ground(window.screen)
-        window.logs.info("불러오기")
+        runtime_values.players[0].pos = saveData["pos"]
+        draw.draw_ground(runtime_values.screen)
+        runtime_values.logs.info("불러오기")
         return True
     else:
         return False

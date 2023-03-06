@@ -1,6 +1,6 @@
 import pygame
 
-from lib.window import players
+from lib.runtime_values import players
 from lib import farm
 from lib.plants import plants_list
 
@@ -19,9 +19,9 @@ def draw_ground(screen: pygame.Surface):
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
             elif tile in farm.Tiles:
                 screen.blit(ground_images[tile], tilePos)  # type: ignore
-            tilePos.x += 32
-        tilePos.y += 32
-        tilePos.x = 0
+            tilePos.y += 32
+        tilePos.x += 32
+        tilePos.y = 0
 
 
 def draw_plants():
@@ -37,6 +37,7 @@ def draw_players():
 
 
 def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: str, inside_color: pygame.Color, border_color: pygame.Color, border_size: float, positon: pygame.math.Vector2):
+    # logs.debug("twb")
     inside = font.render(text, True, inside_color)
     border = font.render(text, True, border_color)
 
