@@ -114,6 +114,7 @@ lsFont = pygame.font.Font("assets/font/Galmuri.ttf", 20)
 # 이미지
 selectImg = [pygame.image.load("assets/img/rice_seed.png"), 1]
 pygameIcon = pygame.image.load('assets/img/icon.png')
+cusImg = pygame.image.load('assets/img/mouseCus.png')
 # 좌표
 selectPos = [10, 60]
 # ...
@@ -124,6 +125,8 @@ webSiteBtnText=lsFont.render("SFG site!", True, WHITE)
 pygame.display.set_caption(f"sfg {var}! - by newkini")
 pygame.display.set_icon(pygameIcon)
 playerClass = player.player(playerPos, screen, hw)
+pygame.mouse.set_visible(False)
+
 riceClass = []
 if __name__ != "__main__":
     running=False
@@ -135,6 +138,7 @@ else:
 # 게임와일
 #webbrowser.open("https://newkini-dev.com/sfg")
 while running:
+    musPos = pygame.mouse.get_pos()
     clock.tick(100)
     
     playerTilePos = playerClass.playerTilePos
@@ -154,6 +158,7 @@ while running:
     fun.etcVar(growCount,selectPos,seedList)
     growCount = keyin.key(selectImg, riceClass, farmRiceImg, screen,playerTilePos, stop, fun.delRice, fun.riceSerci, playerClass,fun.reload,logs)
     draw.draw(fun.reload, riceClass,playerClass,screen,growCount,playerImg,selectImg,selectPos,verTextOutline,verText,posTextOutline,posText,invTextOutline,invText)
+    screen.blit(cusImg,musPos)
     pygame.display.update()  # 화면 업데이트
     playerClass.update(keyin.dir)
     # riceClass.update(playerClass.playerTilePos)
