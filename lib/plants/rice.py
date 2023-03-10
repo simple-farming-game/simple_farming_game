@@ -12,7 +12,7 @@ class rice(Plants.Plants):
     maxAge = 2
 
     def grow(self):
-        self.growCount += random.randint(0, 3)
+        self.growCount += random.randint(-3, 5)
         if (self.growCount < 10000) and (self.age):
             self.update_image(
                 pygame.image.load("assets/img/plants/rice/farm_0.png"))

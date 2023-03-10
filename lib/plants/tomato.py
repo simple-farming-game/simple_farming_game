@@ -12,7 +12,7 @@ class Tomato(Plants.Plants):
     maxAge = 2
 
     def grow(self):
-        self.growCount += random.randint(0, 1000)
+        self.growCount += random.randint(-3, 5)
         if (self.growCount < 10000) and (self.age):
             self.update_image(
                 pygame.image.load("assets/img/plants/tomato/farm_0.png"))
