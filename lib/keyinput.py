@@ -11,27 +11,31 @@ from lib import player
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     tile = farm.tileMap[x][y]
+    runtime_values.logs.info("using item")
+    runtime_values.logs.info(f"at  X:{x} Y:{y}")
     if runtime_values.players[0].handle_item in plants_list.plants_list:
         runtime_values.logs.info(
-            f"심기 : X:{x} Y:{y} 작물:{runtime_values.players[0].handle_item.name}")
-        runtime_values.players[0].plant_plant(runtime_values.screen)
-
+            f"Try to plant:{runtime_values.players[0].handle_item.name}")
+        if runtime_values.players[0].plant_plant(runtime_values.screen):
+            runtime_values.logs.info("success planting")
+        else:
+            runtime_values.logs.info("Fail planting")
     elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
         farm.tileMap[x][y] = farm.Tiles.FARMLAND
-        runtime_values.logs.info(f"경작 : X:{y} Y:{x}")
+        runtime_values.logs.info("Hoe")
 
     elif (runtime_values.players[0].handle_item == Items.SICKLE):
         if isinstance(tile, plants_list.plants_list):  # type: ignore
             runtime_values.players[0].farm_plant()
-            runtime_values.logs.info(f"캐기 : X:{x} Y:{y}")
+            runtime_values.logs.info(f"Sickle")
 
     elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ((tile == farm.Tiles.FARMLAND)):  # 삽
         farm.tileMap[x][y] = farm.Tiles.DIRT
-        runtime_values.logs.info(f"삽 : X:{x} Y:{y}")
+        runtime_values.logs.info(f"Shovel")
     elif runtime_values.players[0].handle_item == Items.NONE:
         pass
     else:
-        runtime_values.logs.info("사용 실패: 일치하는 아이템이 없습니다.")
+        runtime_values.logs.info("Fail to using")
 
 
 def process():
