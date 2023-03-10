@@ -31,6 +31,11 @@ class player(Object):
         super().__init__(image, pos, screen)
         self.window_size = window_size
 
+        # init inventory
+        for plant in plants_list.plants_list:
+            self.inventory[f"{plant.name}"] = 10
+            self.inventory[f"{plant.name}_seed"] = 10
+
     def move(self, direction: Direction):
         match direction:
             case Direction.LEFT:
@@ -79,13 +84,18 @@ class player(Object):
                 tileMap[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND
 
     def plant_plant(self, screen: pygame.Surface) -> bool:
-        if not isinstance(self.handle_item, plants_list.plants_list):  # type: ignore
+        tPos = self.get_tile_pos()
+
+        # check self
+        if not self.handle_item in plants_list.plants_list:
             return False
         if self.inventory[f"{self.handle_item.name}_seed"] == 0:
             return False
-        tPos = self.get_tile_pos()
-        if not tileMap[int(tPos.x)][int(tPos.y)] in Tiles:
+
+        # check farm empty
+        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
             return False
+
         self.inventory[f"{self.handle_item.name}_seed"] += -1
         tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore

@@ -11,11 +11,12 @@ from lib import player
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     tile = farm.tileMap[x][y]
-    if isinstance(
-            runtime_values.players[0].handle_item, plants_list.plants_list):  # type: ignore
+    if runtime_values.players[0].handle_item in plants_list.plants_list:
+        runtime_values.logs.info(
+            f"심기 : X:{x} Y:{y} 작물:{runtime_values.players[0].handle_item.name}")
         runtime_values.players[0].plant_plant(runtime_values.screen)
 
-    elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == 1):  # 경작
+    elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
         farm.tileMap[x][y] = farm.Tiles.FARMLAND
         runtime_values.logs.info(f"경작 : X:{y} Y:{x}")
 
@@ -27,9 +28,10 @@ def use():
     elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ((tile == farm.Tiles.FARMLAND)):  # 삽
         farm.tileMap[x][y] = farm.Tiles.DIRT
         runtime_values.logs.info(f"삽 : X:{x} Y:{y}")
-
+    elif runtime_values.players[0].handle_item == Items.NONE:
+        pass
     else:
-        runtime_values.logs.info("사용 실패: 일치하는 아이템이 없습니다.")  # 왜없을까요?
+        runtime_values.logs.info("사용 실패: 일치하는 아이템이 없습니다.")
 
 
 def process():
@@ -54,15 +56,13 @@ def process():
                 case pygame.K_z:  # 선택 해제
                     runtime_values.players[0].handle_item = Items.NONE
                 case pygame.K_r:  # 씨앗 선택
-                    runtime_values.logs.debug("key r")
-                    if isinstance(runtime_values.players[0].handle_item,
-                                  plants_list.plants_list):  # type: ignore
-                        runtime_values.logs.debug("isInstance")
-
-                        runtime_values.players[0].handle_item = plants_list.next_plant(
-                            runtime_values.players[0].handle_item)  # type: ignore
+                    if runtime_values.players[0].handle_item in plants_list.plants_list:
+                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
+                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                        else:
+                            runtime_values.players[0].handle_item = plants_list.next_plant(
+                                runtime_values.players[0].handle_item)
                     else:
-                        runtime_values.logs.debug("isNot")
                         runtime_values.players[0].handle_item = plants_list.plants_list[0]
                 case pygame.K_f:  # 괭이 선택
                     runtime_values.players[0].handle_item = Items.HOE
@@ -76,8 +76,11 @@ def process():
 
                 case pygame.K_SPACE:  # 달리기
                     runtime_values.players[0].speed = 2.5
-                case pygame.K_t:  lib.save.write_save()
-                case pygame.K_y: lib.save.import_save()
+
+                # TODO: 저장기능 제대로 구현할것.
+                # case pygame.K_t: lib.save.write_save()
+                # case pygame.K_y: lib.save.import_save()
+
                 # case pygame.K_0:  # TODO:cheat
                 #     if int(input("dev code\n")) == 20121029:
                 #         playerClass.speed = 3

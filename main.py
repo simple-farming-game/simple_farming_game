@@ -8,6 +8,7 @@ if __name__ == "__main__":
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
     from lib import draw
     from lib import keyinput
+    from lib import farm
 
     runtime_values.running = True
     runtime_values.my_dir = player.Direction.STOP
@@ -61,6 +62,8 @@ if __name__ == "__main__":
         draw.draw_players()
         keyinput.process()
         runtime_values.players[0].move(runtime_values.my_dir)
+
+        farm.grow_plants()
 
         pygame.display.update()  # 화면 업데이트
 
