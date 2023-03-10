@@ -36,20 +36,11 @@ def use():
 
 def process():
     for event in pygame.event.get():
+        moving(event)
         if event.type == pygame.QUIT:
             runtime_values.running = False
         if event.type == pygame.KEYDOWN:
             match event.key:
-                # group: moves
-                case pygame.K_LEFT:
-                    runtime_values.my_dir = player.Direction.LEFT
-                case pygame.K_RIGHT:
-                    runtime_values.my_dir = player.Direction.RIGHT
-                case pygame.K_UP:
-                    runtime_values.my_dir = player.Direction.UP
-                case pygame.K_DOWN:
-                    runtime_values.my_dir = player.Direction.DOWN
-
                 case pygame.K_d: use()
 
                 # group: change handle item
@@ -90,7 +81,68 @@ def process():
 
         if event.type == pygame.KEYUP:
             match event.key:
-                case pygame.K_UP | pygame.K_DOWN | pygame.K_LEFT | pygame.K_RIGHT:
-                    runtime_values.my_dir = player.Direction.STOP
                 case pygame.K_SPACE:
                     runtime_values.players[0].speed = 1
+
+
+def moving(event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN:
+        match event.key:
+            case pygame.K_LEFT:
+                if runtime_values.my_dir == player.Direction.STOP:
+                    runtime_values.my_dir = player.Direction.LEFT
+                if runtime_values.my_dir == player.Direction.UP:
+                    runtime_values.my_dir = player.Direction.UP_LEFT
+                if runtime_values.my_dir == player.Direction.DOWN:
+                    runtime_values.my_dir = player.Direction.DOWN_LEFT
+            case pygame.K_RIGHT:
+                if runtime_values.my_dir == player.Direction.STOP:
+                    runtime_values.my_dir = player.Direction.RIGHT
+                if runtime_values.my_dir == player.Direction.UP:
+                    runtime_values.my_dir = player.Direction.UP_RIGHT
+                if runtime_values.my_dir == player.Direction.DOWN:
+                    runtime_values.my_dir = player.Direction.DOWN_RIGHT
+            case pygame.K_UP:
+                if runtime_values.my_dir == player.Direction.STOP:
+                    runtime_values.my_dir = player.Direction.UP
+                if runtime_values.my_dir == player.Direction.LEFT:
+                    runtime_values.my_dir = player.Direction.UP_LEFT
+                if runtime_values.my_dir == player.Direction.RIGHT:
+                    runtime_values.my_dir = player.Direction.UP_RIGHT
+            case pygame.K_DOWN:
+                if runtime_values.my_dir == player.Direction.STOP:
+                    runtime_values.my_dir = player.Direction.DOWN
+                if runtime_values.my_dir == player.Direction.LEFT:
+                    runtime_values.my_dir = player.Direction.DOWN_LEFT
+                if runtime_values.my_dir == player.Direction.RIGHT:
+                    runtime_values.my_dir = player.Direction.DOWN_RIGHT
+    if event.type == pygame.KEYUP:
+        match event.key:
+            case pygame.K_LEFT:
+                if runtime_values.my_dir == player.Direction.LEFT:
+                    runtime_values.my_dir = player.Direction.STOP
+                if runtime_values.my_dir == player.Direction.UP_LEFT:
+                    runtime_values.my_dir = player.Direction.UP
+                if runtime_values.my_dir == player.Direction.DOWN_LEFT:
+                    runtime_values.my_dir = player.Direction.DOWN
+            case pygame.K_RIGHT:
+                if runtime_values.my_dir == player.Direction.RIGHT:
+                    runtime_values.my_dir = player.Direction.STOP
+                if runtime_values.my_dir == player.Direction.UP_RIGHT:
+                    runtime_values.my_dir = player.Direction.UP
+                if runtime_values.my_dir == player.Direction.DOWN_RIGHT:
+                    runtime_values.my_dir = player.Direction.DOWN
+            case pygame.K_UP:
+                if runtime_values.my_dir == player.Direction.UP:
+                    runtime_values.my_dir = player.Direction.STOP
+                if runtime_values.my_dir == player.Direction.UP_LEFT:
+                    runtime_values.my_dir = player.Direction.LEFT
+                if runtime_values.my_dir == player.Direction.UP_RIGHT:
+                    runtime_values.my_dir = player.Direction.RIGHT
+            case pygame.K_DOWN:
+                if runtime_values.my_dir == player.Direction.DOWN:
+                    runtime_values.my_dir = player.Direction.STOP
+                if runtime_values.my_dir == player.Direction.DOWN_LEFT:
+                    runtime_values.my_dir = player.Direction.LEFT
+                if runtime_values.my_dir == player.Direction.DOWN_RIGHT:
+                    runtime_values.my_dir = player.Direction.RIGHT
