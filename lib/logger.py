@@ -7,31 +7,31 @@ class logger:
         self.now = datetime.datetime.now()
         self.log = []
 
-    def custem(self, text):
+    def custem(self, text: str):
         self.log.append(f"{text}")
         print(self.log[len(self.log)-1])
 
-    def debug(self, text):
+    def debug(self, text: str):
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - DEBUG - {text}")
         print(self.log[len(self.log)-1])
 
-    def info(self, text):
+    def info(self, text: str):
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - INFO - {text}")
         print(self.log[len(self.log)-1])
 
-    def warning(self, text):
+    def warning(self, text: str):
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - WARNING - {text}")
         print(self.log[len(self.log)-1])
 
-    def error(self, text):
+    def error(self, text: str):
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - ERROR - {text}")
         print(self.log[len(self.log)-1])
 
-    def critical(self, text):
+    def critical(self, text: str):
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - CRITICAL - {text}")
         print(self.log[len(self.log)-1])
