@@ -57,7 +57,7 @@ if __name__ == "__main__":
         draw.draw_text_with_border(
             runtime_values.screen, font_renderer, str(runtime_values.players[0].inventory), WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
         draw.draw_text_with_border(
-            runtime_values.screen, font_renderer, str(runtime_values.players[0].handle_item), WHITE, BLACK, 2, pygame.math.Vector2(10, 70))
+            runtime_values.screen, font_renderer, runtime_values.lang["items"][runtime_values.players[0].handle_item.name], WHITE, BLACK, 2, pygame.math.Vector2(10, 70))
         draw.draw_plants()
         draw.draw_players()
         keyinput.process()
