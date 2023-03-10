@@ -1,111 +1,96 @@
-import lib.rice as rice
-import lib.farm as farm
-import lib.log as log
-import json
-import random
 import pygame
-dir = ""
 
-def key(selectImg, riceClass, farmRiceImg, screen, playerTilePos, stop, delrice, riceSerci, playerClass, reload,logs):
-    growCount = random.randint(0,5)
-    global dir
+import lib.save
+from lib.plants import plants_list
+from lib.items import Items
+from lib import runtime_values
+from lib import farm
+from lib import player
 
-    def key_d():
-        if (selectImg[1] == 1) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2) and (playerClass.inventory["riceSeed"] > 0):  # 심기
-            farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 3
-            riceClass.append(
-                rice.rice(farmRiceImg, screen, playerTilePos))
-            playerClass.inventory["riceSeed"] -= 1
-            logs.info(f"심기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
 
-        elif (selectImg[1] == 2) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 1):  # 경작
-            farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
-            logs.info(f"경작 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+def use():
+    x, y = map(int, runtime_values.players[0].get_tile_pos())
+    tile = farm.tileMap[x][y]
+    if runtime_values.players[0].handle_item in plants_list.plants_list:
+        runtime_values.logs.info(
+            f"심기 : X:{x} Y:{y} 작물:{runtime_values.players[0].handle_item.name}")
+        runtime_values.players[0].plant_plant(runtime_values.screen)
 
-        elif (selectImg[1] == 4) and (farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 3) and (riceSerci(playerTilePos[1], playerTilePos[0]).age == 2):  # 캐기
-            farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 2
-            delrice(playerTilePos[1], playerTilePos[0])
-            playerClass.inventory["riceSeed"] += random.randint(0, 4)
-            playerClass.inventory["rice"] += random.randint(0, 4)
-            logs.info(f"캐기 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+    elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
+        farm.tileMap[x][y] = farm.Tiles.FARMLAND
+        runtime_values.logs.info(f"경작 : X:{y} Y:{x}")
 
-        elif (selectImg[1] == 3) and ((farm.tileMap[playerTilePos[1]][playerTilePos[0]] == 2)): # 삽 
-            farm.tileMap[playerTilePos[1]][playerTilePos[0]] = 1
-            logs.info(f"삽 : X:{playerTilePos[1]} Y:{playerTilePos[0]}")
+    elif (runtime_values.players[0].handle_item == Items.SICKLE):
+        if isinstance(tile, plants_list.plants_list):  # type: ignore
+            runtime_values.players[0].farm_plant()
+            runtime_values.logs.info(f"캐기 : X:{x} Y:{y}")
 
-        else:
-            logs.info("실패")
-    def importSave():
-        try:
-            save = open("save.sfgsave","r")
-            saveData = json.load(save)
-            playerClass.inventory=saveData["inv"]
-            farm.tileMap=saveData["tile"]
-            playerClass.pos=saveData["pos"]
-            reload()
-            pos = [0, 0]
-            tilePos=[0,0]
-            for line in farm.tileMap:
-                for tile in line: 
-                    if tile == 3:
-                        riceClass.append(rice.rice(farmRiceImg, screen, tilePos))
-                    pos[0] += 32
-                    tilePos[0] += 1
-                pos[1] += 32
-                tilePos[1] += 1
-                pos[0] = 0
-                tilePos[0]=0
-            save.close()
-            logs.info("불러오기")
-        except:
-            logs.info("불러오기 실패")
+    elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ((tile == farm.Tiles.FARMLAND)):  # 삽
+        farm.tileMap[x][y] = farm.Tiles.DIRT
+        runtime_values.logs.info(f"삽 : X:{x} Y:{y}")
+    elif runtime_values.players[0].handle_item == Items.NONE:
+        pass
+    else:
+        runtime_values.logs.info("사용 실패: 일치하는 아이템이 없습니다.")
 
+
+def process():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            stop()  # 와일문 나가기
+            runtime_values.running = False
         if event.type == pygame.KEYDOWN:
             match event.key:
-                case pygame.K_LEFT: dir = "l"
-                case pygame.K_RIGHT: dir = "r"
-                case pygame.K_UP: dir = "u"
-                case pygame.K_DOWN: dir = "d"
-                case pygame.K_d: key_d()
+                # group: moves
+                case pygame.K_LEFT:
+                    runtime_values.my_dir = player.Direction.LEFT
+                case pygame.K_RIGHT:
+                    runtime_values.my_dir = player.Direction.RIGHT
+                case pygame.K_UP:
+                    runtime_values.my_dir = player.Direction.UP
+                case pygame.K_DOWN:
+                    runtime_values.my_dir = player.Direction.DOWN
+
+                case pygame.K_d: use()
+
+                # group: change handle item
                 case pygame.K_z:  # 선택 해제
-                    selectImg[0] = pygame.image.load("assets/img/none.png")
-                    selectImg[1] = 0
+                    runtime_values.players[0].handle_item = Items.NONE
                 case pygame.K_r:  # 씨앗 선택
-                    selectImg[0] = pygame.image.load("assets/img/rice_seed.png")
-                    selectImg[1] = 1
+                    if runtime_values.players[0].handle_item in plants_list.plants_list:
+                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
+                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                        else:
+                            runtime_values.players[0].handle_item = plants_list.next_plant(
+                                runtime_values.players[0].handle_item)
+                    else:
+                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
                 case pygame.K_f:  # 괭이 선택
-                    selectImg[0] = pygame.image.load("assets/img/hoe.png")
-                    selectImg[1] = 2
+                    runtime_values.players[0].handle_item = Items.HOE
                 case pygame.K_s:  # 삽 선택
-                    selectImg[0] = pygame.image.load("assets/img/shovel.png")
-                    selectImg[1] = 3
+                    runtime_values.players[0].handle_item = Items.SHOVEL
                 case pygame.K_e:  # 낫 선택
-                    selectImg[0] = pygame.image.load("assets/img/sickle.png")
-                    selectImg[1] = 4
-                case pygame.K_b:  # 낫 선택
-                    selectImg[0] = pygame.image.load("assets/img/rice.png")
-                    selectImg[1] = 5
-                case pygame.K_SPACE:  # 괭이 선택
-                    playerClass.speed=2.5
-                case pygame.K_t:
-                    save = open("save.sfgsave","w")
-                    save.write(json.dumps({"tile":farm.tileMap,"inv":playerClass.inventory,"pos":playerClass.pos}))
-                    save.close()
-                    logs.info("저장")
-                case pygame.K_y:importSave()
-                case pygame.K_0:
-                    if int(input("dev code\n")) == 20121029:
-                        playerClass.speed = 3
-                        playerClass.inventory = {"rice": 20121029, "riceSeed": 20121029, "gold": 20121029}
-                        growCount = 5000
+                    runtime_values.players[0].handle_item = Items.SICKLE
+                # case pygame.K_b:  #  TODO:수확물 선택
+                #     selectImg[0] = pygame.image.load("assets/img/rice.png")
+                #     selectImg[1] = 5
+
+                case pygame.K_SPACE:  # 달리기
+                    runtime_values.players[0].speed = 2.5
+
+                # TODO: 저장기능 제대로 구현할것.
+                # case pygame.K_t: lib.save.write_save()
+                # case pygame.K_y: lib.save.import_save()
+
+                # case pygame.K_0:  # TODO:cheat
+                #     if int(input("dev code\n")) == 20121029:
+                #         playerClass.speed = 3
+                #         playerClass.inventory = {
+                #             "rice": 20121029, "riceSeed": 20121029, "gold": 20121029}
+                #         growCount = 5000
 
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_UP | pygame.K_DOWN | pygame.K_LEFT | pygame.K_RIGHT:
-                    dir = ""
+                    runtime_values.my_dir = player.Direction.STOP
                 case pygame.K_SPACE:
-                    playerClass.speed = 1
-    return growCount
+                    runtime_values.players[0].speed = 1
