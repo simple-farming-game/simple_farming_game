@@ -1,19 +1,27 @@
 import pygame
+import json
 
 
 if __name__ == "__main__":
+    pygame.init()
+    # runtime values
     from lib import player
     from lib import runtime_values
     runtime_values.players = [player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
-    from lib import draw
-    from lib import keyinput
-    from lib import farm
-
+    with open("data/setting.json", 'r', encoding='utf8') as setting_file:
+        runtime_values.setting = json.load(setting_file)
+    with open(f"data/lang/{runtime_values.setting['lang']}.json", 'r', encoding='utf8') as lang_file:
+        runtime_values.lang = json.load(lang_file)
     runtime_values.running = True
     runtime_values.my_dir = player.Direction.STOP
     version = runtime_values.version
     version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
+
+    from lib import draw
+    from lib import keyinput
+    from lib import farm
+
     print(f'''
                         _    ___       ___
     _ __   _____      _| | _|_ _|_ __ |_ _|
