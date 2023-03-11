@@ -77,10 +77,10 @@ def process():
                 # case pygame.K_y: lib.save.import_save()
 
                 # case pygame.K_0:  # TODO:cheat
-                #     if int(input("dev code\n")) == 20121029:
+                #     if int(input("dev code\n")) == 100000:
                 #         playerClass.speed = 3
                 #         playerClass.inventory = {
-                #             "rice": 20121029, "riceSeed": 20121029, "gold": 20121029}
+                #             "rice": 100000, "riceSeed": 100000, "gold": 100000}
                 #         growCount = 5000
 
         if event.type == pygame.KEYUP:
