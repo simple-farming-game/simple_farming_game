@@ -31,3 +31,4 @@ running: bool
 
 players: list[player.player]
 my_dir: player.Direction
+fps: int = 60

@@ -23,7 +23,7 @@ class Direction(Enum):
 
 
 class player(Object):
-    speed: float = 1
+    speed: float = 3
     inventory: Dict[str, int] = {}
     handle_item: Union[plants_list.plants_type, Items] = Items.NONE
 
@@ -36,28 +36,28 @@ class player(Object):
             self.inventory[f"{plant.name}"] = 10
             self.inventory[f"{plant.name}_seed"] = 10
 
-    def move(self, direction: Direction):
+    def move(self, direction: Direction, frame):
         match direction:
             case Direction.LEFT:
-                self.pos.x += -self.speed
+                self.pos.x += -self.speed+frame
             case Direction.RIGHT:
-                self.pos.x += self.speed
+                self.pos.x += self.speed+frame
             case Direction.UP:
-                self.pos.y += -self.speed
+                self.pos.y += -self.speed+frame
             case Direction.DOWN:
-                self.pos.y += self.speed
+                self.pos.y += self.speed+frame
             case Direction.UP_LEFT:
-                self.pos.x += -self.speed
-                self.pos.y += -self.speed
+                self.pos.x += -self.speed+frame
+                self.pos.y += -self.speed+frame
             case Direction.UP_RIGHT:
-                self.pos.x += self.speed
-                self.pos.y += -self.speed
+                self.pos.x += self.speed+frame
+                self.pos.y += -self.speed+frame
             case Direction.DOWN_LEFT:
-                self.pos.x += -self.speed
-                self.pos.y += self.speed
+                self.pos.x += -self.speed+frame
+                self.pos.y += self.speed+frame
             case Direction.DOWN_RIGHT:
-                self.pos.x += self.speed
-                self.pos.y += self.speed
+                self.pos.x += self.speed+frame
+                self.pos.y += self.speed+frame
 
         if self.pos.x >= self.window_size[0]-32:
             self.pos.x = self.window_size[0]-33

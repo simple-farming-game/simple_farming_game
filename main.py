@@ -53,7 +53,8 @@ if __name__ == "__main__":
     # 게임와일
     runtime_values.logs.info("Finish Loading")
     while runtime_values.running:
-        runtime_values.clock.tick(100)
+        df = runtime_values.clock.tick(runtime_values.fps) / 1000
+        runtime_values.clock.tick(runtime_values.fps)
         runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
 
         draw.draw_ground(runtime_values.screen)
@@ -69,7 +70,7 @@ if __name__ == "__main__":
         draw.draw_plants()
         draw.draw_players()
         keyinput.process()
-        runtime_values.players[0].move(runtime_values.my_dir)
+        runtime_values.players[0].move(runtime_values.my_dir, df)
 
         farm.grow_plants()
 

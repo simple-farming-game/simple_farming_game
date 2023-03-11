@@ -70,7 +70,7 @@ def process():
                 #     selectImg[1] = 5
 
                 case pygame.K_SPACE:  # 달리기
-                    runtime_values.players[0].speed = 2.5
+                    runtime_values.players[0].speed = 4.5
 
                 # TODO: 저장기능 제대로 구현할것.
                 # case pygame.K_t: lib.save.write_save()
@@ -86,7 +86,7 @@ def process():
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_SPACE:
-                    runtime_values.players[0].speed = 1
+                    runtime_values.players[0].speed = 3
 
 
 def moving(event: pygame.event.Event):
