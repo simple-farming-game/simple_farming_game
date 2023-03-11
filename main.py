@@ -8,14 +8,19 @@ if __name__ == "__main__":
     from lib import player
     from lib import runtime_values
     from lib import imgs
+
     runtime_values.players = [player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
-    with open("data/setting.json", 'r', encoding='utf8') as setting_file:
+    
+    with open("data/setting.json", 'r', encoding='utf8') as setting_file: # 셋팅파일 열기
         runtime_values.setting = json.load(setting_file)
-    with open(f"data/lang/{runtime_values.setting['lang']}.json", 'r', encoding='utf8') as lang_file:
+    with open(f"data/lang/{runtime_values.setting['lang']}.json", 'r', encoding='utf8') as lang_file: # 언어파일 열기
         runtime_values.lang = json.load(lang_file)
+        
     runtime_values.running = True
     runtime_values.my_dir = player.Direction.STOP
+
+    # 버전변수
     version = runtime_values.version
     version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
 
@@ -39,14 +44,16 @@ if __name__ == "__main__":
     최고의 게발섭! mng커뮤니티! https://discord.gg/mng
     ''', end="")
     runtime_values.logs.info("Start Loading")
-
+    
+    # 변수
     # colors
     SKYBLUE = pygame.Color(113, 199, 245)
     BLACK = pygame.Color(0, 0, 0)
     WHITE = pygame.Color(255, 255, 255)
-
+    # 폰트
     font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
-
+    
+    # 세팅
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
