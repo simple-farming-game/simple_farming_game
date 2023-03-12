@@ -30,7 +30,6 @@ $ pyinstaller main.py
 -   `SPACE`: 달리기
 -   `Z`: 선택 해제
 -   `D`: 선택 항목 사용
--   `G`: 선택한 식물의 정보확인
 
 ## TODO
 
