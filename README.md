@@ -1,13 +1,13 @@
 # 농사 게임
 
-마인크래프트의 농사를 2d로 만든게임입니다.
+모든걸 농사짓자!
 
 ## 설치
 
 ```console
 $ git clone https://github.com/newkincode/simple_farming_game.git
 $ cd simple_farming_game
-$ (pip) install -r Pipfile
+$ pip install pygame
 
 $ python main.py
 ```

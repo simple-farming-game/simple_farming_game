@@ -40,7 +40,6 @@ if __name__ == "__main__":
     |____/ imple |_|  arming  \\____|ame
     
     V. {version_text}
-    최고의 게발섭! mng커뮤니티! https://discord.gg/mng
     ''', end="")
     runtime_values.logs.info("Start Loading")
     
@@ -70,16 +69,16 @@ if __name__ == "__main__":
         # 그외
         draw.draw_plants() # 식물
         draw.draw_players() # 플래이어
-        runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
         # 글시
         draw.draw_text_with_border( # 버전명
             runtime_values.screen, font_renderer, f"SFG {version_text}!  {runtime_values.lang['guid']}", WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
         draw.draw_text_with_border( # 좌표
-            runtime_values.screen, font_renderer, str(runtime_values.players[0].get_tile_pos()), WHITE, BLACK, 2, pygame.math.Vector2(850, 60))
+            runtime_values.screen, font_renderer, str(runtime_values.players[0].get_tile_pos()), WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
         draw.draw_text_with_border( # 인벤토리
             runtime_values.screen, font_renderer, "inventory : "+str(runtime_values.players[0].inventory), WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
         draw.draw_text_with_border( # 셀렉트 아이템
-            runtime_values.screen, font_renderer, "select : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name], WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+            runtime_values.screen, font_renderer, "select : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name], WHITE, BLACK, 2, pygame.math.Vector2(10, 70))
+        runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
         # 처리
         keyinput.process()
