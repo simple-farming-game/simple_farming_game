@@ -50,11 +50,16 @@ if __name__ == "__main__":
     WHITE = pygame.Color(255, 255, 255)
     # 폰트
     font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
-    
+    # 노래
+    musics: dict[str,pygame.mixer.Sound]={
+        "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3")
+    }
+
     # 세팅
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
+    musics["sfg"].play(-1)
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
