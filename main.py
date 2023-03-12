@@ -1,7 +1,6 @@
 import pygame
 import json
 
-
 if __name__ == "__main__":
     pygame.init()
     # runtime values

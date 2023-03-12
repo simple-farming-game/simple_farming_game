@@ -11,7 +11,6 @@ plants_type = Union[
 ]
 plants_list = cast(tuple[plants_type], get_args(plants_type))
 
-
 def next_plant(plant: plants_type) -> plants_type:
     now_index: int
     for index, item in enumerate(plants_list):
