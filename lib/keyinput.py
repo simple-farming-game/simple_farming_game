@@ -89,11 +89,6 @@ def process():
                         pygame.mouse.set_visible(True)
                         iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
-                case pygame.K_ESCAPE:  # 아이템 정보보기
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
-                    pygame.mouse.set_visible(False)
 
         if event.type == pygame.KEYUP:
             match event.key:
