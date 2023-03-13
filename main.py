@@ -91,4 +91,5 @@ if __name__ == "__main__":
 
     runtime_values.logs.info("quit")
     runtime_values.logs.save()
+    musics["sfg"].stop()
     pygame.quit()

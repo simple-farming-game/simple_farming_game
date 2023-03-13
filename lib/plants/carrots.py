@@ -4,7 +4,7 @@ import random
 from . import Plants
 
 
-class carrots(Plants.Plants):
+class Carrots(Plants.Plants):
     name = "carrots"
     price = 15
     growCount = 0

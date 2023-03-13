@@ -3,11 +3,13 @@ from typing import Union, get_args, cast
 from . import rice
 from . import tomato
 from . import sunFlower
+from . import carrots
 
 plants_type = Union[
-    rice.rice,
+    rice.Rice,
     tomato.Tomato,
-    sunFlower.SunFlower
+    sunFlower.SunFlower,
+    carrots.Carrots
 ]
 plants_list = cast(tuple[plants_type], get_args(plants_type))
 
