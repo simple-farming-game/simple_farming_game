@@ -22,5 +22,5 @@ class SunFlower(Plants.Plants):
             self.age = 1
         if (self.growCount >= 25000) and (self.age == 1):
             self.update_image(
-                pygame.image.load("assets/img/plants/tomato/farm_2.png"))
+                pygame.image.load(f"assets/img/plants/{self.name}/farm_2.png"))
             self.age = 2

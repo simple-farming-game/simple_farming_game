@@ -4,8 +4,8 @@ import random
 from . import Plants
 
 
-class Tomato(Plants.Plants):
-    name = "tomato"
+class carrots(Plants.Plants):
+    name = "carrots"
     price = 15
     growCount = 0
     age = 0
