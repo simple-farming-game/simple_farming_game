@@ -6,7 +6,6 @@ from lib.items import Items
 from lib import runtime_values
 from lib import farm
 from lib import player
-from lib import iteminfo
 
 
 def use():
@@ -78,17 +77,11 @@ def process():
                 # case pygame.K_y: lib.save.import_save()
 
                 # case pygame.K_0:  # TODO:cheat
-                #     if int(input("dev code\n")) == 100000:
+                #     if int(input("dev code\n")) == 20121029:
                 #         playerClass.speed = 3
                 #         playerClass.inventory = {
-                #             "rice": 100000, "riceSeed": 100000, "gold": 100000}
+                #             "rice": 20121029, "riceSeed": 20121029, "gold": 20121029}
                 #         growCount = 5000
-
-                case pygame.K_g:  # 아이템 정보보기
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
-                    pygame.mouse.set_visible(False)
 
         if event.type == pygame.KEYUP:
             match event.key:

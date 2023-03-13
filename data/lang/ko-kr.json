@@ -10,9 +10,6 @@
     "SICKLE": "낫",
     "rice": "쌀",
     "tomato": "토마토",
-    "sunFlower": "해바라기",
     "NONE": "없음"
-  },
-  "count" : "겟수",
-  "name" : "이름"
+  }
 }

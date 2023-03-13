@@ -1,6 +1,7 @@
 import pygame
 import json
 
+
 if __name__ == "__main__":
     pygame.init()
     # runtime values
@@ -33,13 +34,14 @@ if __name__ == "__main__":
     | '_ \\ / _ \\ \\ /\\ / / |/ /| || '_ \\ | |
     | | | |  __/\\ V  V /|   < | || | | || |
     |_| |_|\\___| \\_/\\_/ |_|\\_\\___|_| |_|___| Games
-     ____         _____         ____
+    ____         _____         ____
     / ___|       |  ___|       / ___|
     \\___ \\       | |_         | |  _
-     ___) |      | _|         | |_| |
-    |____/ imple |_|  arming   \\____|ame
+    ___) |      |  _|        | |_| |
+    |____/ imple |_|  arming  \\____|ame
     
     V. {version_text}
+    최고의 게발섭! mng커뮤니티! https://discord.gg/mng
     ''', end="")
     runtime_values.logs.info("Start Loading")
     
@@ -50,16 +52,11 @@ if __name__ == "__main__":
     WHITE = pygame.Color(255, 255, 255)
     # 폰트
     font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
-    # 노래
-    musics: dict[str,pygame.mixer.Sound]={
-        "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3")
-    }
-
+    
     # 세팅
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
-    musics["sfg"].play(-1)
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
@@ -71,16 +68,18 @@ if __name__ == "__main__":
         # 화면
         runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
         draw.draw_ground(runtime_values.screen)
-        # 그외
-        draw.draw_plants() # 식물
-        draw.draw_players() # 플래이어
         # 글시
         draw.draw_text_with_border( # 버전명
             runtime_values.screen, font_renderer, f"SFG {version_text}!  {runtime_values.lang['guid']}", WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
         draw.draw_text_with_border( # 좌표
             runtime_values.screen, font_renderer, str(runtime_values.players[0].get_tile_pos()), WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
+        draw.draw_text_with_border( # 인벤토리
+            runtime_values.screen, font_renderer, "inventory : "+str(runtime_values.players[0].inventory), WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
         draw.draw_text_with_border( # 셀렉트 아이템
-            runtime_values.screen, font_renderer, "select : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name], WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
+            runtime_values.screen, font_renderer, "select : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name], WHITE, BLACK, 2, pygame.math.Vector2(10, 70))
+        # 그외
+        draw.draw_plants() # 식물
+        draw.draw_players() # 플래이어
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
         # 처리

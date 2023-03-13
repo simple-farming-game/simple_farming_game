@@ -2,14 +2,13 @@ from typing import Union, get_args, cast
 
 from . import rice
 from . import tomato
-from . import sunFlower
 
 plants_type = Union[
     rice.rice,
-    tomato.Tomato,
-    sunFlower.SunFlower
+    tomato.Tomato
 ]
 plants_list = cast(tuple[plants_type], get_args(plants_type))
+
 
 def next_plant(plant: plants_type) -> plants_type:
     now_index: int

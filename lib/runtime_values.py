@@ -8,7 +8,7 @@ from lib.logger import logger
 from lib import player
 
 version_type = Tuple[str, int, int, int]
-version: version_type = ("devalpha", 2, 0, 4)
+version: version_type = ("alpha", 2, 0, 2)
 
 comInfo = {
     "core": os.cpu_count(),
