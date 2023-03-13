@@ -1,0 +1,21 @@
+{
+    "guid": "newkini-dev.com",
+    "fail": {
+      "save": "failed: a problem occurred",
+      "d": "failed: file not found"
+    },
+    "items": {
+      "HOE" : "hoe",
+      "SHOVEL": "shovel",
+      "SICKLE": "sickle",
+      "rice": "rice",
+      "tomato": "tomato",
+      "sunFlower": "sunflower",
+      "carrots": "carrots",
+      "NONE": "none"
+    },
+    "count" : "get number",
+    "name" : "name",
+    "select" : "select"
+}
+
