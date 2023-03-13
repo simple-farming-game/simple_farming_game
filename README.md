@@ -43,4 +43,4 @@ $ pyinstaller main.py
 -   [newkincode](https://github.com/newkincode) - 메인테이너
 -   [ky0422](https://github.com/ky0422) - `README.md` 작성, 그 외 버그 수정
 -   [kdh8219](https://github.com/kdh8219) - 코드 리팩터링, 첫번째 관심자
--   [2gisgit](https://github.com/2gisgit) - 코드 주석
+-   [2gisgit](https://github.com/2gisgit) - 코드 리팩터링, 첫번째 관심자
