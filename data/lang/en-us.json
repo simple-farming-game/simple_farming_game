@@ -12,7 +12,8 @@
       "tomato": "tomato",
       "sunFlower": "sunflower",
       "carrots": "carrots",
-      "NONE": "none"
+      "NONE": "none",
+      "WATER": "watering can"
     },
     "count" : "get number",
     "name" : "name",
