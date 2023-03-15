@@ -5,4 +5,4 @@ imgs: dict[str, pygame.Surface] = {
 }
 
 def img(imgName):
-    return imgs[imgName]
+    return imgs[imgName] # type: ignore

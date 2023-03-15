@@ -7,6 +7,7 @@ import lib.plants.plants_list as plants_list
 class Tiles(Enum):
     DIRT = auto()
     FARMLAND = auto()
+    WATER_FARMLAND = auto()
 
 
 tileMap: List[List[Union[Tiles, plants_list.plants_type]]] = [

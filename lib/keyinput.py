@@ -14,6 +14,7 @@ def use():
     tile = farm.tileMap[x][y]
     runtime_values.logs.info("using item")
     runtime_values.logs.info(f"at  X:{x} Y:{y}")
+
     if runtime_values.players[0].handle_item in plants_list.plants_list:
         runtime_values.logs.info(
             f"Try to plant:{runtime_values.players[0].handle_item.name}")
@@ -21,11 +22,12 @@ def use():
             runtime_values.logs.info("success planting")
         else:
             runtime_values.logs.info("Fail planting")
+            
     elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
         farm.tileMap[x][y] = farm.Tiles.FARMLAND
         runtime_values.logs.info("Hoe")
 
-    elif (runtime_values.players[0].handle_item == Items.SICKLE):
+    elif (runtime_values.players[0].handle_item == Items.SICKLE): # 낫
         if isinstance(tile, plants_list.plants_list):  # type: ignore
             runtime_values.players[0].farm_plant()
             runtime_values.logs.info(f"Sickle")
@@ -38,6 +40,9 @@ def use():
     else:
         runtime_values.logs.info("Fail to using")
 
+    if (runtime_values.players[0].handle_item == Items.WATER) and (tile == farm.Tiles.FARMLAND):  # 경작
+        farm.tileMap[x][y] = farm.Tiles.WATER_FARMLAND
+        runtime_values.logs.info("Warter")
 
 def process():
     for event in pygame.event.get():
@@ -66,6 +71,8 @@ def process():
                     runtime_values.players[0].handle_item = Items.SHOVEL
                 case pygame.K_e:  # 낫 선택
                     runtime_values.players[0].handle_item = Items.SICKLE
+                case pygame.K_w:  # 낫 선택
+                    runtime_values.players[0].handle_item = Items.WATER
                 # case pygame.K_b:  #  TODO:수확물 선택
                 #     selectImg[0] = pygame.image.load("assets/img/rice.png")
                 #     selectImg[1] = 5

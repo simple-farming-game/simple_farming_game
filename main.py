@@ -28,8 +28,8 @@ if __name__ == "__main__":
     from lib import farm
 
     print(f'''
-                        _    ___       ___
-    _ __   _____      _| | _|_ _|_ __ |_ _|
+                         _    ___       ___
+     _ __   _____      _| | _|_ _|_ __ |_ _|
     | '_ \\ / _ \\ \\ /\\ / / |/ /| || '_ \\ | |
     | | | |  __/\\ V  V /|   < | || | | || |
     |_| |_|\\___| \\_/\\_/ |_|\\_\\___|_| |_|___| Games
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
-    if runtime_values.setting["musicStart"] == True:
+    if runtime_values.setting["musicStart"]:
         musics["sfg"].play(-1)
 
     # 게임와일

@@ -7,7 +7,8 @@ from lib.plants import plants_list
 
 ground_images: dict[farm.Tiles, pygame.Surface] = {
     farm.Tiles.DIRT: pygame.image.load("assets/img/ground/dirt.png"),
-    farm.Tiles.FARMLAND: pygame.image.load("assets/img/ground/farmland.png")
+    farm.Tiles.FARMLAND: pygame.image.load("assets/img/ground/farmland.png")#,
+    #farm.Tiles.WATER_FARMLAND: pygame.image.load("assets/img/ground/water_farmland.png")
 }
 
 
@@ -29,7 +30,6 @@ def draw_plants():
         for tile in line:
             if isinstance(tile, plants_list.plants_list):  # type: ignore
                 tile.draw()  # type: ignore
-
 
 def draw_players():
     for player in players:
