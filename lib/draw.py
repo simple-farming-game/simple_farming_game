@@ -7,8 +7,8 @@ from lib.plants import plants_list
 
 ground_images: dict[farm.Tiles, pygame.Surface] = {
     farm.Tiles.DIRT: pygame.image.load("assets/img/ground/dirt.png"),
-    farm.Tiles.FARMLAND: pygame.image.load("assets/img/ground/farmland.png")#,
-    #farm.Tiles.WATER_FARMLAND: pygame.image.load("assets/img/ground/water_farmland.png")
+    farm.Tiles.FARMLAND: pygame.image.load("assets/img/ground/farmland.png"),
+    farm.Tiles.WATER_FARMLAND: pygame.image.load("assets/img/ground/water_farmland.png")
 }
 
 
@@ -16,8 +16,10 @@ def draw_ground(screen: pygame.Surface):
     tilePos = pygame.math.Vector2(0, 0)
     for line in farm.tileMap:
         for tile in line:
-            if isinstance(tile, plants_list.plants_list):  # type: ignore
+            if isinstance(tile, plants_list.plants_list) and not tile.water:  # type: ignore
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
+            elif isinstance(tile, plants_list.plants_list) and tile.water:  # type: ignore
+                screen.blit(ground_images[farm.Tiles.WATER_FARMLAND], tilePos)
             elif tile in farm.Tiles:
                 screen.blit(ground_images[tile], tilePos)  # type: ignore
             tilePos.y += 32
@@ -28,6 +30,8 @@ def draw_ground(screen: pygame.Surface):
 def draw_plants():
     for line in farm.tileMap:
         for tile in line:
+            if isinstance(tile, plants_list.plants_list):  # type: ignore
+                tile.draw()  # type: ignore
             if isinstance(tile, plants_list.plants_list):  # type: ignore
                 tile.draw()  # type: ignore
 

@@ -37,12 +37,13 @@ def use():
         runtime_values.logs.info(f"Shovel")
     elif runtime_values.players[0].handle_item == Items.NONE:
         pass
+
+    elif (runtime_values.players[0].handle_item == Items.WATER) and (isinstance(tile, plants_list.plants_list)):  # 경작 # type: ignore
+        farm.tileMap[x][y].water = True # type: ignore
+        runtime_values.logs.info("Warter")
+
     else:
         runtime_values.logs.info("Fail to using")
-
-    if (runtime_values.players[0].handle_item == Items.WATER) and (tile == farm.Tiles.FARMLAND):  # 경작
-        farm.tileMap[x][y] = farm.Tiles.WATER_FARMLAND
-        runtime_values.logs.info("Warter")
 
 def process():
     for event in pygame.event.get():
