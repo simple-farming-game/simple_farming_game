@@ -1,2 +1,2 @@
-pip uninstall pyinstaller
+pip install pyinstaller
 pyinstaller main.py
