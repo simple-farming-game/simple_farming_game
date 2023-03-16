@@ -8,6 +8,8 @@ class Plants(Object):
     price: int
     age: int
     maxAge: int
+    water: bool
+    rotCount: int
 
     def __init__(self, pos: pygame.math.Vector2, screen: pygame.Surface) -> None:
         image = pygame.image.load(f"assets/img/plants/{self.name}/farm_0.png")

@@ -19,3 +19,14 @@ def grow_plants():
         for tile in line:
             if isinstance(tile, plants_list.plants_list):  # type: ignore
                 tile.grow()  # type: ignore
+
+def rot_plants():
+    tilePos = [0,0]
+    for line in tileMap:
+        for tile in line:
+            if isinstance(tile, plants_list.plants_list):  # type: ignore
+                if tile.rot(): # type: ignore
+                    tileMap[tilePos[0]][tilePos[1]] = Tiles.FARMLAND
+                tilePos[1] += 1
+        tilePos[0] += 1
+        tilePos[1] = 0

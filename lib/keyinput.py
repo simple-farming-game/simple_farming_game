@@ -44,7 +44,7 @@ def use():
 
     elif (runtime_values.players[0].handle_item == Items.VITAMIN) and (isinstance(tile, plants_list.plants_list)):  # 경작 # type: ignore
         if farm.tileMap[x][y].water and runtime_values.players[0].inventory["VITAMIN"] > 0: # type: ignore
-            farm.tileMap[x][y].growCount += random.randint(1000,2000) # type: ignore
+            farm.tileMap[x][y].growCount += random.randint(500,1000) # type: ignore
             runtime_values.players[0].inventory["VITAMIN"] -= 1
         else:runtime_values.logs.info("Fail to using")
         runtime_values.logs.info("Vitamin")
@@ -53,6 +53,7 @@ def use():
         runtime_values.logs.info("Fail to using")
 
 def process():
+    x, y = map(int, runtime_values.players[0].get_tile_pos())
     for event in pygame.event.get():
         moving(event)
         if event.type == pygame.QUIT:
@@ -112,6 +113,8 @@ def process():
                         pygame.mouse.set_visible(True)
                         iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
+                case pygame.K_0:
+                    print(farm.tileMap[x][y])
 
         if event.type == pygame.KEYUP:
             match event.key:

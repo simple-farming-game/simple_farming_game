@@ -88,6 +88,7 @@ if __name__ == "__main__":
         keyinput.process()
         runtime_values.players[0].move(runtime_values.my_dir, df)
         farm.grow_plants()
+        farm.rot_plants()
         pygame.display.update()  # 화면 업데이트
 
     runtime_values.logs.info("quit")
