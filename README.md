@@ -30,6 +30,9 @@ $ pyinstaller main.py
 -   `SPACE`: 달리기
 -   `Z`: 선택 해제
 -   `D`: 선택 항목 사용
+-   `G`: 아이템 정보
+-   `W`: 물뿌리게
+-   `V`: 비타민
 
 ## TODO
 
