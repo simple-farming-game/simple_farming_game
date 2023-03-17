@@ -15,7 +15,7 @@ class SunFlower(Plants.Plants):
 
     def grow(self):
         if self.water:
-            self.growCount += random.randint(-3, 5)
+            self.growCount += random.randint(0, 10)
             if (self.growCount < 10000) and (self.age):
                 self.update_image(
                     pygame.image.load(f"assets/img/plants/{self.name}/farm_0.png"))
