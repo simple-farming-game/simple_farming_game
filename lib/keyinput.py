@@ -87,10 +87,7 @@ def process():
                     runtime_values.players[0].handle_item = Items.VITAMIN
 
                 case pygame.K_a:  # 판매
-                    if isinstance(runtime_values.players[0], plants_list.plants_list):  # type: ignore
-                        sell.sell(runtime_values.players[0].handle_item) # type: ignore
-                    else:
-                        runtime_values.logs.info("handle item is not plants")
+                    sell.sell(runtime_values.players[0].handle_item) # type: ignore
 
                 # case pygame.K_b:  #  TODO:수확물 선택
                 #     selectImg[0] = pygame.image.load("assets/img/rice.png")
@@ -122,6 +119,8 @@ def process():
                     pygame.mouse.set_visible(False)
                 case pygame.K_0:
                     runtime_values.logs.debug(farm.tileMap[x][y])
+                case pygame.K_1:
+                    runtime_values.logs.debug(runtime_values.players[0].handle_item)
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_SPACE:
