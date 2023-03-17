@@ -1,5 +1,5 @@
 {
-    "guid": "newkini-dev.com",
+    "guid": "h:help",
     "fail": {
       "save": "failed: a problem occurred",
       "d": "failed: file not found"

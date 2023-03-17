@@ -8,6 +8,7 @@ from lib import farm
 from lib import player
 from lib import iteminfo
 from lib import sell
+from lib import help
 import random
 
 def use():
@@ -121,6 +122,8 @@ def process():
                     runtime_values.logs.debug(farm.tileMap[x][y])
                 case pygame.K_1:
                     runtime_values.logs.debug(runtime_values.players[0].handle_item)
+                case pygame.K_h:
+                    help.help()
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_SPACE:
