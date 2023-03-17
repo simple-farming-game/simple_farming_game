@@ -7,6 +7,7 @@ from lib import runtime_values
 from lib import farm
 from lib import player
 from lib import iteminfo
+from lib import sell
 import random
 
 def use():
@@ -85,6 +86,12 @@ def process():
                 case pygame.K_v:  # 비타민
                     runtime_values.players[0].handle_item = Items.VITAMIN
 
+                case pygame.K_a:  # 판매
+                    if isinstance(runtime_values.players[0], plants_list.plants_list):  # type: ignore
+                        sell.sell(runtime_values.players[0].handle_item) # type: ignore
+                    else:
+                        runtime_values.logs.info("handle item is not plants")
+
                 # case pygame.K_b:  #  TODO:수확물 선택
                 #     selectImg[0] = pygame.image.load("assets/img/rice.png")
                 #     selectImg[1] = 5
@@ -114,8 +121,7 @@ def process():
                         iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
                 case pygame.K_0:
-                    print(farm.tileMap[x][y])
-
+                    runtime_values.logs.debug(farm.tileMap[x][y])
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_SPACE:

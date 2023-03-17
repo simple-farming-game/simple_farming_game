@@ -26,7 +26,8 @@ def rot_plants(runtime_values):
             if isinstance(tile, plants_list.plants_list):  # type: ignore
                 if tile.rot(): # type: ignore
                     tileMap[tilePos[0]][tilePos[1]] = Tiles.FARMLAND
-                    runtime_values.logs.info(f"rot plant: {tile.name} pos: {tilePos}")
+                    runtime_values.logs.info(f"rot plant: {tile.name}")
+                    runtime_values.logs.info(f"pos: {tilePos}")
             tilePos[1] +=1
         tilePos[0] += 1
         tilePos[1] = 0

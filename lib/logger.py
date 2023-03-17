@@ -7,36 +7,36 @@ class logger:
         self.now = datetime.datetime.now()
         self.log = []
 
-    def custem(self, text: str):
+    def custem(self, text):
         self.now = datetime.datetime.now()
         self.log.append(f"{text}")
         print(self.log[len(self.log)-1])
 
-    def debug(self, text: str):
+    def debug(self, text):
         self.now = datetime.datetime.now()
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - DEBUG - {text}")
         print(self.log[len(self.log)-1])
 
-    def info(self, text: str):
+    def info(self, text):
         self.now = datetime.datetime.now()
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - INFO - {text}")
         print(self.log[len(self.log)-1])
 
-    def warning(self, text: str):
+    def warning(self, text):
         self.now = datetime.datetime.now()
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - WARNING - {text}")
         print(self.log[len(self.log)-1])
 
-    def error(self, text: str):
+    def error(self, text):
         self.now = datetime.datetime.now()
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - ERROR - {text}")
         print(self.log[len(self.log)-1])
 
-    def critical(self, text: str):
+    def critical(self, text):
         self.now = datetime.datetime.now()
         self.log.append(
             f"{self.now.strftime('%Y-%m-%d %H-%M-%S')} - CRITICAL - {text}")
