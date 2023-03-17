@@ -11,6 +11,7 @@ class Tomato(Plants.Plants):
     age = 0
     maxAge = 2
     water = False
+    rotCount = 0
 
     def grow(self):
         if self.water:
@@ -28,3 +29,9 @@ class Tomato(Plants.Plants):
                     pygame.image.load(f"assets/img/plants/{self.name}/farm_2.png"))
                 self.age += 1
                 self.water = False
+
+    def rot(self):
+        if self.rotCount >= 5000:
+            return True
+        if self.water == False:
+            self.rotCount += random.randint(0, 5)
