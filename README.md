@@ -14,11 +14,10 @@ $ python main.py
 
 ## 빌드
 
-pyinstaller라이브러리가 필요합니다.
-
 ```console
-$ pyinstaller main.py
+> ./build.bat
 ```
+이후 lib폴더와 assets 폴더를 build폴더 안 main폴더에 넣어줍니다(복사 붙여넣기)
 
 ## 조작법
 
