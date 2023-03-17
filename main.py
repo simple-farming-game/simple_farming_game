@@ -84,8 +84,7 @@ if __name__ == "__main__":
         draw.draw_text_with_border( # 셀렉트 아이템
             runtime_values.screen, font_renderer, runtime_values.lang["select"]+" : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name],
              WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
-        if runtime_values.players[0].handle_item in plants_list.plants_list: # type: ignore
-            print(runtime_values.players[0].handle_item)
+        if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item.name == "VITAMIN": # type: ignore
             draw.draw_text_with_border( # 아이템 겟수
                 runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])+
                 " seed : "+str({runtime_values.players[0].inventory[f"{runtime_values.players[0].handle_item.name}_seed"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
