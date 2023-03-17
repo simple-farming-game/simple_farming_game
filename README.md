@@ -17,7 +17,7 @@ $ python main.py
 ```console
 > ./build.bat
 ```
-이후 lib폴더와 assets 폴더를 build폴더 안 main폴더에 넣어줍니다(복사 붙여넣기)
+이후 lib폴더와 assets 폴더와 data폴더를 build폴더 안 main폴더에 넣어줍니다(복사 붙여넣기)
 
 ## 조작법
 
