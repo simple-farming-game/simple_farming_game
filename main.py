@@ -1,6 +1,7 @@
 import pygame
 import json
-def game():
+
+if __name__ == "__main__":
     pygame.init()
     # runtime values
     from lib import player
@@ -10,7 +11,7 @@ def game():
 
     runtime_values.players = [player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
-
+    
     with open("data/setting.json", 'r', encoding='utf8') as setting_file: # 셋팅파일 열기
         runtime_values.setting = json.load(setting_file)
     with open(f"data/lang/{runtime_values.setting['lang']}.json", 'r', encoding='utf8') as lang_file: # 언어파일 열기
@@ -28,21 +29,21 @@ def game():
     from lib import farm
 
     print(f'''
-                            _    ___       ___
-        _ __   _____      _| | _|_ _|_ __ |_ _|
+                         _    ___       ___
+     _ __   _____      _| | _|_ _|_ __ |_ _|
     | '_ \\ / _ \\ \\ /\\ / / |/ /| || '_ \\ | |
     | | | |  __/\\ V  V /|   < | || | | || |
     |_| |_|\\___| \\_/\\_/ |_|\\_\\___|_| |_|___| Games
-        ____         _____         ____
+     ____         _____         ____
     / ___|       |  ___|       / ___|
     \\___ \\       | |_         | |  _
-        ___) |      | _|         | |_| |
+     ___) |      | _|         | |_| |
     |____/ imple |_|  arming   \\____|ame
-
+    
     V. {version_text}
     ''', end="")
     runtime_values.logs.info("Start Loading")
-
+    
     # 변수
     # colors
     SKYBLUE = pygame.Color(113, 199, 245)
@@ -82,7 +83,7 @@ def game():
             runtime_values.screen, font_renderer, str(runtime_values.players[0].get_tile_pos()), WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
         draw.draw_text_with_border( # 셀렉트 아이템
             runtime_values.screen, font_renderer, runtime_values.lang["select"]+" : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name],
-                WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
+             WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
         if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item.name == "VITAMIN": # type: ignore
             draw.draw_text_with_border( # 아이템 겟수
                 runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])+
