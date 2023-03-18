@@ -1,6 +1,6 @@
 import pygame
 
-import lib.save
+from lib import save
 from lib.plants import plants_list
 from lib.items import Items
 from lib import runtime_values
@@ -9,50 +9,60 @@ from lib import player
 from lib import iteminfo
 from lib import sell
 from lib import help
+from lib import logger
 import random
+
 
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
-    tile = farm.tileMap[x][y]
-    runtime_values.logs.info("using item")
-    runtime_values.logs.info(f"at  X:{x} Y:{y}")
+    tile = farm.tile_map[x][y]
+    logger.log_info("using item")
+    logger.log_info(f"at  X:{x} Y:{y}")
 
     if runtime_values.players[0].handle_item in plants_list.plants_list:
-        runtime_values.logs.info(
+        logger.log_info(
             f"Try to plant:{runtime_values.players[0].handle_item.name}")
         if runtime_values.players[0].plant_plant(runtime_values.screen):
-            runtime_values.logs.info("success planting")
+            logger.log_info("success planting")
         else:
-            runtime_values.logs.info("Fail planting")
-            
-    elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
-        farm.tileMap[x][y] = farm.Tiles.FARMLAND
-        runtime_values.logs.info("Hoe")
+            logger.log_info("Fail planting")
 
-    elif (runtime_values.players[0].handle_item == Items.SICKLE): # 낫
+    elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
+        farm.tile_map[x][y] = farm.Tiles.FARMLAND
+        logger.log_info("Hoe")
+
+    elif (runtime_values.players[0].handle_item == Items.SICKLE):  # 낫
         if isinstance(tile, plants_list.plants_list):  # type: ignore
             runtime_values.players[0].farm_plant()
-            runtime_values.logs.info(f"Sickle")
+            logger.log_info(f"Sickle")
 
     elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ((tile == farm.Tiles.FARMLAND)):  # 삽
-        farm.tileMap[x][y] = farm.Tiles.DIRT
-        runtime_values.logs.info(f"Shovel")
+        farm.tile_map[x][y] = farm.Tiles.DIRT
+        logger.log_info(f"Shovel")
     elif runtime_values.players[0].handle_item == Items.NONE:
         pass
 
-    elif (runtime_values.players[0].handle_item == Items.WATER) and (isinstance(tile, plants_list.plants_list)):  # 경작 # type: ignore
-        farm.tileMap[x][y].water = True # type: ignore
-        runtime_values.logs.info("Warter")
+    elif (runtime_values.players[0].handle_item == Items.WATER):  # 물
+        if isinstance(tile, plants_list.plants_list):  # type: ignore
+            farm.tile_map[x][y].watered = True  # type: ignore
+            logger.log_info("Warter")
 
-    elif (runtime_values.players[0].handle_item == Items.VITAMIN) and (isinstance(tile, plants_list.plants_list)):  # 경작 # type: ignore
-        if farm.tileMap[x][y].water and runtime_values.players[0].inventory["VITAMIN"] > 0: # type: ignore
-            farm.tileMap[x][y].growCount += random.randint(500,1000) # type: ignore
+    elif (runtime_values.players[0].handle_item == Items.VITAMIN):  # 비타민
+        logger.log_info("Vitamin")
+        if not isinstance(tile, plants_list.plants_list):  # type: ignore
+            logger.log_info("Fail to using: tile is not a plant")
+        elif not farm.tile_map[x][y].watered:  # type: ignore
+            logger.log_info("Fail to using: plant is not watered")
+        elif runtime_values.players[0].inventory["VITAMIN"] > 0:
+            farm.tile_map[x][y].growCount += random.randint(  # type: ignore
+                500, 1000)
             runtime_values.players[0].inventory["VITAMIN"] -= 1
-        else:runtime_values.logs.info("Fail to using")
-        runtime_values.logs.info("Vitamin")
+        else:
+            logger.log_info("Fail to using: Unhandled")
 
     else:
-        runtime_values.logs.info("Fail to using")
+        logger.log_info("Fail to using: Unhandled")
+
 
 def process():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
@@ -88,9 +98,11 @@ def process():
                     runtime_values.players[0].handle_item = Items.VITAMIN
 
                 case pygame.K_a:  # 판매
-                    sell.sell(runtime_values.players[0].handle_item) # type: ignore
+                    # type: ignore
+                    sell.sell(runtime_values.players[0].handle_item)
                 case pygame.K_b:  # 구매
-                    sell.buy(runtime_values.players[0].handle_item) # type: ignore
+                    # type: ignore
+                    sell.buy(runtime_values.players[0].handle_item)
 
                 # case pygame.K_b:  #  TODO:수확물 선택
                 #     selectImg[0] = pygame.image.load("assets/img/rice.png")
@@ -99,9 +111,8 @@ def process():
                 case pygame.K_SPACE:  # 달리기
                     runtime_values.players[0].speed = 4.5
 
-                # TODO: 저장기능 제대로 구현할것.
-                # case pygame.K_t: lib.save.write_save()
-                # case pygame.K_y: lib.save.import_save()
+                case pygame.K_t: save.write_save()
+                case pygame.K_y: save.import_save(runtime_values.screen)
 
                 # case pygame.K_0:  # TODO:cheat
                 #     if int(input("dev code\n")) == 100000:
@@ -113,17 +124,15 @@ def process():
                 case pygame.K_g:  # 아이템 정보보기
                     if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item == Items.VITAMIN:
                         pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
+                        iteminfo.info(
+                            runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
                 case pygame.K_ESCAPE:  # 메뉴
                     if runtime_values.players[0].handle_item in plants_list.plants_list:
                         pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
+                        iteminfo.info(
+                            runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
-                case pygame.K_0:
-                    runtime_values.logs.debug(farm.tileMap[x][y])
-                case pygame.K_1:
-                    runtime_values.logs.debug(runtime_values.players[0].handle_item)
                 case pygame.K_h:
                     help.help()
         if event.type == pygame.KEYUP:
