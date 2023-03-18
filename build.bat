@@ -1,2 +1,2 @@
 pip install pyinstaller
-pyinstaller main.py
+pyinstaller run.py
