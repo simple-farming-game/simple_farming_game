@@ -18,7 +18,7 @@ if __name__ == "__main__":
         runtime_values.lang = json.load(lang_file)
         
     runtime_values.running = True
-    runtime_values.my_dir = player.Direction.STOP
+    runtime_values.my_dir = player.Direction.STOP #
 
     # 버전변수
     version = runtime_values.version
