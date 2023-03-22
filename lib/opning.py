@@ -1,0 +1,2 @@
+def opning():
+    print("opning")
