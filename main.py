@@ -87,12 +87,12 @@ if __name__ == "__main__":
         if runtime_values.players[0].handle_item in plants_list.plants_list: # type: ignore
             draw.draw_text_with_border( # 아이템 겟수
                 runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])+
-                " seed : "+str({runtime_values.players[0].inventory[f"{runtime_values.players[0].handle_item.name}_seed"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+                " "+runtime_values.lang["seed"]+" : "+str({runtime_values.players[0].inventory[f"{runtime_values.players[0].handle_item.name}_seed"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
         if runtime_values.players[0].handle_item.name == "VITAMIN":
             draw.draw_text_with_border( # 아이템 겟수
                 runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name]), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
         draw.draw_text_with_border( # 좌표
-            runtime_values.screen, font_renderer, "gold : "+str({runtime_values.players[0].inventory["gold"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
+            runtime_values.screen, font_renderer, runtime_values.lang["gold"]+" : "+str({runtime_values.players[0].inventory["gold"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 

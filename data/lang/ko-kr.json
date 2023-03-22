@@ -18,5 +18,7 @@
   },
   "count" : "겟수",
   "name" : "이름",
-  "select" : "선택"
+  "select" : "선택",
+  "seed" : "씨앗",
+  "gold" : "돈"
 }
