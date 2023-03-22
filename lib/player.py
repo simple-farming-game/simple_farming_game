@@ -4,9 +4,9 @@ from typing import Dict, Union
 import pygame
 import random
 
-from lib.object import Object
+from lib.Object import Object
 from lib.plants import plants_list
-from lib.farm import tile_map, Tiles
+from lib.farm import tileMap, Tiles
 from lib.items import Items
 
 
@@ -22,7 +22,7 @@ class Direction(Enum):
     DOWN_RIGHT = auto()
 
 
-class Player(Object):
+class player(Object):
     speed: float = 3
     inventory: Dict[str, int] = {}
     handle_item: Union[plants_list.plants_type, Items] = Items.NONE
@@ -36,6 +36,7 @@ class Player(Object):
             self.inventory[f"{plant.name}"] = 10
             self.inventory[f"{plant.name}_seed"] = 10
         self.inventory["VITAMIN"] = 10
+        self.inventory["VITAMIN_seed"] = -527
         self.inventory["gold"] = 0
 
     def move(self, direction: Direction, frame):
@@ -78,12 +79,12 @@ class Player(Object):
 
     def farm_plant(self):
         tPos = self.get_tile_pos()
-        tile = tile_map[int(tPos.x)][int(tPos.y)]
+        tile = tileMap[int(tPos.x)][int(tPos.y)]
         if isinstance(tile, plants_list.plants_list):  # type: ignore
             if tile.maxAge == tile.age:  # type: ignore
                 self.inventory[tile.name] += random.randint(0, 4)
                 self.inventory[f"{tile.name}_seed"] += 1
-                tile_map[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND
+                tileMap[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND
 
     def plant_plant(self, screen: pygame.Surface) -> bool:
         tPos = self.get_tile_pos()
@@ -95,11 +96,11 @@ class Player(Object):
             return False
 
         # check farm empty
-        if not tile_map[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
+        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
             return False
 
         self.inventory[f"{self.handle_item.name}_seed"] += -1
-        tile_map[int(tPos.x)][int(tPos.y)] = self.handle_item(
+        tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore
         return True
 
