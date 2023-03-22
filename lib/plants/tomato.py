@@ -31,7 +31,7 @@ class Tomato(Plants.Plants):
                 self.water = False
 
     def rot(self):
-        if self.rotCount >= 5000:
+        if self.rotCount >= 10000:
             return True
         if self.water == False:
             self.rotCount += random.randint(0, 5)
