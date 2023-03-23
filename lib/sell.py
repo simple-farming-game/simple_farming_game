@@ -10,7 +10,7 @@ def buy(plant):
     if runtime_values.players[0].handle_item in plants_list.plants_list:
         if runtime_values.players[0].inventory["gold"] > plants_list.plants_list[plants_list.plants_list.index(plant)].price+5:
             runtime_values.players[0].inventory["gold"] -= plants_list.plants_list[plants_list.plants_list.index(plant)].price+5
-            runtime_values.players[0].inventory[f"{plants_list.plants_list[plants_list.plants_list.index(plant)].name}"] += 1
+            runtime_values.players[0].inventory[f"{plants_list.plants_list[plants_list.plants_list.index(plant)].name}_seed"] += 1
     if runtime_values.players[0].handle_item.name == "VITAMIN":
         if runtime_values.players[0].inventory["gold"] > 15:
             runtime_values.players[0].inventory["gold"] -= 15
