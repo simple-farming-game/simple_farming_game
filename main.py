@@ -78,21 +78,36 @@ if __name__ == "__main__":
         draw.draw_players() # 플래이어
         # 글시
         draw.draw_text_with_border( # 버전명
-            runtime_values.screen, font_renderer, f"SFG {version_text}!  {runtime_values.lang['guid']}", WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
+            runtime_values.screen, font_renderer,
+            f"SFG {version_text}!  {runtime_values.lang['guid']}",
+            WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
+        
         draw.draw_text_with_border( # 좌표
-            runtime_values.screen, font_renderer, str(runtime_values.players[0].get_tile_pos()), WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
+            runtime_values.screen, font_renderer,
+            str(runtime_values.players[0].get_tile_pos()),
+            WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
+        
         draw.draw_text_with_border( # 셀렉트 아이템
-            runtime_values.screen, font_renderer, runtime_values.lang["select"]+" : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name],
-             WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
+            runtime_values.screen, font_renderer,
+            f"{runtime_values.lang['select']} : {runtime_values.lang['items'][runtime_values.players[0].handle_item.name]}",
+            WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
+        
         if runtime_values.players[0].handle_item in plants_list.plants_list: # type: ignore
             draw.draw_text_with_border( # 아이템 겟수
-                runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])+
-                " "+runtime_values.lang["seed"]+" : "+str({runtime_values.players[0].inventory[f"{runtime_values.players[0].handle_item.name}_seed"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+                runtime_values.screen, font_renderer,
+                f"{runtime_values.lang['count']} : {str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])} {runtime_values.lang['seed']} : {runtime_values.players[0].inventory[f'{runtime_values.players[0].handle_item.name}_seed']}",
+                WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+            
         if runtime_values.players[0].handle_item.name == "VITAMIN":
-            draw.draw_text_with_border( # 아이템 겟수
-                runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name]), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+            draw.draw_text_with_border( # 비타민 겟수
+                runtime_values.screen, font_renderer,
+                f"{runtime_values.lang['count']} : {runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name]}",
+                WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+            
         draw.draw_text_with_border( # 좌표
-            runtime_values.screen, font_renderer, runtime_values.lang["gold"]+" : "+str({runtime_values.players[0].inventory["gold"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
+            runtime_values.screen, font_renderer,
+            f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
+            WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 

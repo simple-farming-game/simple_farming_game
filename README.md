@@ -44,9 +44,8 @@ $ python main.py
 -   [ ] 스크롤로 아이템 바꾸기
 -   [ ] 클릭 인벤토리
 -   [ ] 씨앗을 살수있게하기
--   [x] 비타민은 씨앗 표시 안되게 하기
 -   [x] 완벽한 한국어
--   [ ] draw_text_with_border 모두 f스트링으로 처리
+-   [x] draw_text_with_border 모두 f스트링으로 처리
 
 ## 기여자
 
