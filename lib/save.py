@@ -9,9 +9,9 @@ from lib import runtime_values
 def write_save():
     with open("save.sfgsave", "w") as save:
         save.write(json.dumps({
-            "version": runtime_values.version,
-            "tile": farm.tileMap,
-            "player_data": runtime_values.players
+            "version": "runtime_values.version",
+            "tile": "farm.tileMap",
+            "player_data": "runtime_values.players"
         }))
     runtime_values.logs.info("저장")
 
@@ -44,6 +44,9 @@ def import_save() -> bool:
 def import_legacy_save(version: Tuple[str, int, int, int], saveData) -> bool:
     if version == ("non", 0, 0, 0):
         # alpha 1.1.1
+        exec("%s = %d" % (saveData["inv"],saveData["inv"]))
+        exec("%s = %d" % (saveData["tile"],saveData["tile"]))
+        exec("%s = %d" % (saveData["pos"],saveData["pos"]))
         runtime_values.players[0].inventory = saveData["inv"]
         farm.tileMap = saveData["tile"]
         runtime_values.players[0].pos = saveData["pos"]
