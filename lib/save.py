@@ -33,7 +33,7 @@ def import_save() -> bool:
     print(runtime_values.version != version)
 
     # alpha 2.0.0
-    farm.tileMap = saveData["tile"]
+    farm.tileMap = json.loads(saveData["tile"])
     saveData["player_pos"] = json.loads(saveData["player_pos"])
     print(saveData["player_pos"])
     runtime_values.players[0].pos.x = saveData["player_pos"][0]
