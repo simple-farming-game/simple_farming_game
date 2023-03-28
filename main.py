@@ -68,7 +68,7 @@ if __name__ == "__main__":
     while runtime_values.running:
         musPos: tuple = pygame.mouse.get_pos()
         df = runtime_values.clock.tick(runtime_values.fps) / 1000
-        runtime_values.clock.tick(runtime_values.fps)
+        runtime_values.clock.tick(runtime_values.fps) #
         # 그리기
         # 화면
         runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
