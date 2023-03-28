@@ -11,7 +11,7 @@ def write_save():
         save.write(json.dumps({
             "version": f"{runtime_values.version}",
             "tile": f"{farm.tileMap}",
-            "player_data": f"{runtime_values.players}"
+            "player_pos": f"{runtime_values.players[0].pos}"
         }))
     runtime_values.logs.info("저장")
 
@@ -34,7 +34,10 @@ def import_save() -> bool:
 
     # alpha 2.0.0
     farm.tileMap = saveData["tile"]
-    runtime_values.players = saveData["player_data"]
+    saveData["player_pos"] = json.loads(saveData["player_pos"])
+    print(saveData["player_pos"])
+    runtime_values.players[0].pos.x = saveData["player_pos"][0]
+    runtime_values.players[0].pos.y = saveData["player_pos"][1]
     runtime_values.logs.info("성공!")
     return True
 
