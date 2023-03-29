@@ -6,13 +6,20 @@ from lib import draw
 from lib import runtime_values
 
 
+
 def write_save():
     with open("save.sfgsave", "w") as save:
-        save.write(json.dumps({
-            "version": f"{runtime_values.version}",
-            "tile": f"{farm.tileMap}",
-            "player_pos": f"{runtime_values.players[0].pos}"
-        }))
+        data = {
+            "version": runtime_values.version,
+            "tile": list(),
+            "player_pos": runtime_values.players[0].pos
+        }
+        data["tile"] = []
+        for i in farm.tileMap:
+            for j in range(len(i)):
+                print(i[j].name)
+                data["tile"].append(i[j].name)
+        save.write(json.dumps(data))
     runtime_values.logs.info("저장")
 
 
@@ -20,8 +27,10 @@ def import_save() -> bool:
     # import save
     saveData = {}
     try:
-        with open("save.sfgsave", "r") as saveFile:
-            saveData = json.load(saveFile)
+        saveFile = open("save.sfgsave", "r", encoding='utf-8-sig')
+        saveData = json.load(saveFile)
+        saveFile.close()
+        del saveFile
             
     except:
         runtime_values.logs.info("불러오기 실패: 파일 불러오기 실패.")
@@ -31,14 +40,16 @@ def import_save() -> bool:
     version: runtime_values.version_type
     version =  tuple(saveData["version"])
     print(runtime_values.version != version)
-
     # alpha 2.0.0
-    farm.tileMap = json.loads(saveData["tile"])
+    saveData["tile"] = []
+    for i in saveData["tile"]:
+        saveData["tile"].append(list(map(lambda x: farm.Tiles[x], saveData["tile"][i])))
     saveData["player_pos"] = json.loads(saveData["player_pos"])
     print(saveData["player_pos"])
     runtime_values.players[0].pos.x = saveData["player_pos"][0]
     runtime_values.players[0].pos.y = saveData["player_pos"][1]
     runtime_values.logs.info("성공!")
+    del saveData
     return True
 
 
