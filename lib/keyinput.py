@@ -99,8 +99,9 @@ def process():
                 case pygame.K_SPACE:  # 달리기
                     runtime_values.players[0].speed = 4.5
 
-                case pygame.K_t: lib.save.write_save()
-                case pygame.K_y: print(lib.save.import_save())
+                # TODO: 저장기능 제대로 구현할것.
+                # case pygame.K_t: lib.save.write_save()
+                # case pygame.K_y: lib.save.import_save()
 
                 # case pygame.K_0:  # TODO:cheat
                 #     if int(input("dev code\n")) == 100000:

@@ -11,21 +11,11 @@ from lib.plants import plants_list
 
 def write_save():
     with open("save.sfgsave", "w") as save:
-        data = {
+        save.write(json.dumps({
             "version": runtime_values.version,
-            "tile": list(),
-            "player_pos_x": runtime_values.players[0].pos.x,
-            "player_pos_y": runtime_values.players[0].pos.y
-        }
-        data["tile"] = []
-        count = 0
-        for i in farm.tileMap:
-            data["tile"].append(list())
-            for j in range(len(i)):
-                print(i[j].name)
-                data["tile"][count].append(i[j].name)
-            count += 1
-        save.write(json.dumps(data))
+            "tile": farm.tileMap,
+            "player_data": runtime_values.players
+        }))
     runtime_values.logs.info("저장")
 
 
