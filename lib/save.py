@@ -12,13 +12,14 @@ def write_save():
         data = {
             "version": runtime_values.version,
             "tile": list(),
-            "player_pos": runtime_values.players[0].pos
+            "player_pos": [runtime_values.players[0].pos.x, runtime_values.players[0].pos.y]
         }
         data["tile"] = []
         for i in farm.tileMap:
             for j in range(len(i)):
                 print(i[j].name)
                 data["tile"].append(i[j].name)
+        print(data)
         save.write(json.dumps(data))
     runtime_values.logs.info("저장")
 
