@@ -16,10 +16,13 @@ def write_save():
             "player_pos_y": runtime_values.players[0].pos.y
         }
         data["tile"] = []
+        count = 0
         for i in farm.tileMap:
+            data["tile"].append(list())
             for j in range(len(i)):
                 print(i[j].name)
-                data["tile"].append(i[j].name)
+                data["tile"][count].append(i[j].name)
+            count += 1
         print(data)
         save.write(json.dumps(data))
     runtime_values.logs.info("저장")
@@ -31,6 +34,7 @@ def import_save() -> bool:
     try:
         saveFile = open("save.sfgsave", "r", encoding='utf-8-sig')
         saveData = json.load(saveFile)
+        print(saveData)
         saveFile.close()
         del saveFile
             
@@ -43,9 +47,19 @@ def import_save() -> bool:
     version =  tuple(saveData["version"])
     print(runtime_values.version != version)
     # alpha 2.0.0
-    saveData["tile"] = []
+    farm.tileMap = []
+    count = 0
+    print(saveData["tile"])
     for i in saveData["tile"]:
-        saveData["tile"].append(list(map(lambda x: farm.Tiles[x], saveData["tile"][i])))
+        farm.tileMap.append(list())
+        print(getattr(farm.Tiles, i))
+        for t in i:
+            for j in t:
+                print(j)
+                farm.tileMap[count].append(getattr(farm.Tiles, j))
+            
+        count += 1
+            
     runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
     runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
     runtime_values.logs.info("불러오기")
