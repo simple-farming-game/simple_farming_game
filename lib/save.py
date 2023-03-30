@@ -46,8 +46,8 @@ def import_save() -> bool:
     saveData["tile"] = []
     for i in saveData["tile"]:
         saveData["tile"].append(list(map(lambda x: farm.Tiles[x], saveData["tile"][i])))
-    runtime_values.players[0].pos.x = int(saveData["player_pos_x"][0])
-    runtime_values.players[0].pos.y = int(saveData["player_pos_y"][1])
+    runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
+    runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
     runtime_values.logs.info("불러오기")
     del saveData
     return True
