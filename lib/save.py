@@ -45,7 +45,7 @@ def import_save() -> bool:
     saveData["tile"] = []
     for i in saveData["tile"]:
         saveData["tile"].append(list(map(lambda x: farm.Tiles[x], saveData["tile"][i])))
-    saveData["player_pos"] = json.loads(saveData["player_pos"])
+    saveData["player_pos"] = json.load(saveData["player_pos"])
     print(saveData["player_pos"])
     runtime_values.players[0].pos.x = saveData["player_pos"][0]
     runtime_values.players[0].pos.y = saveData["player_pos"][1]
