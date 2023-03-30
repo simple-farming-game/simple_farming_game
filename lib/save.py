@@ -23,7 +23,6 @@ def write_save():
                 print(i[j].name)
                 data["tile"][count].append(i[j].name)
             count += 1
-        print(data)
         save.write(json.dumps(data))
     runtime_values.logs.info("저장")
 
@@ -34,7 +33,6 @@ def import_save() -> bool:
     try:
         saveFile = open("save.sfgsave", "r", encoding='utf-8-sig')
         saveData = json.load(saveFile)
-        print(saveData)
         saveFile.close()
         del saveFile
             
@@ -45,18 +43,14 @@ def import_save() -> bool:
     # check version
     version: runtime_values.version_type
     version =  tuple(saveData["version"])
-    print(runtime_values.version != version)
     # alpha 2.0.0
     farm.tileMap = []
     count = 0
-    print(saveData["tile"])
     for i in saveData["tile"]:
         farm.tileMap.append(list())
-        print(getattr(farm.Tiles, i))
-        for t in i:
-            for j in t:
-                print(j)
-                farm.tileMap[count].append(getattr(farm.Tiles, j))
+        for j in i:
+            runtime_values.logs.info(f"import Tile : {j}")
+            farm.tileMap[count].append(getattr(farm.Tiles, j))
             
         count += 1
             
