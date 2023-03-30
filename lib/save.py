@@ -22,7 +22,6 @@ def write_save():
         for i in farm.tileMap:
             data["tile"].append(list())
             for j in range(len(i)):
-                print(i[j].name)
                 data["tile"][count].append(i[j].name)
             count += 1
         save.write(json.dumps(data))
@@ -53,7 +52,7 @@ def import_save() -> bool:
         farm.tileMap.append(list())
         for j in i:
             try:
-                #runtime_values.logs.info(f"import Tile : {j}")
+                runtime_values.logs.info(f"import Tile : {j}")
                 farm.tileMap[count].append(getattr(farm.Tiles, j))
             except:
                 for pl in plants_list.plants_list:
