@@ -48,20 +48,24 @@ def import_save() -> bool:
     # alpha 2.0.0
     farm.tileMap = []
     count = 0
+    tempPos = [0,0]
     for i in saveData["tile"]:
         farm.tileMap.append(list())
         for j in i:
             try:
-                runtime_values.logs.info(f"import Tile : {j}")
+                #runtime_values.logs.info(f"import Tile : {j}")
                 farm.tileMap[count].append(getattr(farm.Tiles, j))
             except:
                 for pl in plants_list.plants_list:
                     if pl.name == j:
                         farm.tileMap[count].append(pl)
-                        farm.tileMap[count][-1] = pl(pygame.math.Vector2(farm.tileMap[count].index(pl)*32,count*32), runtime_values.screen) # type: ignore
-                        print(farm.tileMap[count])
-            
-        count += 1
+                        farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
+                        print(tempPos)
+            tempPos[1]+=1
+        count += 1           
+        tempPos[1]=0
+        tempPos[0]+=1
+        
             
     runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
     runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
