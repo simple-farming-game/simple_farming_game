@@ -1,9 +1,11 @@
 import json
 from typing import Tuple
+import pygame
 
 from lib import farm
 from lib import draw
 from lib import runtime_values
+from lib.plants import plants_list
 
 
 
@@ -49,8 +51,15 @@ def import_save() -> bool:
     for i in saveData["tile"]:
         farm.tileMap.append(list())
         for j in i:
-            runtime_values.logs.info(f"import Tile : {j}")
-            farm.tileMap[count].append(getattr(farm.Tiles, j))
+            try:
+                runtime_values.logs.info(f"import Tile : {j}")
+                farm.tileMap[count].append(getattr(farm.Tiles, j))
+            except:
+                for pl in plants_list.plants_list:
+                    if pl.name == j:
+                        farm.tileMap[count].append(pl)
+                        farm.tileMap[count][-1] = pl(pygame.math.Vector2(farm.tileMap[count].index(pl)*32,count*32), runtime_values.screen) # type: ignore
+                        print(farm.tileMap[count])
             
         count += 1
             

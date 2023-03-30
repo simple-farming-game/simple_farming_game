@@ -18,10 +18,13 @@ def draw_ground(screen: pygame.Surface):
         for tile in line:
             if isinstance(tile, plants_list.plants_list) and not tile.water:  # type: ignore
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
+            elif tile in plants_list.plants_list:
+                screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
             elif isinstance(tile, plants_list.plants_list) and tile.water:  # type: ignore
                 screen.blit(ground_images[farm.Tiles.WATER_FARMLAND], tilePos)
-            elif tile in farm.Tiles:
-                screen.blit(ground_images[tile], tilePos)  # type: ignore
+            elif not tile in plants_list.plants_list:
+                if tile in farm.Tiles:
+                    screen.blit(ground_images[tile], tilePos)  # type: ignore
             tilePos.y += 32
         tilePos.x += 32
         tilePos.y = 0
