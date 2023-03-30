@@ -92,15 +92,11 @@ def process():
                 case pygame.K_b:  # 구매
                     sell.buy(runtime_values.players[0].handle_item) # type: ignore
 
-                # case pygame.K_b:  #  TODO:수확물 선택
-                #     selectImg[0] = pygame.image.load("assets/img/rice.png")
-                #     selectImg[1] = 5
-
                 case pygame.K_SPACE:  # 달리기
                     runtime_values.players[0].speed = 4.5
 
-                case pygame.K_t: lib.save.write_save()
-                case pygame.K_y: lib.save.import_save()
+                case pygame.K_k: lib.save.write_save()
+                case pygame.K_l: lib.save.import_save()
 
                 # case pygame.K_0:  # TODO:cheat
                 #     if int(input("dev code\n")) == 100000:
