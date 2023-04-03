@@ -37,6 +37,8 @@ class player(Object):
         for plant in plants_list.plants_list:
             self.inventory[f"{plant.name}"] = 10
             self.inventory[f"{plant.name}_seed"] = 10
+        for block in block_list.block_list:
+            self.inventory[f"{block.name}"] = 10
         self.inventory["VITAMIN"] = 10
         self.inventory["gold"] = 0
 
