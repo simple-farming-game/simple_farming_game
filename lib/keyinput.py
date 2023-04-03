@@ -9,6 +9,7 @@ from lib import player
 from lib import iteminfo
 from lib import sell
 from lib import help
+from lib.block import block_list
 import random
 
 def use():
@@ -76,6 +77,27 @@ def process():
                                 runtime_values.players[0].handle_item)
                     else:
                         runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                        
+                case pygame.K_r:  # 씨앗 선택
+                    if runtime_values.players[0].handle_item in plants_list.plants_list:
+                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
+                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                        else:
+                            runtime_values.players[0].handle_item = plants_list.next_plant(
+                                runtime_values.players[0].handle_item)
+                    else:
+                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                
+                case pygame.K_m:  # 블록 선택
+                    if runtime_values.players[0].handle_item in block_list.block_list:
+                        if runtime_values.players[0].handle_item == block_list.block_list[-1]:
+                            runtime_values.players[0].handle_item = block_list.block_list[0]
+                        else:
+                            runtime_values.players[0].handle_item = block_list.next_block(
+                                runtime_values.players[0].handle_item)
+                    else:
+                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                
                 case pygame.K_f:  # 괭이 선택
                     runtime_values.players[0].handle_item = Items.HOE
                 case pygame.K_s:  # 삽 선택

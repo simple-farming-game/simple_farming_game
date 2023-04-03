@@ -8,6 +8,8 @@ from lib.Object import Object
 from lib.plants import plants_list
 from lib.farm import tileMap, Tiles
 from lib.items import Items
+from lib.block import block_list
+
 
 
 class Direction(Enum):
@@ -25,7 +27,7 @@ class Direction(Enum):
 class player(Object):
     speed: float = 3
     inventory: Dict[str, int] = {}
-    handle_item: Union[plants_list.plants_type, Items] = Items.NONE
+    handle_item: Union[plants_list.plants_type,block_list.block_type, Items] = Items.NONE
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
         super().__init__(image, pos, screen)
