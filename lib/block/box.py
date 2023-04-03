@@ -4,6 +4,6 @@ import random
 from . import Block
 
 
-class Box():
+class Box(Block.Block):
     item = {}
     name:str = "box"

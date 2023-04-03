@@ -104,6 +104,24 @@ class player(Object):
         tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore
         return True
+    
+    def put_block(self, screen: pygame.Surface) -> bool:
+        tPos = self.get_tile_pos()
+
+        # check self
+        if not self.handle_item in block_list.block_list:
+            return False
+        if self.inventory[f"{self.handle_item.name}"] == 0:
+            return False
+
+        # check farm empty
+        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.DIRT:
+            return False
+
+        self.inventory[f"{self.handle_item.name}"] += -1
+        tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
+            tilePosToPos(tPos), screen)  # type: ignore
+        return True
 
 
 def tilePosToPos(tilePos: pygame.math.Vector2) -> pygame.math.Vector2:

@@ -25,6 +25,14 @@ def use():
             runtime_values.logs.info("success planting")
         else:
             runtime_values.logs.info("Fail planting")
+    
+    if runtime_values.players[0].handle_item in block_list.block_list:
+        runtime_values.logs.info(
+            f"Try to put:{runtime_values.players[0].handle_item.name}")
+        if runtime_values.players[0].put_block(runtime_values.screen):
+            runtime_values.logs.info("success put")
+        else:
+            runtime_values.logs.info("Fail put")
             
     elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
         farm.tileMap[x][y] = farm.Tiles.FARMLAND

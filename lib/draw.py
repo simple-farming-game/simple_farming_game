@@ -3,6 +3,7 @@ import pygame
 from lib.runtime_values import players
 from lib import farm
 from lib.plants import plants_list
+from lib.block import block_list
 
 
 ground_images: dict[farm.Tiles, pygame.Surface] = {
@@ -36,6 +37,13 @@ def draw_plants():
             if isinstance(tile, plants_list.plants_list):  # type: ignore
                 tile.draw()  # type: ignore
             if isinstance(tile, plants_list.plants_list):  # type: ignore
+                tile.draw()  # type: ignore
+def draw_block():
+    for line in farm.tileMap:
+        for tile in line:
+            if isinstance(tile, block_list.block_list):  # type: ignore
+                tile.draw()  # type: ignore
+            if isinstance(tile, block_list.block_list):  # type: ignore
                 tile.draw()  # type: ignore
 
 def draw_players():
