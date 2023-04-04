@@ -10,6 +10,7 @@ class Sprinkle(Block.Block):
     rangeList:list[list[int]] = []
     
     def water(self):
+        print("helo")
         for j in range(0,3):
             self.rangeList.append([])
             for i in range(-2,4):
