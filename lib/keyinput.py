@@ -6,7 +6,6 @@ from lib.items import Items
 from lib import runtime_values
 from lib import farm
 from lib import player
-from lib import iteminfo
 from lib import sell
 from lib import help
 from lib.block import block_list
@@ -134,16 +133,9 @@ def process():
                 #         playerClass.inventory = {
                 #             "rice": 100000, "riceSeed": 100000, "gold": 100000}
                 #         growCount = 5000
-
-                case pygame.K_g:  # 아이템 정보보기
-                    if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item == Items.VITAMIN:
-                        pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
-                    pygame.mouse.set_visible(False)
                 case pygame.K_ESCAPE:  # 메뉴
                     if runtime_values.players[0].handle_item in plants_list.plants_list:
                         pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
                 case pygame.K_0:
                     runtime_values.logs.debug(farm.tileMap[x][y])
