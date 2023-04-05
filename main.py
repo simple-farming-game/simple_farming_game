@@ -70,7 +70,11 @@ if __name__ == "__main__":
         musPos: tuple = pygame.mouse.get_pos()
         df = runtime_values.clock.tick(runtime_values.fps) / 1000
         runtime_values.clock.tick(runtime_values.fps)
+        
+        
+        
         # 그리기
+        process.process()
         # 화면
         runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
         draw.draw_ground(runtime_values.screen)
@@ -118,7 +122,6 @@ if __name__ == "__main__":
         farm.grow_plants()
         farm.rot_plants(runtime_values)
         pygame.display.update()  # 화면 업데이트
-        process.process()
 
     runtime_values.logs.info("quit")
     runtime_values.logs.save()
