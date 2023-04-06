@@ -5,7 +5,6 @@ from . import Block
 from .. import farm
 from ..plants import plants_list
 
-<<<<<<< HEAD
 class Sprinkle(Block.Block):
     vitamin: bool = False
     name:str = "sprinkle"
@@ -24,9 +23,3 @@ class Sprinkle(Block.Block):
             if isinstance(farm.tileMap[i[0]][i[1]], plants_list.plants_type):
                 farm.tileMap[i[0]][i[1]].water = True # type: ignore
             
-=======
-
-class Sprinkle():
-    vitamin: bool = False
-    name:str = "Sprinkle"
->>>>>>> b5b599b (add key(m))

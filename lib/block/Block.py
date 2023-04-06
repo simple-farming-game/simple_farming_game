@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from ..Object import Object
 import pygame
 
@@ -14,5 +13,3 @@ class Block(Object):
     def returnVar(self):
         return [self.image, self.pos, self.screen]
     def init(self): ...
-=======
->>>>>>> b5b599b (add key(m))
