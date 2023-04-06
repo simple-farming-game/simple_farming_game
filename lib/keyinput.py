@@ -103,7 +103,11 @@ def process():
                             runtime_values.players[0].handle_item = block_list.next_block(
                                 runtime_values.players[0].handle_item)
                     else:
+<<<<<<< HEAD
                         runtime_values.players[0].handle_item = block_list.block_list[0]
+=======
+                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
+>>>>>>> b5b599b (add key(m))
                 
                 case pygame.K_f:  # 괭이 선택
                     runtime_values.players[0].handle_item = Items.HOE
