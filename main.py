@@ -118,12 +118,11 @@ if __name__ == "__main__":
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
         # 채팅 드로우
-        for i in chat.chat_list:
-            draw.draw_text_with_border( # 
-            runtime_values.screen, font_renderer,
-            f"{i[0]} : {i[1]}",
-            WHITE, BLACK, 2, pygame.math.Vector2(10, 576))
-            
+        draw.draw_text_with_border( # 
+        runtime_values.screen, font_renderer,
+        f"{chat.chat_list[-1][0]} : {chat.chat_list[-1][1]}",
+        WHITE, BLACK, 2, pygame.math.Vector2(10, 576))
+        
         # 처리
         keyinput.process()
         runtime_values.players[0].move(runtime_values.my_dir, df)
