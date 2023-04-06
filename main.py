@@ -9,7 +9,6 @@ if __name__ == "__main__":
     from lib import imgs
     from lib.plants import plants_list
     from lib import process
-    from lib import chat
 
     runtime_values.players = [player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
@@ -90,7 +89,7 @@ if __name__ == "__main__":
         
         draw.draw_text_with_border( # 좌표
             runtime_values.screen, font_renderer,
-            f"{runtime_values.players[0].get_tile_pos().x} {runtime_values.players[0].get_tile_pos().y}",
+            str(runtime_values.players[0].get_tile_pos()),
             WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
         
         draw.draw_text_with_border( # 셀렉트 아이템
@@ -110,20 +109,13 @@ if __name__ == "__main__":
                 f"{runtime_values.lang['count']} : {runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name]}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
             
-        draw.draw_text_with_border( # 돈
+        draw.draw_text_with_border( # 좌표
             runtime_values.screen, font_renderer,
             f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
             WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
-        # 채팅 드로우
-        for i in chat.chat_list:
-            draw.draw_text_with_border( # 
-            runtime_values.screen, font_renderer,
-            f"{i[0]} : {i[1]}",
-            WHITE, BLACK, 2, pygame.math.Vector2(10, 576))
-            
         # 처리
         keyinput.process()
         runtime_values.players[0].move(runtime_values.my_dir, df)
