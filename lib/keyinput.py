@@ -10,6 +10,7 @@ from lib import sell
 from lib import help
 from lib.block import block_list
 import random
+from lib import chat
 
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
@@ -62,7 +63,7 @@ def use():
     else:
         runtime_values.logs.info("Fail to using")
 
-def process():
+def process(nick):
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     for event in pygame.event.get():
         moving(event)
@@ -139,11 +140,15 @@ def process():
                     pygame.mouse.set_visible(False)
                 case pygame.K_0:
                     runtime_values.logs.debug(farm.tileMap[x][y])
-                    runtime_values.logs.debug(farm.tileMap[x][y].water)
                 case pygame.K_1:
                     runtime_values.logs.debug(runtime_values.players[0].handle_item)
                 case pygame.K_h:
                     help.help()
+                case pygame.K_n:
+                    pygame.mouse.set_visible(True)
+                    chat.sand(input("msg : "),nick)
+                    pygame.mouse.set_visible(False)
+                
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_SPACE:

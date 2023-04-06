@@ -1,8 +1,11 @@
 import pygame
 import json
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     pygame.init()
+    
+    nick = input("nick : ")
+    
     # runtime values
     from lib import player
     from lib import runtime_values
@@ -124,7 +127,7 @@ if __name__ == "__main__":
         WHITE, BLACK, 2, pygame.math.Vector2(10, 576))
         
         # 처리
-        keyinput.process()
+        keyinput.process(nick)
         runtime_values.players[0].move(runtime_values.my_dir, df)
         farm.grow_plants()
         farm.rot_plants(runtime_values)
