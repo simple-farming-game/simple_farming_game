@@ -139,6 +139,7 @@ def process():
                     pygame.mouse.set_visible(False)
                 case pygame.K_0:
                     runtime_values.logs.debug(farm.tileMap[x][y])
+                    runtime_values.logs.debug(farm.tileMap[x][y].water)
                 case pygame.K_1:
                     runtime_values.logs.debug(runtime_values.players[0].handle_item)
                 case pygame.K_h:
