@@ -10,7 +10,6 @@ block_type = Union[
 block_list = cast(tuple[block_type], get_args(block_type))
 
 def next_block(block: block_type) -> block_type:
-    print("hello")
     now_index: int
     for index, item in enumerate(block_list):
         if item == block:
