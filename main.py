@@ -12,7 +12,10 @@ if __name__ == "__main__":
     from lib import imgs
     from lib.plants import plants_list
     from lib import process
+<<<<<<< HEAD
     from lib import chat
+=======
+>>>>>>> 6a6a394 (기능구현 실패)
 
     runtime_values.players = [player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
@@ -132,6 +135,7 @@ if __name__ == "__main__":
         farm.grow_plants()
         farm.rot_plants(runtime_values)
         pygame.display.update()  # 화면 업데이트
+        process.process()
 
     runtime_values.logs.info("quit")
     runtime_values.logs.save()
