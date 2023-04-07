@@ -1,6 +1,5 @@
 from lib import farm
 from lib.block import block_list
-<<<<<<< HEAD
 import pygame
 
 def process():
@@ -12,11 +11,3 @@ def process():
             tilePos.y += 32
         tilePos.x += 32
         tilePos.y = 0
-=======
-
-def process():
-    for i in farm.tileMap:
-        for j in i:
-            if j in block_list.block_list:
-                j.water()
->>>>>>> 6a6a394 (기능구현 실패)
