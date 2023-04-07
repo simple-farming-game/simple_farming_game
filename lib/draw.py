@@ -45,17 +45,7 @@ def draw_block(screen, tilePos):
             if isinstance(tile, block_list.block_list):  # type: ignore
                 screen.blit(ground_images[farm.Tiles.DIRT], tilePos)
                 tile.draw()  # type: ignore
-<<<<<<< HEAD
                 
-=======
-def draw_block():
-    for line in farm.tileMap:
-        for tile in line:
-            if isinstance(tile, block_list.block_list):  # type: ignore
-                tile.draw()  # type: ignore
-            if isinstance(tile, block_list.block_list):  # type: ignore
-                tile.draw()  # type: ignore
->>>>>>> d6beeeb (블록 놓기 완성 하지만 오류)
 
 def draw_players():
     for player in players:
