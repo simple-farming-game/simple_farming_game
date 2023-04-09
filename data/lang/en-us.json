@@ -1,22 +1,24 @@
 {
-    "guid": "h:help",
-    "fail": {
-      "save": "failed: a problem occurred",
-      "d": "failed: file not found"
-    },
-    "items": {
-      "HOE" : "hoe",
-      "SHOVEL": "shovel",
-      "SICKLE": "sickle",
-      "rice": "rice",
-      "tomato": "tomato",
-      "sunFlower": "sunflower",
-      "carrots": "carrots",
-      "NONE": "none",
-      "WATER": "watering can"
-    },
-    "count" : "get number",
-    "name" : "name",
-    "select" : "select"
+  "guid": "h:help",
+  "fail": {
+    "save": "failed: a problem occurred",
+    "d": "failed: file not found"
+  },
+  "items": {
+    "HOE" : "hoe",
+    "SHOVEL": "shovel",
+    "SICKLE": "sickle",
+    "rice": "rice",
+    "tomato": "tomato",
+    "sunFlower": "sunflower",
+    "carrots": "carrots",
+    "NONE": "none",
+    "WATER": "watering can"
+  },
+  "count" : "get number",
+  "name" : "name",
+  "select" : "select",
+  "seed" : "seed",
+  "gold" : "money"
 }
 
