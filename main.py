@@ -51,11 +51,21 @@ if __name__ == "__main__":
     WHITE = pygame.Color(255, 255, 255)
     # 폰트
     font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
+    opning_font = pygame.font.Font("assets/font/Galmuri.ttf", 50)
     # 노래
     musics: dict[str,pygame.mixer.Sound]={
         "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3")
     }
 
+    runtime_values.logs.info("Finish Loading")
+
+    # 오프닝
+    for i in range(300):
+        runtime_values.clock.tick(runtime_values.fps)
+        draw.draw_text_with_border( # 메시지
+            runtime_values.screen, opning_font, "newkini", WHITE, BLACK, 2, pygame.math.Vector2(400, 300))
+        pygame.display.update()
+    
     # 세팅
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
@@ -64,7 +74,6 @@ if __name__ == "__main__":
         musics["sfg"].play(-1)
 
     # 게임와일
-    runtime_values.logs.info("Finish Loading")
     while runtime_values.running:
         musPos: tuple = pygame.mouse.get_pos()
         df = runtime_values.clock.tick(runtime_values.fps) / 1000
