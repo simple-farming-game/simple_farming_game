@@ -23,7 +23,7 @@ if __name__ == "__main__":
         runtime_values.lang = json.load(lang_file)
         
     runtime_values.running = True
-    runtime_values.my_dir = player.Direction.STOP
+    runtime_values.my_dir = player.Direction.STOP #
 
     # 버전변수
     version = runtime_values.version
@@ -56,21 +56,11 @@ if __name__ == "__main__":
     WHITE = pygame.Color(255, 255, 255)
     # 폰트
     font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
-    opning_font = pygame.font.Font("assets/font/Galmuri.ttf", 50)
     # 노래
     musics: dict[str,pygame.mixer.Sound]={
         "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3")
     }
 
-    runtime_values.logs.info("Finish Loading")
-
-    # 오프닝
-    for i in range(300):
-        runtime_values.clock.tick(runtime_values.fps)
-        draw.draw_text_with_border( # 메시지
-            runtime_values.screen, opning_font, "newkini", WHITE, BLACK, 2, pygame.math.Vector2(400, 300))
-        pygame.display.update()
-    
     # 세팅
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
@@ -79,11 +69,16 @@ if __name__ == "__main__":
         musics["sfg"].play(-1)
 
     # 게임와일
+    runtime_values.logs.info("Finish Loading")
     while runtime_values.running:
         musPos: tuple = pygame.mouse.get_pos()
         df = runtime_values.clock.tick(runtime_values.fps) / 1000
         runtime_values.clock.tick(runtime_values.fps)
+        
+        
+        
         # 그리기
+        process.process()
         # 화면
         runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
         draw.draw_ground(runtime_values.screen)
@@ -92,16 +87,21 @@ if __name__ == "__main__":
         draw.draw_players() # 플래이어
         # 글시
         draw.draw_text_with_border( # 버전명
-            runtime_values.screen, font_renderer, f"SFG {version_text}!  {runtime_values.lang['guid']}", WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
+            runtime_values.screen, font_renderer,
+            f"SFG {version_text}!  {runtime_values.lang['guid']}",
+            WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
+        
         draw.draw_text_with_border( # 좌표
             runtime_values.screen, font_renderer,
             f"{runtime_values.players[0].get_tile_pos().x} {runtime_values.players[0].get_tile_pos().y}",
             WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
         
         draw.draw_text_with_border( # 셀렉트 아이템
-            runtime_values.screen, font_renderer, runtime_values.lang["select"]+" : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name],
-             WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
-        if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item.name == "VITAMIN": # type: ignore
+            runtime_values.screen, font_renderer,
+            f"{runtime_values.lang['select']} : {runtime_values.lang['items'][runtime_values.players[0].handle_item.name]}",
+            WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
+        
+        if runtime_values.players[0].handle_item in plants_list.plants_list: # type: ignore
             draw.draw_text_with_border( # 아이템 겟수
                 runtime_values.screen, font_renderer,
                 f"{runtime_values.lang['count']} : {str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])} {runtime_values.lang['seed']} : {runtime_values.players[0].inventory[f'{runtime_values.players[0].handle_item.name}_seed']}",
