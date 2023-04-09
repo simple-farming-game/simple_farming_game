@@ -6,9 +6,9 @@ from lib.items import Items
 from lib import runtime_values
 from lib import farm
 from lib import player
-from lib import iteminfo
 from lib import sell
 from lib import help
+from lib.block import block_list
 import random
 from lib import chat
 
@@ -25,6 +25,14 @@ def use():
             runtime_values.logs.info("success planting")
         else:
             runtime_values.logs.info("Fail planting")
+    
+    if runtime_values.players[0].handle_item in block_list.block_list:
+        runtime_values.logs.info(
+            f"Try to put:{runtime_values.players[0].handle_item.name}")
+        if runtime_values.players[0].put_block(runtime_values.screen):
+            runtime_values.logs.info("success put")
+        else:
+            runtime_values.logs.info("Fail put")
             
     elif (runtime_values.players[0].handle_item == Items.HOE) and (tile == farm.Tiles.DIRT):  # 경작
         farm.tileMap[x][y] = farm.Tiles.FARMLAND
@@ -77,6 +85,27 @@ def process(nick):
                                 runtime_values.players[0].handle_item)
                     else:
                         runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                        
+                case pygame.K_r:  # 씨앗 선택
+                    if runtime_values.players[0].handle_item in plants_list.plants_list:
+                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
+                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                        else:
+                            runtime_values.players[0].handle_item = plants_list.next_plant(
+                                runtime_values.players[0].handle_item)
+                    else:
+                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
+                
+                case pygame.K_m:  # 블록 선택
+                    if runtime_values.players[0].handle_item in block_list.block_list:
+                        if runtime_values.players[0].handle_item == block_list.block_list[-1]:
+                            runtime_values.players[0].handle_item = block_list.block_list[0]
+                        else:
+                            runtime_values.players[0].handle_item = block_list.next_block(
+                                runtime_values.players[0].handle_item)
+                    else:
+                        runtime_values.players[0].handle_item = block_list.block_list[0]
+                
                 case pygame.K_f:  # 괭이 선택
                     runtime_values.players[0].handle_item = Items.HOE
                 case pygame.K_s:  # 삽 선택
@@ -90,17 +119,14 @@ def process(nick):
 
                 case pygame.K_a:  # 판매
                     sell.sell(runtime_values.players[0].handle_item) # type: ignore
-
-                # case pygame.K_b:  #  TODO:수확물 선택
-                #     selectImg[0] = pygame.image.load("assets/img/rice.png")
-                #     selectImg[1] = 5
+                case pygame.K_b:  # 구매
+                    sell.buy(runtime_values.players[0].handle_item) # type: ignore
 
                 case pygame.K_SPACE:  # 달리기
                     runtime_values.players[0].speed = 4.5
 
-                # TODO: 저장기능 제대로 구현할것.
-                # case pygame.K_t: lib.save.write_save()
-                # case pygame.K_y: lib.save.import_save()
+                case pygame.K_k: lib.save.write_save()
+                case pygame.K_l: lib.save.import_save()
 
                 # case pygame.K_0:  # TODO:cheat
                 #     if int(input("dev code\n")) == 100000:
@@ -108,16 +134,9 @@ def process(nick):
                 #         playerClass.inventory = {
                 #             "rice": 100000, "riceSeed": 100000, "gold": 100000}
                 #         growCount = 5000
-
-                case pygame.K_g:  # 아이템 정보보기
-                    if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item == Items.VITAMIN:
-                        pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
-                    pygame.mouse.set_visible(False)
                 case pygame.K_ESCAPE:  # 메뉴
                     if runtime_values.players[0].handle_item in plants_list.plants_list:
                         pygame.mouse.set_visible(True)
-                        iteminfo.info(runtime_values.players[0].handle_item.name, runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])
                     pygame.mouse.set_visible(False)
                 case pygame.K_0:
                     runtime_values.logs.debug(farm.tileMap[x][y])
