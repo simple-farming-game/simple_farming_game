@@ -8,8 +8,10 @@ class Tiles(Enum):
     FARMLAND = auto()
     WATER_FARMLAND = auto()
 
+
 tileMap: List[List[Union[Tiles, plants_list.plants_type]]] = [
     [Tiles.DIRT for _ in range(20)] for _ in range(30)]
+
 
 def grow_plants():
     for line in tileMap:

@@ -8,8 +8,6 @@ from lib.Object import Object
 from lib.plants import plants_list
 from lib.farm import tileMap, Tiles
 from lib.items import Items
-from lib.block import block_list
-
 
 
 class Direction(Enum):
@@ -27,7 +25,7 @@ class Direction(Enum):
 class player(Object):
     speed: float = 3
     inventory: Dict[str, int] = {}
-    handle_item: Union[plants_list.plants_type,block_list.block_type, Items] = Items.NONE
+    handle_item: Union[plants_list.plants_type, Items] = Items.NONE
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
         super().__init__(image, pos, screen)
@@ -37,9 +35,8 @@ class player(Object):
         for plant in plants_list.plants_list:
             self.inventory[f"{plant.name}"] = 10
             self.inventory[f"{plant.name}_seed"] = 10
-        for block in block_list.block_list:
-            self.inventory[f"{block.name}"] = 10
         self.inventory["VITAMIN"] = 10
+        self.inventory["VITAMIN_seed"] = -527
         self.inventory["gold"] = 0
 
     def move(self, direction: Direction, frame):
@@ -103,24 +100,6 @@ class player(Object):
             return False
 
         self.inventory[f"{self.handle_item.name}_seed"] += -1
-        tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
-            tilePosToPos(tPos), screen)  # type: ignore
-        return True
-    
-    def put_block(self, screen: pygame.Surface) -> bool:
-        tPos = self.get_tile_pos()
-
-        # check self
-        if not self.handle_item in block_list.block_list:
-            return False
-        if self.inventory[f"{self.handle_item.name}"] == 0:
-            return False
-
-        # check farm empty
-        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.DIRT:
-            return False
-
-        self.inventory[f"{self.handle_item.name}"] += -1
         tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore
         return True

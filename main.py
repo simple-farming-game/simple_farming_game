@@ -11,8 +11,11 @@ if __name__ == "__main__":
     from lib import runtime_values
     from lib import imgs
     from lib.plants import plants_list
+<<<<<<< HEAD
     from lib import process
     from lib import chat
+=======
+>>>>>>> parent of f06ee65 (Merge branch 'main' into dev/opning)
 
     runtime_values.players = [player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
@@ -94,15 +97,20 @@ if __name__ == "__main__":
         draw.draw_text_with_border( # 버전명
             runtime_values.screen, font_renderer, f"SFG {version_text}!  {runtime_values.lang['guid']}", WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
         draw.draw_text_with_border( # 좌표
+<<<<<<< HEAD
             runtime_values.screen, font_renderer,
             f"{runtime_values.players[0].get_tile_pos().x} {runtime_values.players[0].get_tile_pos().y}",
             WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
         
+=======
+            runtime_values.screen, font_renderer, str(runtime_values.players[0].get_tile_pos()), WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
+>>>>>>> parent of f06ee65 (Merge branch 'main' into dev/opning)
         draw.draw_text_with_border( # 셀렉트 아이템
             runtime_values.screen, font_renderer, runtime_values.lang["select"]+" : "+runtime_values.lang["items"][runtime_values.players[0].handle_item.name],
              WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
         if runtime_values.players[0].handle_item in plants_list.plants_list or runtime_values.players[0].handle_item.name == "VITAMIN": # type: ignore
             draw.draw_text_with_border( # 아이템 겟수
+<<<<<<< HEAD
                 runtime_values.screen, font_renderer,
                 f"{runtime_values.lang['count']} : {str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])} {runtime_values.lang['seed']} : {runtime_values.players[0].inventory[f'{runtime_values.players[0].handle_item.name}_seed']}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
@@ -117,6 +125,12 @@ if __name__ == "__main__":
             runtime_values.screen, font_renderer,
             f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
             WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
+=======
+                runtime_values.screen, font_renderer, runtime_values.lang["count"]+" : "+str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])+
+                " seed : "+str({runtime_values.players[0].inventory[f"{runtime_values.players[0].handle_item.name}_seed"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
+        draw.draw_text_with_border( # 좌표
+            runtime_values.screen, font_renderer, "gold : "+str({runtime_values.players[0].inventory["gold"]}), WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
+>>>>>>> parent of f06ee65 (Merge branch 'main' into dev/opning)
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 

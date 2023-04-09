@@ -33,12 +33,16 @@ $ python main.py
 -   `W`: 물뿌리게
 -   `V`: 비타민
 -   `A`: 판매
+<<<<<<< HEAD
 -   `B`: 구매
 -   `H`: 도움말
 -   `K`: 저장
 -   `L`: 불러오기
 -   `M`: 블록 선택
 -   `N`: 채팅
+=======
+-   `H`: 키
+>>>>>>> parent of f06ee65 (Merge branch 'main' into dev/opning)
 ## TODO
 
 -   [ ] 구매
