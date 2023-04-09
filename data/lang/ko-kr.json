@@ -14,13 +14,9 @@
     "carrots": "당근",
     "NONE": "없음",
     "WATER": "물뿌리게",
-    "VITAMIN": "비타민",
-    "box": "상자",
-    "sprinkle": "스프링 쿨러"
+    "VITAMIN": "비타민"
   },
   "count" : "겟수",
   "name" : "이름",
-  "select" : "선택",
-  "seed" : "씨앗",
-  "gold" : "돈"
+  "select" : "선택"
 }

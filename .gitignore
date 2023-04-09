@@ -5,4 +5,3 @@ dist/*
 main.spec
 *.sfgsave
 log/
-dist.zip
