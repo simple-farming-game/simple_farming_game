@@ -16,7 +16,7 @@ def draw_ground(screen: pygame.Surface):
     tilePos = pygame.math.Vector2(0, 0)
     for line in farm.tileMap:
         for tile in line:
-            if isinstance(tile, plants_list.plants_list) and not tile.water:  # type: ignore
+            if tile in plants_list.plants_list and not tile.water:
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
             elif isinstance(tile, plants_list.plants_list) and tile.water:  # type: ignore
                 screen.blit(ground_images[farm.Tiles.WATER_FARMLAND], tilePos)
