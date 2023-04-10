@@ -20,6 +20,9 @@ class Sprinkle(Block.Block):
     
     def water(self):
         for i in self.rangeList:
-            if isinstance(farm.tileMap[i[0]][i[1]], plants_list.plants_type):
-                farm.tileMap[i[0]][i[1]].water = True # type: ignore
+            try:
+                if isinstance(farm.tileMap[i[0]][i[1]], plants_list.plants_type):
+                    farm.tileMap[i[0]][i[1]].water = True # type: ignore
+            except IndexError:
+                pass
             
