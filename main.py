@@ -11,6 +11,7 @@ if __name__ == "__main__":
     from lib import runtime_values
     from lib import imgs
     from lib.plants import plants_list
+    from lib.block import block_list
     from lib import process
     from lib import chat
 
@@ -107,8 +108,8 @@ if __name__ == "__main__":
                 f"{runtime_values.lang['count']} : {str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])} {runtime_values.lang['seed']} : {runtime_values.players[0].inventory[f'{runtime_values.players[0].handle_item.name}_seed']}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
             
-        if runtime_values.players[0].handle_item.name == "VITAMIN":
-            draw.draw_text_with_border( # 비타민 겟수
+        if runtime_values.players[0].handle_item.name == "VITAMIN" or runtime_values.players[0].handle_item in block_list.block_list:
+            draw.draw_text_with_border( # 아이템 겟수
                 runtime_values.screen, font_renderer,
                 f"{runtime_values.lang['count']} : {runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name]}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
