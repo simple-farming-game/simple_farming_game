@@ -113,8 +113,10 @@ if __name__ == "__main__":
             runtime_values.screen, font_renderer,
             f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
             WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
-
+        # ui
+        runtime_values.screen.blit(imgs.img("item_bar"), [28*32-(256-64),20*32-32])
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
+        
 
         # 처리
         keyinput.process()
