@@ -1,4 +1,5 @@
 import pygame
+from lib.plants import plants_list
 
 imgs: dict[str, pygame.Surface] = {
     "mus" : pygame.image.load("assets/img/mouse_cus.png"),

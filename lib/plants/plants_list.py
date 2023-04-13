@@ -1,4 +1,5 @@
 from typing import Union, get_args, cast
+import pygame
 
 from . import rice
 from . import tomato
@@ -12,6 +13,7 @@ plants_type = Union[
     carrots.Carrots
 ]
 plants_list = cast(tuple[plants_type], get_args(plants_type))
+plants_image = [pygame.image.load(f"assets/img/plants/{i.name}/item.png") for i in plants_list]
 
 def next_plant(plant: plants_type) -> plants_type:
     now_index: int

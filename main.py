@@ -115,6 +115,10 @@ if __name__ == "__main__":
             WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
         # ui
         runtime_values.screen.blit(imgs.img("item_bar"), [28*32-(256-64),20*32-32])
+
+        # itmebar item
+        runtime_values.screen.blit(plants_list.plants_image[0], [28*32+32,20*32-32])
+
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
         
 
