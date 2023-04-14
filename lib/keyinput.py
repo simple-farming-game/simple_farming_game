@@ -89,25 +89,6 @@ def process():
                 # group: change handle item
                 case pygame.K_z:  # 선택 해제
                     runtime_values.players[0].handle_item = Items.NONE
-                case pygame.K_r:  # 씨앗 선택
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
-                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
-                        else:
-                            runtime_values.players[0].handle_item = plants_list.next_plant(
-                                runtime_values.players[0].handle_item)
-                    else:
-                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
-                        
-                case pygame.K_r:  # 씨앗 선택
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
-                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
-                        else:
-                            runtime_values.players[0].handle_item = plants_list.next_plant(
-                                runtime_values.players[0].handle_item)
-                    else:
-                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
                 
                 case pygame.K_m:  # 블록 선택
                     if runtime_values.players[0].handle_item in block_list.block_list:

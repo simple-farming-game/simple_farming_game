@@ -122,8 +122,10 @@ if __name__ == "__main__":
                 count+=1
             except:break
         del count
-        print(keyinput.select_bar*32-keyinput.select_bar*32*2)
         runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
+        try:
+            runtime_values.players[0].handle_item = plants_list.plants_list[keyinput.select_bar-1]
+        except:pass
         
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
