@@ -4,8 +4,6 @@ import json
 if __name__ == "__main__":    
     pygame.init()
     
-    nick = input("nick : ")
-    
     # runtime values
     from lib import player
     from lib import runtime_values
@@ -13,10 +11,13 @@ if __name__ == "__main__":
     from lib.plants import plants_list
     from lib.block import block_list
     from lib import process
+    from lib import draw
+    from lib import keyinput
+    from lib import farm
     from lib import chat
 
-    runtime_values.players = [player.player(pygame.image.load(
-        "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size)]
+    runtime_values.players.append(player.player(pygame.image.load(
+        "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size))
     
     with open("data/setting.json", 'r', encoding='utf8') as setting_file: # 셋팅파일 열기
         runtime_values.setting = json.load(setting_file)
@@ -24,15 +25,10 @@ if __name__ == "__main__":
         runtime_values.lang = json.load(lang_file)
         
     runtime_values.running = True
-    runtime_values.my_dir = player.Direction.STOP #
 
     # 버전변수
     version = runtime_values.version
     version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
-
-    from lib import draw
-    from lib import keyinput
-    from lib import farm
 
     print(f'''
                          _    ___       ___
@@ -46,8 +42,7 @@ if __name__ == "__main__":
      ___) |      | _|         | |_| |
     |____/ imple |_|  arming   \\____|ame
     
-    V. {version_text}
-    ''', end="")
+    V. {version_text}''')
     runtime_values.logs.info("Start Loading")
     
     # 변수
@@ -68,6 +63,8 @@ if __name__ == "__main__":
     pygame.mouse.set_visible(False)
     if runtime_values.setting["musicStart"]:
         musics["sfg"].play(-1)
+
+    nick = input("nick : ")
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
@@ -118,6 +115,22 @@ if __name__ == "__main__":
             runtime_values.screen, font_renderer,
             f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
             WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
+        # ui
+        runtime_values.screen.blit(imgs.img("item_bar"), [28*32-(256-64),20*32-32])
+
+        # itmebar item
+        count = 0
+        for i in range(32,-256,-32):
+            try:
+                runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
+                count+=1
+            except:break
+        del count
+        runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
+        try:
+            runtime_values.players[0].handle_item = plants_list.plants_list[keyinput.select_bar-1]
+        except:pass
+        
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 

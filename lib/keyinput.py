@@ -12,6 +12,18 @@ from lib.block import block_list
 import random
 from lib import chat
 
+SELECT_KEY = {
+    pygame.K_1 : 1,
+    pygame.K_2 : 2,
+    pygame.K_3 : 3,
+    pygame.K_4 : 4,
+    pygame.K_5 : 5,
+    pygame.K_6 : 6,
+    pygame.K_7 : 7,
+    pygame.K_8 : 8
+}
+select_bar = 1 
+
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     tile = farm.tileMap[x][y]
@@ -64,9 +76,11 @@ def use():
         runtime_values.logs.info("Fail to using")
 
 def process(nick):
+    global select_bar
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     for event in pygame.event.get():
         moving(event)
+        select(event)
         if event.type == pygame.QUIT:
             runtime_values.running = False
         if event.type == pygame.KEYDOWN:
@@ -76,25 +90,6 @@ def process(nick):
                 # group: change handle item
                 case pygame.K_z:  # 선택 해제
                     runtime_values.players[0].handle_item = Items.NONE
-                case pygame.K_r:  # 씨앗 선택
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
-                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
-                        else:
-                            runtime_values.players[0].handle_item = plants_list.next_plant(
-                                runtime_values.players[0].handle_item)
-                    else:
-                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
-                        
-                case pygame.K_r:  # 씨앗 선택
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        if runtime_values.players[0].handle_item == plants_list.plants_list[-1]:
-                            runtime_values.players[0].handle_item = plants_list.plants_list[0]
-                        else:
-                            runtime_values.players[0].handle_item = plants_list.next_plant(
-                                runtime_values.players[0].handle_item)
-                    else:
-                        runtime_values.players[0].handle_item = plants_list.plants_list[0]
                 
                 case pygame.K_m:  # 블록 선택
                     if runtime_values.players[0].handle_item in block_list.block_list:
@@ -138,9 +133,11 @@ def process(nick):
                     if runtime_values.players[0].handle_item in plants_list.plants_list:
                         pygame.mouse.set_visible(True)
                     pygame.mouse.set_visible(False)
-                case pygame.K_0:
+                case pygame.K_EQUALS:
                     runtime_values.logs.debug(farm.tileMap[x][y])
-                case pygame.K_1:
+                    try:runtime_values.logs.debug(farm.tileMap[x][y].water) # type: ignore
+                    except:pass
+                case pygame.K_MINUS:
                     runtime_values.logs.debug(runtime_values.players[0].handle_item)
                 case pygame.K_h:
                     help.help()
@@ -153,8 +150,11 @@ def process(nick):
             match event.key:
                 case pygame.K_SPACE:
                     runtime_values.players[0].speed = 3
-
-
+def select(event: pygame.event.Event):
+    global select_bar
+    if event.type == pygame.KEYDOWN:
+        if event.key in SELECT_KEY.keys():
+            select_bar = SELECT_KEY[event.key]
 def moving(event: pygame.event.Event):
     if event.type == pygame.KEYDOWN:
         match event.key:

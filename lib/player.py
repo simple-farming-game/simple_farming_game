@@ -22,6 +22,7 @@ class Direction(Enum):
     UP_RIGHT = auto()
     DOWN_LEFT = auto()
     DOWN_RIGHT = auto()
+    NONE = auto()
 
 
 class player(Object):
@@ -66,9 +67,9 @@ class player(Object):
                 self.pos.y += self.speed+frame
 
         if self.pos.x >= self.window_size[0]-32:
-            self.pos.x = self.window_size[0]-33
+            self.pos.x = self.window_size[0]-32
         if self.pos.x <= 0:
-            self.pos.x = 1
+            self.pos.x = 0
         if self.pos.y >= self.window_size[1]-32:
             self.pos.y = self.window_size[1]-32
         if self.pos.y <= 1:
