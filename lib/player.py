@@ -22,6 +22,7 @@ class Direction(Enum):
     UP_RIGHT = auto()
     DOWN_LEFT = auto()
     DOWN_RIGHT = auto()
+    NONE = auto()
 
 
 class player(Object):

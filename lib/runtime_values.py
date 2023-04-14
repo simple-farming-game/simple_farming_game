@@ -29,6 +29,6 @@ logs = logger()
 
 running: bool
 
-players: list[player.player]
-my_dir: player.Direction
+players: list[player.player] = []
+my_dir: player.Direction = player.Direction.NONE
 fps: int = 100
