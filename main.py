@@ -123,6 +123,7 @@ if __name__ == "__main__":
                 runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
                 count+=1
             except:break
+        del count
         
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
