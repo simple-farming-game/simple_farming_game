@@ -122,6 +122,8 @@ if __name__ == "__main__":
                 count+=1
             except:break
         del count
+        print(keyinput.select_bar*32-keyinput.select_bar*32*2)
+        runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
         
 
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서

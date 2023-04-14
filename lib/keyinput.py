@@ -21,7 +21,7 @@ SELECT_KEY = {
     pygame.K_7 : 7,
     pygame.K_8 : 8
 }
-select_bar = 0 
+select_bar = 1 
 
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
