@@ -41,8 +41,7 @@ if __name__ == "__main__":
      ___) |      | _|         | |_| |
     |____/ imple |_|  arming   \\____|ame
     
-    V. {version_text}
-    ''', end="")
+    V. {version_text}''')
     runtime_values.logs.info("Start Loading")
     
     # 변수
