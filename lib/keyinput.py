@@ -11,6 +11,18 @@ from lib import help
 from lib.block import block_list
 import random
 
+SELECT_KEY = {
+    pygame.K_1 : 1,
+    pygame.K_2 : 2,
+    pygame.K_3 : 3,
+    pygame.K_4 : 4,
+    pygame.K_5 : 5,
+    pygame.K_6 : 6,
+    pygame.K_7 : 7,
+    pygame.K_8 : 8
+}
+select_bar = 0 
+
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     tile = farm.tileMap[x][y]
@@ -61,13 +73,13 @@ def use():
 
     else:
         runtime_values.logs.info("Fail to using")
-select_bar = 0
+
 def process():
     global select_bar
     x, y = map(int, runtime_values.players[0].get_tile_pos())
     for event in pygame.event.get():
         moving(event)
-        select_bar = select(event)
+        select(event)
         if event.type == pygame.QUIT:
             runtime_values.running = False
         if event.type == pygame.KEYDOWN:
@@ -151,23 +163,11 @@ def process():
             match event.key:
                 case pygame.K_SPACE:
                     runtime_values.players[0].speed = 3
-SELECT_KEY = {
-    pygame.K_1 : 1,
-    pygame.K_2 : 2,
-    pygame.K_3 : 3,
-    pygame.K_4 : 4,
-    pygame.K_5 : 5,
-    pygame.K_6 : 6,
-    pygame.K_7 : 7,
-    pygame.K_8 : 8
-} 
 def select(event: pygame.event.Event):
+    global select_bar
     if event.type == pygame.KEYDOWN:
-        try:
-            return SELECT_KEY[event.key]
-        except:pass
-    print(select_bar)
-
+        if event.key in SELECT_KEY.keys():
+            select_bar = SELECT_KEY[event.key]
 def moving(event: pygame.event.Event):
     if event.type == pygame.KEYDOWN:
         match event.key:
