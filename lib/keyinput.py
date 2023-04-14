@@ -23,12 +23,6 @@ SELECT_KEY = {
     pygame.K_8 : 8
 }
 select_bar = 1
-before_select_bar = 1
-has_select_bar_changed_var = True
-def has_select_bar_changed():
-    if select_bar != before_select_bar:
-        return True
-    else: return False
 
 def use():
     x, y = map(int, runtime_values.players[0].get_tile_pos())
@@ -83,9 +77,7 @@ def use():
 
 def process(nick):
     global select_bar
-    global has_select_bar_changed_var
     x, y = map(int, runtime_values.players[0].get_tile_pos())
-    has_select_bar_changed_var = False
     for event in pygame.event.get():
         moving(event)
         select(event)
@@ -162,8 +154,6 @@ def select(event: pygame.event.Event):
     global select_bar
     if event.type == pygame.KEYDOWN:
         if event.key in SELECT_KEY.keys():
-            before_select_bar = select_bar
-            has_select_bar_changed_var = has_select_bar_changed()
             try:
                 runtime_values.players[0].handle_item = plants_list.plants_list[select_bar-1]
             except:pass
