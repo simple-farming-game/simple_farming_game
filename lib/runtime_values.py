@@ -10,7 +10,7 @@ from lib import player
 version_type = Tuple[str, int, int, int]
 version: version_type = ("alpha", 2, 1, 9)
 
-comInfo = {
+pcInfo = {
     "core": os.cpu_count(),
     "os": platform.system(),
     "processor": platform.processor(),
