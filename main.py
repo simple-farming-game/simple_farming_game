@@ -58,13 +58,12 @@ if __name__ == "__main__":
     }
 
     # 세팅
+    nick = input("nick : ")
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
     if runtime_values.setting["musicStart"]:
         musics["sfg"].play(-1)
-
-    nick = input("nick : ")
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
