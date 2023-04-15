@@ -131,7 +131,6 @@ def process(nick):
                 #         growCount = 5000
                 case pygame.K_ESCAPE:  # 메뉴
                     runtime_values.on_setting = not runtime_values.on_setting
-                    print(runtime_values.on_setting)
                 case pygame.K_EQUALS:
                     runtime_values.logs.debug(farm.tileMap[x][y])
                     try:runtime_values.logs.debug(farm.tileMap[x][y].water) # type: ignore
