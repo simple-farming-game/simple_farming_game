@@ -15,6 +15,7 @@ if __name__ == "__main__":
     from lib import keyinput
     from lib import farm
     from lib import chat
+    from lib import setting
 
     runtime_values.players.append(player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size))
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     BLACK = pygame.Color(0, 0, 0)
     WHITE = pygame.Color(255, 255, 255)
     # 폰트
-    font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
+    font_renderer = runtime_values.font
     # 노래
     musics: dict[str,pygame.mixer.Sound]={
         "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3"),
@@ -142,6 +143,7 @@ if __name__ == "__main__":
         runtime_values.players[0].move(runtime_values.my_dir, df)
         farm.grow_plants()
         farm.rot_plants(runtime_values)
+        setting.setting()
         pygame.display.update()  # 화면 업데이트
 
     runtime_values.logs.info("quit")
