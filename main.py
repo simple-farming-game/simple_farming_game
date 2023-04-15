@@ -121,10 +121,10 @@ if __name__ == "__main__":
         # itmebar item
         count = 0
         for i in range(32,-256,-32):
-            try:
+            try: # TODO: 빈칸을 선택할 경우 none을 선택하게 변경, 한게가 없어지면 뒤로 밀려나게 하기
                 if runtime_values.players[0].inventory[f"{plants_list.plants_list[count].name}_seed"] > 0:
-                        runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
-                        count+=1
+                    runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
+                count+=1
             except:break
         del count
         runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
