@@ -154,10 +154,10 @@ def select(event: pygame.event.Event):
     global select_bar
     if event.type == pygame.KEYDOWN:
         if event.key in SELECT_KEY.keys():
+            select_bar = SELECT_KEY[event.key]
             try:
                 runtime_values.players[0].handle_item = plants_list.plants_list[select_bar-1]
             except:pass
-            select_bar = SELECT_KEY[event.key]
 def moving(event: pygame.event.Event):
     if event.type == pygame.KEYDOWN:
         match event.key:
