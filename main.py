@@ -122,8 +122,9 @@ if __name__ == "__main__":
         count = 0
         for i in range(32,-256,-32):
             try:
-                runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
-                count+=1
+                if runtime_values.players[0].inventory[f"{plants_list.plants_list[count].name}_seed"] > 0:
+                        runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
+                        count+=1
             except:break
         del count
         runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
