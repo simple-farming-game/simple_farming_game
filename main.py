@@ -18,8 +18,11 @@ if __name__ == "__main__":
     from lib import setting
     from lib import ui
 
-    runtime_values.players.append(player.player(pygame.image.load(
-        "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size))
+    runtime_values.players.append(
+        player.player(pygame.image.load("assets/img/player.png"),
+        pygame.math.Vector2(900, 100),
+        runtime_values.screen, runtime_values.window_size)
+    )
     
     with open("data/setting.json", 'r', encoding='utf8') as setting_file: # 셋팅파일 열기
         runtime_values.setting = json.load(setting_file)
