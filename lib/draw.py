@@ -62,7 +62,6 @@ def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: 
 
     return inside
 
-
 def process(screen: pygame.Surface):
     draw_ground(screen)
     draw_plants()
