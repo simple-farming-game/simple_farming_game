@@ -16,6 +16,7 @@ if __name__ == "__main__":
     from lib import farm
     from lib import chat
     from lib import setting
+    from lib import ui
 
     runtime_values.players.append(player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size))
@@ -58,6 +59,8 @@ if __name__ == "__main__":
         "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3"),
         "windless" : pygame.mixer.Sound("assets/music/windless.mp3") # by 루나#9444
     }
+    # ui
+    testbtn = ui.Btn("hello",lambda: print("hello"), pygame.Vector2(0,0))
 
     # 세팅
     nick = input("nick : ")
@@ -144,6 +147,7 @@ if __name__ == "__main__":
         farm.grow_plants()
         farm.rot_plants(runtime_values)
         setting.setting()
+        testbtn.draw()
         pygame.display.update()  # 화면 업데이트
 
     runtime_values.logs.info("quit")
