@@ -60,6 +60,8 @@ def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: 
     screen.blit(border, pygame.math.Vector2(positon.x, positon.y+border_size))
     screen.blit(inside, positon)
 
+    return inside
+
 
 def process(screen: pygame.Surface):
     draw_ground(screen)

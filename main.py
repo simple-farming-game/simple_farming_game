@@ -15,6 +15,8 @@ if __name__ == "__main__":
     from lib import keyinput
     from lib import farm
     from lib import chat
+    from lib import setting
+    from lib import ui
 
     runtime_values.players.append(player.player(pygame.image.load(
         "assets/img/player.png"), pygame.math.Vector2(900, 100), runtime_values.screen, runtime_values.window_size))
@@ -51,21 +53,21 @@ if __name__ == "__main__":
     BLACK = pygame.Color(0, 0, 0)
     WHITE = pygame.Color(255, 255, 255)
     # 폰트
-    font_renderer = pygame.font.Font("assets/font/Galmuri.ttf", 20)
+    font_renderer = runtime_values.font
     # 노래
     musics: dict[str,pygame.mixer.Sound]={
         "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3"),
         "windless" : pygame.mixer.Sound("assets/music/windless.mp3") # by 루나#9444
     }
+    # ui
 
     # 세팅
+    nick = input("nick : ")
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
     if runtime_values.setting["musicStart"]:
         musics["windless"].play(-1)
-
-    nick = input("nick : ")
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
@@ -130,6 +132,8 @@ if __name__ == "__main__":
         del count
         runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
         
+
+
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
         # 채팅 드로우
@@ -143,6 +147,7 @@ if __name__ == "__main__":
         runtime_values.players[0].move(runtime_values.my_dir, df)
         farm.grow_plants()
         farm.rot_plants(runtime_values)
+        setting.setting()
         pygame.display.update()  # 화면 업데이트
 
     runtime_values.logs.info("quit")

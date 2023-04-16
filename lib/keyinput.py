@@ -130,9 +130,7 @@ def process(nick):
                 #             "rice": 100000, "riceSeed": 100000, "gold": 100000}
                 #         growCount = 5000
                 case pygame.K_ESCAPE:  # 메뉴
-                    if runtime_values.players[0].handle_item in plants_list.plants_list:
-                        pygame.mouse.set_visible(True)
-                    pygame.mouse.set_visible(False)
+                    runtime_values.on_setting = not runtime_values.on_setting
                 case pygame.K_EQUALS:
                     runtime_values.logs.debug(farm.tileMap[x][y])
                     try:runtime_values.logs.debug(farm.tileMap[x][y].water) # type: ignore

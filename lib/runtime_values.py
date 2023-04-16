@@ -32,3 +32,10 @@ running: bool
 players: list[player.player] = []
 my_dir: player.Direction = player.Direction.STOP
 fps: int = 100
+
+on_setting = False
+font = pygame.font.Font("assets/font/Galmuri.ttf", 20)
+
+SKYBLUE = pygame.Color(113, 199, 245)
+BLACK = pygame.Color(0, 0, 0)
+WHITE = pygame.Color(255, 255, 255)
