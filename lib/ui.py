@@ -10,7 +10,11 @@ class Btn:
         self.text = text
         self.pos = pos
         self.pressed = False
-
+        self.pos_tuple = (int(pos.x),int(pos.y))
+        self.btn_rect.center = self.pos_tuple
+        self.btn_rect.width = self.btn_rect.width*2
+        self.btn_rect.height = self.btn_rect.height*2
+ 
     def draw(self):
         self.btn_var = dw.draw_text_with_border(runtime_values.screen, runtime_values.font, self.text, runtime_values.WHITE, runtime_values.BLACK, 2, self.pos)
         self.musPos: tuple = pygame.mouse.get_pos()

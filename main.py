@@ -90,7 +90,7 @@ if __name__ == "__main__":
     def title():
         if runtime_values.setting["musicStart"]:
             musics["sfg"].play(-1)
-        start = ui.Btn("시작!", run, pygame.Vector2(0,0))
+        start = ui.Btn("시작!", run, pygame.Vector2(runtime_values.window_size[0]/2,runtime_values.window_size[1]/2))
         while runtime_values.running:
             musPos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)
