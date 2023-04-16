@@ -60,7 +60,6 @@ if __name__ == "__main__":
         "windless" : pygame.mixer.Sound("assets/music/windless.mp3") # by 루나#9444
     }
     # ui
-    testbtn = ui.Btn("hello",lambda: print("hello"), pygame.Vector2(0,0))
 
     # 세팅
     nick = input("nick : ")
@@ -133,6 +132,8 @@ if __name__ == "__main__":
         del count
         runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
         
+
+
         runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
         # 채팅 드로우
@@ -147,7 +148,6 @@ if __name__ == "__main__":
         farm.grow_plants()
         farm.rot_plants(runtime_values)
         setting.setting()
-        testbtn.draw()
         pygame.display.update()  # 화면 업데이트
 
     runtime_values.logs.info("quit")
