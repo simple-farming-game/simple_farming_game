@@ -5,8 +5,11 @@ if __name__ == "__main__":
     pygame.init()
     
     # runtime values
+    
     from lib import player
     from lib import runtime_values
+    runtime_values.logs.info("Start Loading")
+    runtime_values.logs.info("import lib...")
     from lib import imgs
     from lib.plants import plants_list
     from lib.block import block_list
@@ -17,6 +20,9 @@ if __name__ == "__main__":
     from lib import chat
     from lib import setting
     from lib import ui
+
+    runtime_values.logs.info("end")
+    runtime_values.logs.info("setting runtime_values...")
 
     runtime_values.players.append(
         player.player(pygame.image.load("assets/img/player.png"),
@@ -31,25 +37,26 @@ if __name__ == "__main__":
         
     runtime_values.running = True
 
+    runtime_values.logs.info("end")
+
     # 버전변수
     version = runtime_values.version
     version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
 
-    print(f'''
-                         _    ___       ___
-     _ __   _____      _| | _|_ _|_ __ |_ _|
-    | '_ \\ / _ \\ \\ /\\ / / |/ /| || '_ \\ | |
-    | | | |  __/\\ V  V /|   < | || | | || |
-    |_| |_|\\___| \\_/\\_/ |_|\\_\\___|_| |_|___| Games
-     ____         _____         ____
-    / ___|       |  ___|       / ___|
-    \\___ \\       | |_         | |  _
-     ___) |      | _|         | |_| |
-    |____/ imple |_|  arming   \\____|ame
+    runtime_values.logs.info(f"                     _    ___       ___")
+    runtime_values.logs.info(f" _ __   _____      _| | _|_ _|_ __ |_ _|")
+    runtime_values.logs.info(f"| '_ \\ / _ \\ \\ /\\ / / |/ /| || '_ \\ | |")
+    runtime_values.logs.info(f"| | | |  __/\\ V  V /|   < | || | | || |")
+    runtime_values.logs.info(f"|_| |_|\\___| \\_/\\_/ |_|\\_\\___|_| |_|___| Games")
+    runtime_values.logs.info(f" ____         _____         ____")
+    runtime_values.logs.info(f"/ ___|       |  ___|       / ___|")
+    runtime_values.logs.info(f"\\___ \\       | |_         | |  _")
+    runtime_values.logs.info(f" ___) |      | _|         | |_| |")
+    runtime_values.logs.info(f"|____/ imple |_|  arming   \\____|ame\n")
     
-    V. {version_text}''')
-    runtime_values.logs.info("Start Loading")
-    
+    runtime_values.logs.info(f"V. {version_text}")
+
+    runtime_values.logs.info("setting var...")
     # 변수
     # colors
     SKYBLUE = pygame.Color(113, 199, 245)
@@ -69,6 +76,8 @@ if __name__ == "__main__":
     pygame.display.set_caption(f"sfg {version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load('assets/img/icon.png'))
     pygame.mouse.set_visible(False)
+
+    runtime_values.logs.info("end")
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
