@@ -72,6 +72,21 @@ if __name__ == "__main__":
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
+
+    def opening():
+        for i in range(1*100):
+            runtime_values.clock.tick(runtime_values.fps)
+            musPos: tuple = pygame.mouse.get_pos()
+            runtime_values.screen.fill(SKYBLUE)
+            draw.draw_text_with_border( # 좌표
+                runtime_values.screen, font_renderer,
+                "newkini",
+                WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
+            keyinput.process(nick)
+            runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
+            pygame.display.update()  # 화면 업데이트
+        title()
+
     def title():
         if runtime_values.setting["musicStart"]:
             musics["sfg"].play(-1)
@@ -168,7 +183,7 @@ if __name__ == "__main__":
             setting.setting()
             pygame.display.update()  # 화면 업데이트
 
-    title()
+    opening()
 
     runtime_values.logs.info("quit")
     runtime_values.logs.save()
