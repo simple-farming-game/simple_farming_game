@@ -6,6 +6,7 @@ from lib import farm
 from lib import draw
 from lib import runtime_values
 from lib.plants import plants_list
+from lib.block import block_list
 
 
 
@@ -56,11 +57,18 @@ def import_save() -> bool:
                 runtime_values.logs.info(f"import Tile : {j}")
                 farm.tileMap[count].append(getattr(farm.Tiles, j))
             except:
-                for pl in plants_list.plants_list:
-                    if pl.name == j:
-                        farm.tileMap[count].append(pl)
-                        farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
-                        print(tempPos)
+                if j in plants_list.plants_name:
+                    for pl in plants_list.plants_list:
+                        if pl.name == j:
+                            farm.tileMap[count].append(pl)
+                            farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
+                            print(tempPos)
+                elif j in block_list.block_list:
+                    for bl in block_list.block_list:
+                        if bl.name == j:
+                            farm.tileMap[count].append(bl)
+                            farm.tileMap[count][-1] = bl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
+                            print(tempPos)
             tempPos[1]+=1
         count += 1           
         tempPos[1]=0

@@ -8,7 +8,7 @@ block_type = Union[
     sprinkle.Sprinkle
 ]
 block_list = cast(tuple[block_type], get_args(block_type))
-
+block_name = [i.name for i in block_list]
 def next_block(block: block_type) -> block_type:
     now_index: int
     for index, item in enumerate(block_list):
