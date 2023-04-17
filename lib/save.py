@@ -63,7 +63,7 @@ def import_save() -> bool:
                             farm.tileMap[count].append(pl)
                             farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
                             print(tempPos)
-                elif j in block_list.block_list:
+                elif j in block_list.block_name:
                     for bl in block_list.block_list:
                         if bl.name == j:
                             farm.tileMap[count].append(bl)
