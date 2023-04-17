@@ -15,7 +15,8 @@ def write_save():
             "version": runtime_values.version,
             "tile": list(),
             "player_pos_x": runtime_values.players[0].pos.x,
-            "player_pos_y": runtime_values.players[0].pos.y
+            "player_pos_y": runtime_values.players[0].pos.y,
+            "inv": json.dumps(runtime_values.players[0].inventory)
         }
         data["tile"] = []
         count = 0
@@ -68,19 +69,7 @@ def import_save() -> bool:
             
     runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
     runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
+    runtime_values.players[0].inventory = json.loads(saveData["inv"])
     runtime_values.logs.info("불러오기")
     del saveData
     return True
-
-
-def import_legacy_save(version: Tuple[str, int, int, int], saveData) -> bool:
-    if version == ("non", 0, 0, 0):
-        # alpha 1.1.1
-        runtime_values.players[0].inventory = saveData["inv"]
-        farm.tileMap = saveData["tile"]
-        runtime_values.players[0].pos = saveData["pos"]
-        draw.draw_ground(runtime_values.screen)
-        runtime_values.logs.info("불러오기")
-        return True
-    else:
-        return False
