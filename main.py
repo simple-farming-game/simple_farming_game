@@ -113,7 +113,7 @@ if __name__ == "__main__":
                 runtime_values.screen, font_renderer,
                 "newkini",
                 WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
-            keyinput.process(nick)
+            keyinput.process(nick)#
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
         title()
