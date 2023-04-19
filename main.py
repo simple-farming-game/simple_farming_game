@@ -99,11 +99,21 @@ if __name__ == "__main__":
             print("최신 버전이 있습니다. 릴리즈 페이지에서 업데이트 해주세요.")
         else:
             print("최신 버전을 사용 중입니다.")
+        del latest_ver_num
+        del current_ver_num
     else:
         if var_ranking[latest_var[0]] > var_ranking[version[0]]:
             print("최신 버전이 있습니다. 릴리즈 페이지에서 업데이트 해주세요.")
         else:
             print("최신 버전을 사용 중입니다.")
+    
+    del latest_response
+    del latest_releases
+    del latest_tag
+    del latest_var
+    del var_ranking
+
+
     def opening():
         for i in range(1*100):
             runtime_values.clock.tick(runtime_values.fps)
