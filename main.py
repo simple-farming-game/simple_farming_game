@@ -101,7 +101,6 @@ if __name__ == "__main__":
                 break
             x += (target_x - x)/15
 
-            print(x)
             keyinput.process(nick)
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
