@@ -1,5 +1,6 @@
 import json
 import requests
+import webbrowser
 
 def var_check(version):
         latest_response = requests.get('https://api.github.com/repos/newkincode/simple_farming_game/releases/latest')
@@ -16,6 +17,7 @@ def var_check(version):
             current_ver_num = [int(x) for x in version[1:]]
             if latest_ver_num > current_ver_num:
                 print("최신 버전이 있습니다. 릴리즈 페이지에서 업데이트 해주세요.")
+                webbrowser.open("https://github.com/newkincode/simple_farming_game")
             else:
                 print("최신 버전을 사용 중입니다.")
             del latest_ver_num
@@ -23,6 +25,7 @@ def var_check(version):
         else:
             if var_ranking[latest_var[0]] > var_ranking[version[0]]:
                 print("최신 버전이 있습니다. 릴리즈 페이지에서 업데이트 해주세요.")
+                webbrowser.open("https://github.com/newkincode/simple_farming_game")
             else:
                 print("최신 버전을 사용 중입니다.")
         
