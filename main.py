@@ -84,6 +84,7 @@ if __name__ == "__main__":
 
     def opening():
         x=0
+        target_x = runtime_values.window_size[0]/2
         while True:
             runtime_values.clock.tick(runtime_values.fps)
             musPos: tuple = pygame.mouse.get_pos()
@@ -95,10 +96,12 @@ if __name__ == "__main__":
             
             if x < 480 and 479 < x:
                 pygame.time.wait(1000)
-                x+=1
-            elif x < 480:
-                x += (runtime_values.window_size[0] - x)/15
-            else: x += (runtime_values.window_size[0]/2 - x)/15
+                target_x = runtime_values.window_size[0]
+            elif x < 960 and 959 < x:
+                break
+            x += (target_x - x)/15
+
+            print(x)
             keyinput.process(nick)
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
