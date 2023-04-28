@@ -83,14 +83,19 @@ if __name__ == "__main__":
     runtime_values.logs.info("Finish Loading")
 
     def opening():
-        for i in range(1*100):
+        x=0
+        while True:
             runtime_values.clock.tick(runtime_values.fps)
             musPos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)
             draw.draw_text_with_border( # 좌표
                 runtime_values.screen, font_renderer,
                 "newkini",
-                WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
+                WHITE, BLACK, 2, pygame.math.Vector2(x, runtime_values.window_size[1]/2))
+            x += (runtime_values.window_size[0]/2 - x)/15
+            print(x)
+            if x < 480 and 479 < x:
+                break
             keyinput.process(nick)
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
