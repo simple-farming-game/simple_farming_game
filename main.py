@@ -110,12 +110,14 @@ if __name__ == "__main__":
     def title():
         if runtime_values.setting["musicStart"]:
             musics["sfg"].play(-1)
-        start = ui.Btn("시작!", run, pygame.Vector2(runtime_values.window_size[0]/2,runtime_values.window_size[1]/2))
+        start = ui.Btn("시작!", run, pygame.Vector2(runtime_values.window_size[0]-runtime_values.window_size[0]*2,runtime_values.window_size[1]/2))
         while runtime_values.running:
             musPos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)
             keyinput.process(nick)
             start.draw()
+            start.pos.x += (runtime_values.window_size[0]/2 - start.pos.x)/15
+
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
         musics["sfg"].stop()
