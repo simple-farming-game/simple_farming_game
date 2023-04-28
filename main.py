@@ -92,10 +92,13 @@ if __name__ == "__main__":
                 runtime_values.screen, font_renderer,
                 "newkini",
                 WHITE, BLACK, 2, pygame.math.Vector2(x, runtime_values.window_size[1]/2))
-            x += (runtime_values.window_size[0]/2 - x)/15
-            print(x)
+            
             if x < 480 and 479 < x:
-                break
+                pygame.time.wait(1000)
+                x+=1
+            elif x < 480:
+                x += (runtime_values.window_size[0] - x)/15
+            else: x += (runtime_values.window_size[0]/2 - x)/15
             keyinput.process(nick)
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
