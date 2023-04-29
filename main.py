@@ -19,6 +19,7 @@ if __name__ == "__main__":
     from lib import ui
     from lib import defs
     from lib import drawObj
+    import webbrowser
 
     runtime_values.logs.info("end")
     runtime_values.logs.info("setting runtime_values...")
@@ -124,6 +125,8 @@ if __name__ == "__main__":
         musics["sfg"].stop()
         if runtime_values.setting["musicStart"]:
             musics["windless"].play(-1)
+        codemos_btn = ui.Btn("코드모스", lambda: webbrowser.open("https://discord.gg/codemos"), pygame.math.Vector2(10, 110))
+        official_discord_btn = ui.Btn("공식디코", lambda: webbrowser.open("https://discord.gg/TpJPpHwSnM"), pygame.math.Vector2(30*4+10, 110))
         while runtime_values.running:
             df = runtime_values.clock.tick(runtime_values.fps) / 1000
             runtime_values.clock.tick(runtime_values.fps)
@@ -136,7 +139,9 @@ if __name__ == "__main__":
             # 그외
             draw.draw_plants() # 식물
             draw.draw_players() # 플래이어
-            
+            # ui
+            codemos_btn.draw()
+            official_discord_btn.draw()
             drawObj.drawObj()
 
             # 처리
