@@ -127,7 +127,7 @@ if __name__ == "__main__":
     def run():
         pygame.mixer.music.stop()
         pygame.mixer.music.load(musics["windless"])
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
         while runtime_values.running:
             df = runtime_values.clock.tick(runtime_values.fps) / 1000
             runtime_values.clock.tick(runtime_values.fps)
