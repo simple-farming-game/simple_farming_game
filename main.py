@@ -67,9 +67,9 @@ if __name__ == "__main__":
     # 폰트
     font_renderer = runtime_values.font
     # 노래
-    musics: dict[str,pygame.mixer.Sound]={
-        "sfg" : pygame.mixer.Sound("assets/music/sfg.mp3"),
-        "windless" : pygame.mixer.Sound("assets/music/windless.mp3") # by 루나#9444
+    musics: dict[str,str]={
+        "sfg" : "assets/music/sfg.mp3",
+        "windless" : "assets/music/windless.mp3" # by 루나#9444
     }
     # ui
 
@@ -109,8 +109,8 @@ if __name__ == "__main__":
         title()
 
     def title():
-        if runtime_values.setting["musicStart"]:
-            musics["sfg"].play(-1)
+        pygame.mixer.music.load(musics["sfg"])
+        pygame.mixer.music.play()
         start = ui.Btn("시작!", run, pygame.Vector2(runtime_values.window_size[0]/2,runtime_values.window_size[1]/2))
         codemos_btn = ui.Btn("코드모스", lambda: webbrowser.open("https://discord.gg/codemos"), pygame.math.Vector2(runtime_values.window_size[0]/2-30*4+10, runtime_values.window_size[1]/2+25))
         official_discord_btn = ui.Btn("공식디코", lambda: webbrowser.open("https://discord.gg/TpJPpHwSnM"), pygame.math.Vector2(runtime_values.window_size[0]/2+30*4+10, runtime_values.window_size[1]/2+25))
@@ -123,22 +123,19 @@ if __name__ == "__main__":
             start.draw()
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
-        musics["sfg"].stop()
 
     def run():
-        musics["sfg"].stop()
-        if runtime_values.setting["musicStart"]:
-            musics["windless"].play(-1)
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(musics["windless"])
+        pygame.mixer.music.play()
         while runtime_values.running:
             df = runtime_values.clock.tick(runtime_values.fps) / 1000
             runtime_values.clock.tick(runtime_values.fps)
 
-            if runtime_values.setting["musicStart"] and not pygame.mixer.music.get_busy():
-                # 현재 노래가 완전히 종료되었는지 확인
-                if pygame.mixer.music.get_pos() == -1:
-                    musics["windless"].play(-1)
+            if runtime_values.setting["musicStart"]:
+                pygame.mixer.music.unpause()
             else:
-                musics["windless"].stop()
+                pygame.mixer.music.pause()
 
             # 그리기
             process.process()
@@ -164,5 +161,5 @@ if __name__ == "__main__":
 
     runtime_values.logs.info("quit")
     runtime_values.logs.save()
-    musics["windless"].stop()
+    pygame.mixer.music.stop()
     pygame.quit()
