@@ -133,8 +133,12 @@ if __name__ == "__main__":
             df = runtime_values.clock.tick(runtime_values.fps) / 1000
             runtime_values.clock.tick(runtime_values.fps)
 
-            if runtime_values.setting["musicStart"] and not pygame.mixer.music.get_busy(): musics["windless"].play(-1)
-            else: musics["windless"].stop()
+            if runtime_values.setting["musicStart"] and not pygame.mixer.music.get_busy():
+                # 현재 노래가 완전히 종료되었는지 확인
+                if pygame.mixer.music.get_pos() == -1:
+                    musics["windless"].play(-1)
+            else:
+                musics["windless"].stop()
 
             # 그리기
             process.process()
