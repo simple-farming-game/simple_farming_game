@@ -1,0 +1,8 @@
+**/*/__pycache__/
+*.pyc
+build/*
+dist/*
+main.spec
+*.sfgsave
+log/
+dist.zip
