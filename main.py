@@ -53,6 +53,7 @@ if __name__ == "__main__":
     runtime_values.logs.info(f"\\___ \\       | |_         | |  _")
     runtime_values.logs.info(f" ___) |      | _|         | |_| |")
     runtime_values.logs.info(f"|____/ imple |_|  arming   \\____|ame\n")
+    runtime_values.logs.info(f"코드모스 참여링크 : 디코쥐쥐 codemos")
     
     runtime_values.logs.info(f"V. {version_text}")
 
