@@ -16,7 +16,8 @@ class Btn:
         self.btn_rect.height = self.btn_rect.height*2
  
     def draw(self):
-        self.btn_var = dw.draw_text_with_border(runtime_values.screen, runtime_values.font, self.text, runtime_values.BLUE, runtime_values.BLACK, 2, self.pos)
+        if not self.pressed:
+            self.btn_var = dw.draw_text_with_border(runtime_values.screen, runtime_values.font, self.text, runtime_values.BLUE, runtime_values.BLACK, 2, self.pos)
         self.musPos: tuple = pygame.mouse.get_pos()
         if self.btn_rect.collidepoint(self.musPos):
             if pygame.mouse.get_pressed()[0] == 1 and not self.pressed:
@@ -24,3 +25,4 @@ class Btn:
                 self._def()
         else:
             self.pressed = False
+            self.btn_var = dw.draw_text_with_border(runtime_values.screen, runtime_values.font, self.text, runtime_values.WHITE, runtime_values.BLACK, 2, self.pos)
