@@ -11,6 +11,7 @@ from lib import help
 from lib.block import block_list
 import random
 from lib import chat
+from lib import debug
 
 SELECT_KEY = {
     pygame.K_1 : 1,
@@ -81,6 +82,7 @@ def process(nick):
     for event in pygame.event.get():
         moving(event)
         select(event)
+        debug.debug(event)
         if event.type == pygame.QUIT:
             runtime_values.running = False
         if event.type == pygame.KEYDOWN:
@@ -131,12 +133,7 @@ def process(nick):
                 #         growCount = 5000
                 case pygame.K_ESCAPE:  # 메뉴
                     runtime_values.on_setting = not runtime_values.on_setting
-                case pygame.K_EQUALS:
-                    runtime_values.logs.debug(farm.tileMap[x][y])
-                    try:runtime_values.logs.debug(farm.tileMap[x][y].water) # type: ignore
-                    except:pass
-                case pygame.K_MINUS:
-                    runtime_values.logs.debug(runtime_values.players[0].handle_item)
+                
                 case pygame.K_h:
                     help.help()
                 case pygame.K_n:
