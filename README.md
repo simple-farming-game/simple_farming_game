@@ -50,7 +50,7 @@ $ python main.py
 -   [x] 아이템을 bar로 표시하기(but 아직 보완할 부분이 많음)
 -   [ ] 클릭 인벤토리
 -   [ ] 상자에 아이템 넣어서 판매
--   [ ] 게임 내에서 설정을 바꿀수 있을수 있도록 변경
+-   [x] 게임 내에서 설정을 바꿀수 있을수 있도록 변경
 -   [ ] 도전과제 만들기
 -   [ ] 상자 제작
 -   [ ] 타이틀화면 만들기
@@ -58,5 +58,7 @@ $ python main.py
 ## 기여자
 
 -   [newkincode](https://github.com/newkincode) - 메인테이너
+-   [LynHan1110](https://github.com/LynHan1110) - 예정
 -   [ky0422](https://github.com/ky0422) - `README.md` 작성, 그 외 버그 수정
 -   [kdh8219](https://github.com/kdh8219) - 코드 리팩터링, 첫번째 관심자
+-   [copilot](https://github.com/features/copilot) - 코드 작성 도우미
