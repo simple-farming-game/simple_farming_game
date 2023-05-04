@@ -12,7 +12,7 @@ font_renderer = runtime_values.font
 SKYBLUE = pygame.Color(113, 199, 245)
 BLACK = pygame.Color(0, 0, 0)
 WHITE = pygame.Color(255, 255, 255)
-#
+
 def drawObj():
             musPos: tuple = pygame.mouse.get_pos()
     # 글시
