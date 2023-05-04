@@ -12,7 +12,7 @@ font_renderer = runtime_values.font
 SKYBLUE = pygame.Color(113, 199, 245)
 BLACK = pygame.Color(0, 0, 0)
 WHITE = pygame.Color(255, 255, 255)
-
+#
 def drawObj():
             musPos: tuple = pygame.mouse.get_pos()
     # 글시
@@ -61,8 +61,6 @@ def drawObj():
                 except:break
             del count
             runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
-            
-
 
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 
