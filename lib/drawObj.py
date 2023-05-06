@@ -38,31 +38,33 @@ def drawObj():
             # itmebar item
             count = 0
             for i in range(32,-256,-32):
-                    # TODO: 빈칸을 선택할 경우 none을 선택하게 변경, 한게가 없어지면 뒤로 밀려나게 하기
-                    if runtime_values.players[0].inventory.items() in plants_list.plants_name:
-                        runtime_values.screen.blit(
-                            plants_list.plants_image[
-                                plants_list.plants_name.index(
-                                    list(runtime_values.players[0]. # type: ignore
-                                        inventory.items()
-                                    ))], 
-                                    [28*32-i,20*32-32])
-                    elif runtime_values.players[0].inventory.items() in block_list.block_name:
-                        runtime_values.screen.blit(
-                            block_list.block_image[
-                                block_list.block_name.index(
-                                    list(runtime_values.players[0]. # type: ignore
-                                        inventory.items()
-                                    ))], 
-                                    [28*32-i,20*32-32])
-                    elif runtime_values.players[0].inventory.items() in list(item.Items.__members__):
-                        runtime_values.screen.blit(
-                            list(item.Items.value[1])[
-                                list(item.Items.value[0])(
-                                    list(runtime_values.players[0]. # type: ignore
-                                        inventory.items()
-                                    ))], 
-                                    [28*32-i,20*32-32])
+                    try:
+                        # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
+                        if list(runtime_values.players[0].inventory.items())[int(i/32-1)] in plants_list.plants_name:
+                            runtime_values.screen.blit(
+                                plants_list.plants_image[
+                                    plants_list.plants_name.index(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        ))], 
+                                        [28*32-i,20*32-32])
+                        elif list(runtime_values.players[0].inventory.items())[int(i/32-1)] in block_list.block_name:
+                            runtime_values.screen.blit(
+                                block_list.block_image[
+                                    block_list.block_name.index(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        ))], 
+                                        [28*32-i,20*32-32])
+                        elif list(runtime_values.players[0].inventory.items())[int(i/32-1)] in list(item.Items.__members__):
+                            runtime_values.screen.blit(
+                                list(item.value_list[1])[
+                                    list(item.value_list[0])(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        ))], 
+                                        [28*32-i,20*32-32])
+                    except:break
             del count
             runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
 

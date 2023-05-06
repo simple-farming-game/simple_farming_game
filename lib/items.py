@@ -8,4 +8,5 @@ class Items(Enum):
     WATER = (auto(), "assets/img/items/water.png")
     NONE = (auto(), "assets/img/items/none.png")
 
-print(Items.HOE.value[1])
+value_list = [[i.value[0] for i in Items],[i.value[1] for i in Items]]
+print(value_list[0])
