@@ -28,20 +28,13 @@ class Direction(Enum):
 class player(Object):
     speed: float = 3
     inventory: Dict[str, int] = {}
+    inventory_size: int = 8
+    gold: int = 0
     handle_item: Union[plants_list.plants_type,block_list.block_type, Items] = Items.NONE
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
         super().__init__(image, pos, screen)
         self.window_size = window_size
-
-        # init inventory
-        for plant in plants_list.plants_list:
-            self.inventory[f"{plant.name}"] = 10
-            self.inventory[f"{plant.name}_seed"] = 10
-        for block in block_list.block_list:
-            self.inventory[f"{block.name}"] = 10
-        self.inventory["VITAMIN"] = 10
-        self.inventory["gold"] = 0
 
     def move(self, direction: Direction, frame):
         match direction:

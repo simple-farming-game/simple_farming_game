@@ -45,7 +45,7 @@ def drawObj():
                 
             draw.draw_text_with_border( # 돈
                 runtime_values.screen, font_renderer,
-                f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
+                f"{runtime_values.lang['gold']} : {runtime_values.players[0].gold}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
             
             # ui
