@@ -151,7 +151,14 @@ def select(event: pygame.event.Event):
         if event.key in SELECT_KEY.keys():
             select_bar = SELECT_KEY[event.key]
             try:
-                runtime_values.players[0].handle_item = list(runtime_values.players[0].inventory.items())[select_bar-1][0] # type: ignore
+                print(list(runtime_values.players[0].inventory.items())[select_bar-1][0])
+                if list(runtime_values.players[0].inventory.items())[select_bar-1][0] in block_list.block_name:
+                    runtime_values.players[0].handle_item = block_list.block_list[block_list.block_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                elif list(runtime_values.players[0].inventory.items())[select_bar-1][0] in plants_list.plants_name:
+                    print(plants_list.plants_list[plants_list.plants_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])])
+                    runtime_values.players[0].handle_item = plants_list.plants_list[plants_list.plants_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                else:
+                    runtime_values.players[0].handle_item = list(runtime_values.players[0].inventory.items())[select_bar-1][0] # type: ignore
             except:pass
 def moving(event: pygame.event.Event):
     if event.type == pygame.KEYDOWN:
