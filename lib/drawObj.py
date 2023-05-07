@@ -37,7 +37,7 @@ def drawObj():
 
             # itmebar item
             count = 0
-            for i in range(32,-256,-32):
+            for i in range(32,256,32):
                 try:
                     # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
                     if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
@@ -46,7 +46,7 @@ def drawObj():
                                 plants_list.plants_name.index(
                                     list(runtime_values.players[0].inventory.items())[count][0] # type: ignore
                                 )], [28*32-i+32,19*32])
-                        
+
                     elif list(runtime_values.players[0].inventory.items())[count][0] in block_list.block_name:
                         runtime_values.screen.blit(
                             block_list.block_image[
@@ -55,7 +55,7 @@ def drawObj():
                                         inventory.items()
                                     ))], 
                                     [28*32-i+32,19*32])
-                        
+
                     else:
                         runtime_values.screen.blit(
                             list(item.value_list[1])[
