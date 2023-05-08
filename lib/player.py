@@ -27,7 +27,7 @@ class Direction(Enum):
 
 class player(Object):
     speed: float = 3
-    inventory: Dict[str, int] = {'rice': 1, "SHOVEL": 0}
+    inventory: Dict[str, int] = {}
     inventory_size: int = 8
     gold: int = 0
     handle_item: Union[plants_list.plants_type,block_list.block_type, items.Items] = items.Items.NONE
@@ -37,8 +37,8 @@ class player(Object):
         self.window_size = window_size
 
         for i in items.value_name:
-            self.inventory[i] = 1
-
+            self.inventory[f'{i}'] = 1
+            
     def move(self, direction: Direction, frame):
         match direction:
             case Direction.LEFT:
