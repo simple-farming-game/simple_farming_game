@@ -58,9 +58,7 @@ def drawObj():
                     else:
                         runtime_values.screen.blit(
                             pygame.image.load(
-                                item.get_value(
-                                    list(runtime_values.players[0].inventory.keys())[count][0]
-                                )[1]
+                                list(runtime_values.players[0].inventory.keys())[count][0].value[1] # type: ignore
                             ), [28*32-i+32,19*32]
                         )
                     count += 1
