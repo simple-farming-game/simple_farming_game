@@ -7,7 +7,7 @@ import random
 from lib.Object import Object
 from lib.plants import plants_list
 from lib.farm import tileMap, Tiles
-from lib.items import Items
+from lib import items
 from lib.block import block_list
 
 
@@ -30,11 +30,14 @@ class player(Object):
     inventory: Dict[str, int] = {'rice': 1, "SHOVEL": 0}
     inventory_size: int = 8
     gold: int = 0
-    handle_item: Union[plants_list.plants_type,block_list.block_type, Items] = Items.NONE
+    handle_item: Union[plants_list.plants_type,block_list.block_type, items.Items] = items.Items.NONE
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
         super().__init__(image, pos, screen)
         self.window_size = window_size
+
+        for i in items.value_name:
+            self.inventory[i] = 1
 
     def move(self, direction: Direction, frame):
         match direction:
