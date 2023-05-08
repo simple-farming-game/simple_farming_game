@@ -37,7 +37,7 @@ def drawObj():
 
             # itmebar item
             count = 0
-            for i in range(32,256,32):
+            for i in range(0,256,32):
                 try:
                     # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
                     if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
