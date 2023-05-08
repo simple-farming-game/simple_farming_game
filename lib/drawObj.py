@@ -38,7 +38,6 @@ def drawObj():
             # itmebar item
             count = 0
             for i in range(0,256,32):
-                try:
                     # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
                     if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
                         runtime_values.screen.blit(
@@ -58,14 +57,13 @@ def drawObj():
 
                     else:
                         runtime_values.screen.blit(
-                            list(item.value_list[1])[
-                                list(item.value_list[0])(
-                                    list(runtime_values.players[0]. # type: ignore
-                                        inventory.items()
-                                    ))], 
-                                    [28*32-i+32,19*32])
+                            pygame.image.load(
+                                item.get_value(
+                                    list(runtime_values.players[0].inventory.keys())[count][0]
+                                )[1]
+                            ), [28*32-i+32,19*32]
+                        )
                     count += 1
-                except:break
             del count
             runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
 
