@@ -9,6 +9,7 @@ class Items(Enum):
     NONE = (auto(), "assets/img/items/none.png")
 
 value_list = [[i.value[0] for i in Items],[i.value[1] for i in Items]]
+value_name = [i.name for i in Items]
 def get_value(name):
-    return value_list[0][value_list[1].index(name)]
+    return value_list[1][value_name.index(name)]
 print(value_list[0])

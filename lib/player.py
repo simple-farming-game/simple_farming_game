@@ -27,7 +27,7 @@ class Direction(Enum):
 
 class player(Object):
     speed: float = 3
-    inventory: Dict[Items | str, int] = {'rice': 1, Items.SHOVEL: 0}
+    inventory: Dict[str, int] = {'rice': 1, "SHOVEL": 0}
     inventory_size: int = 8
     gold: int = 0
     handle_item: Union[plants_list.plants_type,block_list.block_type, Items] = Items.NONE

@@ -39,28 +39,35 @@ def drawObj():
             count = 0
             for i in range(0,256,32):
                     # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
-                    if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
-                        runtime_values.screen.blit(
-                            plants_list.plants_image[
-                                plants_list.plants_name.index(
-                                    list(runtime_values.players[0].inventory.items())[count][0] # type: ignore
-                                )], [28*32-i+32,19*32])
+                    try:
+                        if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
+                            runtime_values.screen.blit(
+                                plants_list.plants_image[
+                                    plants_list.plants_name.index(
+                                        list(runtime_values.players[0].inventory.items())[count][0] # type: ignore
+                                    )], [28*32-i+32,19*32])
 
-                    elif list(runtime_values.players[0].inventory.items())[count][0] in block_list.block_name:
-                        runtime_values.screen.blit(
-                            block_list.block_image[
-                                block_list.block_name.index(
-                                    list(runtime_values.players[0]. # type: ignore
-                                        inventory.items()
-                                    ))], 
-                                    [28*32-i+32,19*32])
+                        elif list(runtime_values.players[0].inventory.items())[count][0] in block_list.block_name:
+                            runtime_values.screen.blit(
+                                block_list.block_image[
+                                    block_list.block_name.index(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        ))], 
+                                        [28*32-i+32,19*32])
 
-                    else:
-                        runtime_values.screen.blit(
-                            pygame.image.load(
-                                list(runtime_values.players[0].inventory.keys())[count][0].value[1] # type: ignore
-                            ), [28*32-i+32,19*32]
-                        )
+                        else:
+                            runtime_values.screen.blit(
+                                pygame.image.load(
+                                    item.get_value(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        )[count][0]
+                                    )
+                                ), [28*32-i+32,19*32]
+                            )
+                    except IndexError:
+                          break
                     count += 1
             del count
             runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
