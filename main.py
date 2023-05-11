@@ -87,7 +87,7 @@ if __name__ == "__main__":
     def opening():
         x=0
         target_x = runtime_values.window_size[0]/2
-        while True:
+        while runtime_values.running:
             runtime_values.clock.tick(runtime_values.fps)
             musPos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)

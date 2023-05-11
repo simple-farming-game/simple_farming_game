@@ -13,6 +13,7 @@ plants_type = Union[
     carrots.Carrots
 ]
 plants_list = cast(tuple[plants_type], get_args(plants_type))
+print(plants_list)
 plants_name = [i.name for i in plants_list]
 plants_image = [pygame.transform.scale(pygame.image.load(f"assets/img/plants/{i.name}/seed.png"),(32,32)) for i in plants_list]
 

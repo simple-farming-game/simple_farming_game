@@ -3,6 +3,7 @@ import lib.runtime_values as runtime_values
 import lib.imgs as imgs
 import lib.block.block_list as block_list
 import lib.plants.plants_list as plants_list
+import lib.items as item
 from lib import keyinput
 from lib import chat
 import pygame
@@ -25,27 +26,10 @@ def drawObj():
                 runtime_values.screen, font_renderer,
                 f"{runtime_values.players[0].get_tile_pos().x} {runtime_values.players[0].get_tile_pos().y}",
                 WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
-            
-            draw.draw_text_with_border( # 셀렉트 아이템
-                runtime_values.screen, font_renderer,
-                f"{runtime_values.lang['select']} : {runtime_values.lang['items'][runtime_values.players[0].handle_item.name]}",
-                WHITE, BLACK, 2, pygame.math.Vector2(10, 35))
-            
-            if runtime_values.players[0].handle_item in plants_list.plants_list: # type: ignore
-                draw.draw_text_with_border( # 아이템 겟수
-                    runtime_values.screen, font_renderer,
-                    f"{runtime_values.lang['count']} : {str(runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name])} {runtime_values.lang['seed']} : {runtime_values.players[0].inventory[f'{runtime_values.players[0].handle_item.name}_seed']}",
-                    WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
-                
-            if runtime_values.players[0].handle_item.name == "VITAMIN" or runtime_values.players[0].handle_item in block_list.block_list:
-                draw.draw_text_with_border( # 아이템 겟수
-                    runtime_values.screen, font_renderer,
-                    f"{runtime_values.lang['count']} : {runtime_values.players[0].inventory[runtime_values.players[0].handle_item.name]}",
-                    WHITE, BLACK, 2, pygame.math.Vector2(10, 60))
                 
             draw.draw_text_with_border( # 돈
                 runtime_values.screen, font_renderer,
-                f"{runtime_values.lang['gold']} : {runtime_values.players[0].inventory['gold']}",
+                f"{runtime_values.lang['gold']} : {runtime_values.players[0].gold}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
             
             # ui
@@ -53,12 +37,38 @@ def drawObj():
 
             # itmebar item
             count = 0
-            for i in range(32,-256,-32):
-                try: # TODO: 빈칸을 선택할 경우 none을 선택하게 변경, 한게가 없어지면 뒤로 밀려나게 하기
-                    if runtime_values.players[0].inventory[f"{plants_list.plants_list[count].name}_seed"] > 0:
-                        runtime_values.screen.blit(plants_list.plants_image[count], [28*32+i,20*32-32])
-                    count+=1
-                except:break
+            for i in range(0,256,32):
+                    # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
+                    try:
+                        if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
+                            runtime_values.screen.blit(
+                                plants_list.plants_image[
+                                    plants_list.plants_name.index(
+                                        list(runtime_values.players[0].inventory.items())[count][0] # type: ignore
+                                    )], [28*32-i+32,19*32])
+
+                        elif list(runtime_values.players[0].inventory.items())[count][0] in block_list.block_name:
+                            runtime_values.screen.blit(
+                                block_list.block_image[
+                                    block_list.block_name.index(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        ))], 
+                                        [28*32-i+32,19*32])
+
+                        else:
+                            runtime_values.screen.blit(
+                                pygame.image.load(
+                                    item.get_value(
+                                        list(runtime_values.players[0]. # type: ignore
+                                            inventory.items()
+                                        )[count][0]
+                                    )
+                                ), [28*32-i+32,19*32]
+                            )
+                    except IndexError:
+                          break
+                    count += 1
             del count
             runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
 

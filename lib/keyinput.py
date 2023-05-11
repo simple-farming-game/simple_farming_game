@@ -3,6 +3,7 @@ import pygame
 import lib.save
 from lib.plants import plants_list
 from lib.items import Items
+from lib import items
 from lib import runtime_values
 from lib import farm
 from lib import player
@@ -78,7 +79,7 @@ def use():
 
 def process(nick):
     global select_bar
-    x, y = map(int, runtime_values.players[0].get_tile_pos())
+    x, y = map(int, runtime_values.players[0].get_tile_pos()) # type: ignore
     for event in pygame.event.get():
         moving(event)
         select(event)
@@ -151,7 +152,13 @@ def select(event: pygame.event.Event):
         if event.key in SELECT_KEY.keys():
             select_bar = SELECT_KEY[event.key]
             try:
-                runtime_values.players[0].handle_item = plants_list.plants_list[select_bar-1]
+                if list(runtime_values.players[0].inventory.items())[select_bar-1][0] in block_list.block_name:
+                    runtime_values.players[0].handle_item = block_list.block_list[block_list.block_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                elif list(runtime_values.players[0].inventory.items())[select_bar-1][0] in plants_list.plants_name:
+                    runtime_values.players[0].handle_item = plants_list.plants_list[plants_list.plants_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                else:
+                    print(list(runtime_values.players[0].inventory.items())[select_bar-1][0])
+                    runtime_values.players[0].handle_item = list(items.Items)[items.value_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])] # type: ignore
             except:pass
 def moving(event: pygame.event.Event):
     if event.type == pygame.KEYDOWN:
