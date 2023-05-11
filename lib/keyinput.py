@@ -74,6 +74,9 @@ def use():
         else:runtime_values.logs.info("Fail to using")
         runtime_values.logs.info("Vitamin")
 
+    elif isinstance(tile, block_list.block_list[1]): # type: ignore
+        tile.interact() # type: ignore
+
     else:
         runtime_values.logs.info("Fail to using")
 

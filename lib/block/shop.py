@@ -12,3 +12,6 @@ class Shop(Block.Block):
     
     def init(self):
         pass
+    
+    def interact(self):
+        print("shop")
