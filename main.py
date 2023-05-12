@@ -22,7 +22,7 @@ if __name__ == "__main__":
     import webbrowser
 
     runtime_values.logs.info("end")
-    runtime_values.logs.info("setting runtime_values...")
+    runtime_values.logs.info("init...")
 
     runtime_values.players.append(
         player.player(pygame.image.load("assets/img/player.png"),
@@ -36,6 +36,8 @@ if __name__ == "__main__":
         runtime_values.lang = json.load(lang_file)
         
     runtime_values.running = True
+
+    farm.init()
 
     runtime_values.logs.info("end")
 

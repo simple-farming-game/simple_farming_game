@@ -39,7 +39,7 @@ def use():
             runtime_values.logs.info("success planting")
         else:
             runtime_values.logs.info("Fail planting")
-    
+
     if runtime_values.players[0].handle_item in block_list.block_list:
         runtime_values.logs.info(
             f"Try to put:{runtime_values.players[0].handle_item.name}")
@@ -74,7 +74,7 @@ def use():
         else:runtime_values.logs.info("Fail to using")
         runtime_values.logs.info("Vitamin")
 
-    elif isinstance(tile, block_list.block_list[1]): # type: ignore
+    elif isinstance(tile, block_list.block_type): # type: ignore
         tile.interact() # type: ignore
 
     else:
