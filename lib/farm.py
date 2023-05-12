@@ -15,7 +15,7 @@ tileMap: List[List[Union[Tiles, plants_list.plants_type]]] = [
 
 def init():
     import lib.runtime_values as runtime_values
-    tileMap[3][3] = block_list.block_list[1](pygame.Vector2(3*32,3*32), runtime_values.screen)
+    tileMap[3][3] = block_list.block_list[1](pygame.Vector2(3*32,3*32), runtime_values.screen) # type: ignore
 
 
 def grow_plants():

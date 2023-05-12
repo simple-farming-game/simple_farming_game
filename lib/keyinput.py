@@ -74,12 +74,13 @@ def use():
         else:runtime_values.logs.info("Fail to using")
         runtime_values.logs.info("Vitamin")
 
-    elif isinstance(tile, block_list.block_type): # type: ignore
-        tile.interact() # type: ignore
-
     else:
         runtime_values.logs.info("Fail to using")
-
+def block_use():
+    x, y = map(int, runtime_values.players[0].get_tile_pos())
+    tile = farm.tileMap[x][y]
+    if isinstance(tile, block_list.block_list[1]): # type: ignore
+        farm.tileMap[x][y].interact() # type: ignore
 def process(nick):
     global select_bar
     x, y = map(int, runtime_values.players[0].get_tile_pos()) # type: ignore
@@ -106,17 +107,6 @@ def process(nick):
                                 runtime_values.players[0].handle_item)
                     else:
                         runtime_values.players[0].handle_item = block_list.block_list[0]
-                
-                case pygame.K_f:  # 괭이 선택
-                    runtime_values.players[0].handle_item = Items.HOE
-                case pygame.K_s:  # 삽 선택
-                    runtime_values.players[0].handle_item = Items.SHOVEL
-                case pygame.K_e:  # 낫 선택
-                    runtime_values.players[0].handle_item = Items.SICKLE
-                case pygame.K_w:  # 낫 선택
-                    runtime_values.players[0].handle_item = Items.WATER
-                case pygame.K_v:  # 비타민
-                    runtime_values.players[0].handle_item = Items.VITAMIN
 
                 case pygame.K_a:  # 판매
                     sell.sell(runtime_values.players[0].handle_item) # type: ignore
@@ -137,7 +127,10 @@ def process(nick):
                 #         growCount = 5000
                 case pygame.K_ESCAPE:  # 메뉴
                     runtime_values.on_setting = not runtime_values.on_setting
-                
+
+                case pygame.K_f:  # 블록 사용
+                    block_use()
+
                 case pygame.K_h:
                     help.help()
                 case pygame.K_n:
