@@ -16,7 +16,9 @@ class Sprinkle(Block.Block):
                 self.rangeList.append(int(super().returnVar()[1].x//32 + i))
                 self.rangeList.append(int(super().returnVar()[1].y//32 + j))
         self.rangeList = [self.rangeList[i:i+2] for i in range(0, len(self.rangeList), 2)]
-                
+    
+    def update(self, runtime_values):
+        pass
     
     def water(self):
         for i in self.rangeList:
