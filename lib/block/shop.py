@@ -2,21 +2,16 @@ import pygame
 import random
 
 from . import Block
-from .. import draw
+from .. import farm
+from ..plants import plants_list
 
 class Shop(Block.Block):
+    vitamin: bool = False
     name:str = "shop"
-    shop_opne = False
+    rangeList:list = []
     
     def init(self):
         pass
     
     def interact(self):
-        self.shop_opne = not self.shop_opne
-
-    def update(self, runtime_values):
-        if self.shop_opne:
-            draw.draw_text_with_border( # 돈
-                runtime_values.screen, runtime_values.font,
-                "상점입니다",
-                runtime_values.WHITE, runtime_values.BLACK, 2, pygame.math.Vector2(10,10))
+        print("shop")

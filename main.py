@@ -143,8 +143,10 @@ if __name__ == "__main__":
             process.process()
             # 화면
             runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
+            draw.draw_ground(runtime_values.screen)
             # 그외
-            draw.process(runtime_values.screen)
+            draw.draw_plants() # 식물
+            draw.draw_players() # 플래이어
             # ui
             drawObj.drawObj()
 

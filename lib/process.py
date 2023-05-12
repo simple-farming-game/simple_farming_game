@@ -10,8 +10,6 @@ def process():
         for tile in line:
             if isinstance(tile, block_list.block_list[0]):  # type: ignore
                 tile.water() # type: ignore
-            if isinstance(tile, block_list.block_list):  # type: ignore
-                tile.update(runtime_values) # type: ignore
             tilePos.y += 32
         tilePos.x += 32
         tilePos.y = 0
