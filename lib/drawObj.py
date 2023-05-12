@@ -53,9 +53,8 @@ def drawObj():
                             runtime_values.screen.blit(
                                 block_list.block_image[
                                     block_list.block_name.index(
-                                        list(runtime_values.players[0]. # type: ignore
-                                            inventory.items()
-                                        ))], 
+                                        list(runtime_values.players[0].inventory.items())[count][0]
+                                        )], 
                                         [28*32-i+32,19*32])
 
                         else:
