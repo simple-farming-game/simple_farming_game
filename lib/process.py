@@ -1,8 +1,10 @@
 from lib import farm
+from lib import runtime_values
 from lib.block import block_list
 import pygame
 
 def process():
+    runtime_values.players[0].update()
     tilePos = pygame.math.Vector2(0, 0)
     for line in farm.tileMap:
         for tile in line:
