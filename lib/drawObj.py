@@ -36,16 +36,18 @@ def drawObj():
             runtime_values.screen.blit(imgs.img("item_bar"), [28*32-(256-64),20*32-32])
 
             # itmebar item
+            runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
             count = 0
             for i in range(0,256,32):
                     # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
                     try:
-                        if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
+                        if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_seed_name:
                             runtime_values.screen.blit(
                                 plants_list.plants_image[
-                                    plants_list.plants_name.index(
-                                        list(runtime_values.players[0].inventory.items())[count][0] # type: ignore
-                                    )], [28*32-i+32,19*32])
+                                    plants_list.plants_seed_name.index(
+                                        list(runtime_values.players[0].inventory.items())[count][0]
+                                    )
+                                ], [28*32-i+32,19*32])
 
                         elif list(runtime_values.players[0].inventory.items())[count][0] in block_list.block_name:
                             runtime_values.screen.blit(
@@ -67,10 +69,12 @@ def drawObj():
                                 ), [28*32-i+32,19*32]
                             )
                     except IndexError:
-                          break
+                          pass
+                    except ValueError:
+                          pass
                     count += 1
             del count
-            runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
+            
 
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
 

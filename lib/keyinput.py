@@ -157,8 +157,8 @@ def select(event: pygame.event.Event):
             try:
                 if list(runtime_values.players[0].inventory.items())[select_bar-1][0] in block_list.block_name:
                     runtime_values.players[0].handle_item = block_list.block_list[block_list.block_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
-                elif list(runtime_values.players[0].inventory.items())[select_bar-1][0] in plants_list.plants_name:
-                    runtime_values.players[0].handle_item = plants_list.plants_list[plants_list.plants_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                elif list(runtime_values.players[0].inventory.items())[select_bar-1][0] in plants_list.plants_seed_name:
+                    runtime_values.players[0].handle_item = plants_list.plants_list[plants_list.plants_seed_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
                 else:
                     print(list(runtime_values.players[0].inventory.items())[select_bar-1][0])
                     runtime_values.players[0].handle_item = list(items.Items)[items.value_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])] # type: ignore
