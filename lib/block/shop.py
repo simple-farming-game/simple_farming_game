@@ -6,12 +6,15 @@ from .. import farm
 from ..plants import plants_list
 
 class Shop(Block.Block):
-    vitamin: bool = False
-    name:str = "shop"
-    rangeList:list = []
+    is_shop_opne: bool = False
+    name: str = "shop"
     
     def init(self):
         pass
     
     def interact(self):
-        print("shop")
+        self.is_shop_opne = not self.is_shop_opne
+    
+    def update(self):
+        if self.is_shop_opne:
+            print("test")
