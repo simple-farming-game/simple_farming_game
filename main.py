@@ -140,7 +140,6 @@ if __name__ == "__main__":
                 pygame.mixer.music.pause()
 
             # 그리기
-            process.process()
             # 화면
             runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
             draw.draw_ground(runtime_values.screen)
@@ -151,6 +150,7 @@ if __name__ == "__main__":
             drawObj.drawObj()
 
             # 처리
+            process.process()
             keyinput.process(nick)
             runtime_values.players[0].move(runtime_values.my_dir, df)
             farm.grow_plants()
