@@ -1,7 +1,10 @@
 import pygame
-import tkinter
+
 
 from . import Block
+from . import block_list
+from ..plants import plants_list
+from .. import shopGui
 
 class Shop(Block.Block):
     is_shop_opne: bool = False
@@ -11,14 +14,7 @@ class Shop(Block.Block):
         pass
     
     def interact(self):
-        root = tkinter.Tk()
- 
-        nameLabel = tkinter.Label(root, text=f"")
-        nameLabel.grid(row=0, column=0)
-        countLabel = tkinter.Button(root, text=f"")
-        countLabel.grid(row=1, column=0)
-
-        root.mainloop()
+        shopGui.shop_opne(block_list, plants_list)
         
     @staticmethod
     def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: str, inside_color: pygame.Color, border_color: pygame.Color, border_size: float, positon: pygame.math.Vector2):
