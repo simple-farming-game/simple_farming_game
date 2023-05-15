@@ -30,4 +30,4 @@ class Shop(Block.Block):
             self.draw_text_with_border(
                 runtime_values.screen, runtime_values.font,
                 "상점",
-                runtime_values.WHITE, runtime_values.BLACK, 2, pygame.math.Vector2(10, 85))
+                runtime_values.WHITE, runtime_values.BLACK, 2, pygame.math.Vector2(15*32, 5*32))
