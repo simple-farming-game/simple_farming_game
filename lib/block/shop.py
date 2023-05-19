@@ -4,7 +4,7 @@ import pygame
 from . import Block
 from . import block_list
 from ..plants import plants_list
-from .. import shopGui
+#from .. import shopGui
 
 class Shop(Block.Block):
     is_shop_opne: bool = False
@@ -13,8 +13,8 @@ class Shop(Block.Block):
     def init(self):
         pass
     
-    def interact(self):
-        shopGui.shop_opne(block_list, plants_list)
+    def interact(self):pass
+        #shopGui.shop_opne(block_list, plants_list)
         
     @staticmethod
     def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: str, inside_color: pygame.Color, border_color: pygame.Color, border_size: float, positon: pygame.math.Vector2):

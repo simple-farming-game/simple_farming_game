@@ -19,6 +19,7 @@ if __name__ == "__main__":
     from lib import ui
     from lib import defs
     from lib import drawObj
+    from lib import save
     import webbrowser
 
     runtime_values.logs.info("end")
@@ -38,6 +39,9 @@ if __name__ == "__main__":
     runtime_values.running = True
 
     farm.init()
+
+    runtime_values.logs.info("import save...")
+    save.import_save()
 
     runtime_values.logs.info("end")
 
@@ -162,6 +166,8 @@ if __name__ == "__main__":
     opening()
 
     runtime_values.logs.info("quit")
+    runtime_values.logs.info("저장중입니다...")
     runtime_values.logs.save()
+    save.write_save()
     pygame.mixer.music.stop()
     pygame.quit()
