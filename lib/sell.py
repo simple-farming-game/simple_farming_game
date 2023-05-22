@@ -1,4 +1,5 @@
 from lib.plants import plants_list
+from lib.block import block_list
 from lib import runtime_values
 
 def sell(plant):
@@ -11,6 +12,10 @@ def buy(plant):
         if runtime_values.players[0].inventory["gold"] > plants_list.plants_list[plants_list.plants_list.index(plant)].price+5:
             runtime_values.players[0].inventory["gold"] -= plants_list.plants_list[plants_list.plants_list.index(plant)].price+5
             runtime_values.players[0].inventory[f"{plants_list.plants_list[plants_list.plants_list.index(plant)].name}_seed"] += 1
+    if runtime_values.players[0].handle_item in block_list.block_list:
+        if runtime_values.players[0].inventory["gold"] > block_list.block_list[plants_list.plants_list.index(plant)].price+5:
+            runtime_values.players[0].inventory["gold"] -= block_list.block_list[plants_list.plants_list.index(plant)].price+5
+            runtime_values.players[0].inventory[f"{block_list.block_list[plants_list.plants_list.index(plant)].name}_seed"] += 1
     if runtime_values.players[0].handle_item.name == "VITAMIN":
         if runtime_values.players[0].inventory["gold"] > 15:
             runtime_values.players[0].inventory["gold"] -= 15

@@ -4,25 +4,15 @@ import pygame
 from . import Block
 from . import block_list
 from ..plants import plants_list
-#from .. import shopGui
+from .. import shopGui
 
 class Shop(Block.Block):
     is_shop_opne: bool = False
     name: str = "shop"
+    price: int = 999999999
     
     def init(self):
-        pass
+        shopGui.init(block_list.block_list, plants_list.plants_list)
     
-    def interact(self):pass
-        #shopGui.shop_opne(block_list, plants_list)
-        
-    @staticmethod
-    def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: str, inside_color: pygame.Color, border_color: pygame.Color, border_size: float, positon: pygame.math.Vector2):
-        inside = font.render(text, True, inside_color)
-        border = font.render(text, True, border_color)
-
-        screen.blit(border, pygame.math.Vector2(positon.x-border_size, positon.y))
-        screen.blit(border, pygame.math.Vector2(positon.x+border_size, positon.y))
-        screen.blit(border, pygame.math.Vector2(positon.x, positon.y-border_size))
-        screen.blit(border, pygame.math.Vector2(positon.x, positon.y+border_size))
-        screen.blit(inside, positon)
+    def interact(self):
+        shopGui.shop_opne()
