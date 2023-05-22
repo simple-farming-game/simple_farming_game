@@ -29,7 +29,7 @@ class player(Object):
     speed: float = 3
     inventory: Dict[str, int] = {"sprinkle":1}
     inventory_size: int = 8
-    gold: int = 0
+    gold: int = 1000
     handle_item: Union[plants_list.plants_type,block_list.block_type, items.Items] = items.Items.NONE
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:
@@ -97,16 +97,16 @@ class player(Object):
         tPos = self.get_tile_pos()
 
         # check self
-        if not self.handle_item in plants_list.plants_list:
+        if not self.handle_item in plants_list.plants_seed_name:
             return False
-        if self.inventory[f"{self.handle_item.name}_seed"] == 0:
+        if self.inventory[self.handle_item] == 0:
             return False
 
         # check farm empty
         if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
             return False
 
-        self.inventory[f"{self.handle_item.name}_seed"] += -1
+        self.inventory[self.handle_item] += -1
         tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore
         return True
@@ -115,16 +115,16 @@ class player(Object):
         tPos = self.get_tile_pos()
 
         # check self
-        if not self.handle_item in block_list.block_list:
+        if not self.handle_item in block_list.block_name:
             return False
-        if self.inventory[f"{self.handle_item.name}"] == 0:
+        if self.inventory[self.handle_item] == 0:
             return False
 
         # check farm empty
         if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.DIRT:
             return False
 
-        self.inventory[f"{self.handle_item.name}"] += -1
+        self.inventory[self.handle_item] += -1
         tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore
         return True

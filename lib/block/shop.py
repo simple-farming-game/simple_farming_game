@@ -12,7 +12,7 @@ class Shop(Block.Block):
     price: int = 999999999
     
     def init(self):
-        shopGui.init(block_list.block_list, plants_list.plants_list)
+        shopGui.init()
     
     def interact(self):
-        shopGui.shop_opne()
+        shopGui.shop_open(block_list.block_list, plants_list.plants_list)
