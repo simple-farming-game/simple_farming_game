@@ -217,3 +217,18 @@ def moving(event: pygame.event.Event):
                     runtime_values.my_dir = player.Direction.LEFT
                 if runtime_values.my_dir == player.Direction.DOWN_RIGHT:
                     runtime_values.my_dir = player.Direction.RIGHT
+def esteregg():
+    inp = int(input("code\n"))
+    if inp == 3927399:
+        print("over 9000")
+    if inp == 5977298:
+        print("north korea is best korea")
+    if inp == 9907926:
+        print("""
+helloworld:
+We are Anonymous.
+We are Legion.
+We do not forgive.
+We do not forget.
+Expect us!
+        """)
