@@ -3,6 +3,7 @@ import pygame
 import lib.save
 from lib.plants import plants_list
 from lib.items import Items
+from lib import items
 from lib import runtime_values
 from lib import farm
 from lib import player
@@ -38,7 +39,7 @@ def use():
             runtime_values.logs.info("success planting")
         else:
             runtime_values.logs.info("Fail planting")
-    
+
     if runtime_values.players[0].handle_item in block_list.block_list:
         runtime_values.logs.info(
             f"Try to put:{runtime_values.players[0].handle_item.name}")
@@ -75,10 +76,14 @@ def use():
 
     else:
         runtime_values.logs.info("Fail to using")
-
+def block_use():
+    x, y = map(int, runtime_values.players[0].get_tile_pos())
+    tile = farm.tileMap[x][y]
+    if isinstance(tile, block_list.block_list[1]): # type: ignore
+        farm.tileMap[x][y].interact() # type: ignore
 def process(nick):
     global select_bar
-    x, y = map(int, runtime_values.players[0].get_tile_pos())
+    x, y = map(int, runtime_values.players[0].get_tile_pos()) # type: ignore
     for event in pygame.event.get():
         moving(event)
         select(event)
@@ -102,17 +107,6 @@ def process(nick):
                                 runtime_values.players[0].handle_item)
                     else:
                         runtime_values.players[0].handle_item = block_list.block_list[0]
-                
-                case pygame.K_f:  # 괭이 선택
-                    runtime_values.players[0].handle_item = Items.HOE
-                case pygame.K_s:  # 삽 선택
-                    runtime_values.players[0].handle_item = Items.SHOVEL
-                case pygame.K_e:  # 낫 선택
-                    runtime_values.players[0].handle_item = Items.SICKLE
-                case pygame.K_w:  # 낫 선택
-                    runtime_values.players[0].handle_item = Items.WATER
-                case pygame.K_v:  # 비타민
-                    runtime_values.players[0].handle_item = Items.VITAMIN
 
                 case pygame.K_a:  # 판매
                     sell.sell(runtime_values.players[0].handle_item) # type: ignore
@@ -133,7 +127,10 @@ def process(nick):
                 #         growCount = 5000
                 case pygame.K_ESCAPE:  # 메뉴
                     runtime_values.on_setting = not runtime_values.on_setting
-                
+
+                case pygame.K_f:  # 블록 사용
+                    block_use()
+
                 case pygame.K_h:
                     help.help()
                 case pygame.K_n:
@@ -151,7 +148,13 @@ def select(event: pygame.event.Event):
         if event.key in SELECT_KEY.keys():
             select_bar = SELECT_KEY[event.key]
             try:
-                runtime_values.players[0].handle_item = plants_list.plants_list[select_bar-1]
+                if list(runtime_values.players[0].inventory.items())[select_bar-1][0] in block_list.block_name:
+                    runtime_values.players[0].handle_item = block_list.block_list[block_list.block_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                elif list(runtime_values.players[0].inventory.items())[select_bar-1][0] in plants_list.plants_seed_name:
+                    runtime_values.players[0].handle_item = plants_list.plants_list[plants_list.plants_seed_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])]
+                else:
+                    print(list(runtime_values.players[0].inventory.items())[select_bar-1][0])
+                    runtime_values.players[0].handle_item = list(items.Items)[items.value_name.index(list(runtime_values.players[0].inventory.items())[select_bar-1][0])] # type: ignore
             except:pass
 def moving(event: pygame.event.Event):
     if event.type == pygame.KEYDOWN:
@@ -214,3 +217,18 @@ def moving(event: pygame.event.Event):
                     runtime_values.my_dir = player.Direction.LEFT
                 if runtime_values.my_dir == player.Direction.DOWN_RIGHT:
                     runtime_values.my_dir = player.Direction.RIGHT
+def esteregg():
+    inp = int(input("code\n"))
+    if inp == 3927399:
+        print("over 9000")
+    if inp == 5977298:
+        print("north korea is best korea")
+    if inp == 9907926:
+        print("""
+helloworld:
+We are Anonymous.
+We are Legion.
+We do not forgive.
+We do not forget.
+Expect us!
+        """)

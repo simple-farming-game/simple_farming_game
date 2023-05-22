@@ -19,10 +19,11 @@ if __name__ == "__main__":
     from lib import ui
     from lib import defs
     from lib import drawObj
+    from lib import save
     import webbrowser
 
     runtime_values.logs.info("end")
-    runtime_values.logs.info("setting runtime_values...")
+    runtime_values.logs.info("init...")
 
     runtime_values.players.append(
         player.player(pygame.image.load("assets/img/player.png"),
@@ -36,6 +37,11 @@ if __name__ == "__main__":
         runtime_values.lang = json.load(lang_file)
         
     runtime_values.running = True
+
+    farm.init()
+
+    runtime_values.logs.info("import save...")
+    save.import_save()
 
     runtime_values.logs.info("end")
 
@@ -87,7 +93,7 @@ if __name__ == "__main__":
     def opening():
         x=0
         target_x = runtime_values.window_size[0]/2
-        while True:
+        while runtime_values.running:
             runtime_values.clock.tick(runtime_values.fps)
             musPos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)
@@ -138,7 +144,6 @@ if __name__ == "__main__":
                 pygame.mixer.music.pause()
 
             # 그리기
-            process.process()
             # 화면
             runtime_values.screen.fill(SKYBLUE)  # 화면 채우기
             draw.draw_ground(runtime_values.screen)
@@ -149,6 +154,7 @@ if __name__ == "__main__":
             drawObj.drawObj()
 
             # 처리
+            process.process()
             keyinput.process(nick)
             runtime_values.players[0].move(runtime_values.my_dir, df)
             farm.grow_plants()
@@ -160,6 +166,8 @@ if __name__ == "__main__":
     opening()
 
     runtime_values.logs.info("quit")
+    runtime_values.logs.info("저장중입니다...")
     runtime_values.logs.save()
+    save.write_save()
     pygame.mixer.music.stop()
     pygame.quit()

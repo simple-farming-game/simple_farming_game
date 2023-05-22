@@ -9,7 +9,8 @@ class Sprinkle(Block.Block):
     vitamin: bool = False
     name:str = "sprinkle"
     rangeList:list = []
-    
+    price:int = 10
+
     def init(self):
         for j in [-2,-1,0,1,2]:
             for i in [-2,-1,0,1,2]:

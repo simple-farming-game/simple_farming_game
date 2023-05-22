@@ -21,8 +21,13 @@ class Btn:
         self.musPos: tuple = pygame.mouse.get_pos()
         if self.btn_rect.collidepoint(self.musPos):
             if pygame.mouse.get_pressed()[0] == 1 and not self.pressed:
+                pygame.time.wait(100)
                 self.pressed = True
                 self._def()
+                pygame.time.wait(100)
+            else:
+                self.pressed = False
+                self.btn_var = dw.draw_text_with_border(runtime_values.screen, runtime_values.font, self.text, runtime_values.BLUE, runtime_values.BLACK, 2, self.pos)
         else:
             self.pressed = False
             self.btn_var = dw.draw_text_with_border(runtime_values.screen, runtime_values.font, self.text, runtime_values.WHITE, runtime_values.BLACK, 2, self.pos)
