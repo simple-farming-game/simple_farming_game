@@ -87,8 +87,13 @@ class player(Object):
         tile = tileMap[int(tPos.x)][int(tPos.y)]
         if isinstance(tile, plants_list.plants_list):  # type: ignore
             if tile.maxAge == tile.age:  # type: ignore
-                self.inventory[tile.name] += random.randint(0, 4)
-                self.inventory[f"{tile.name}_seed"] += random.randint(0, 3)
+                try:
+                    self.inventory[tile.name] += random.randint(0, 4)
+                    self.inventory[f"{tile.name}_seed"] += random.randint(0, 3)
+                except KeyError:
+                    self.inventory[tile.name] = random.randint(0, 4)
+                    self.inventory[f"{tile.name}_seed"] = random.randint(0, 3)
+                    
                 tileMap[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND
 
     def plant_plant(self, screen: pygame.Surface) -> bool:
