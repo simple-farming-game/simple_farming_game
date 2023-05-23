@@ -17,7 +17,8 @@ def write_save():
             "tile": list(),
             "player_pos_x": runtime_values.players[0].pos.x,
             "player_pos_y": runtime_values.players[0].pos.y,
-            "inv": json.dumps(runtime_values.players[0].inventory)
+            "inv": json.dumps(runtime_values.players[0].inventory),
+            "gold" : runtime_values.players[0].gold
         }
         data["tile"] = []
         count = 0
@@ -42,10 +43,6 @@ def import_save() -> bool:
     except:
         runtime_values.logs.info("불러오기 실패: 파일 불러오기 실패.")
         return False
-
-    # check version
-    version: runtime_values.version_type
-    version =  tuple(saveData["version"])
     # alpha 2.0.0
     farm.tileMap = []
     count = 0
@@ -62,13 +59,11 @@ def import_save() -> bool:
                         if pl.name == j:
                             farm.tileMap[count].append(pl)
                             farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
-                            print(tempPos)
                 elif j in block_list.block_name:
                     for bl in block_list.block_list:
                         if bl.name == j:
                             farm.tileMap[count].append(bl)
                             farm.tileMap[count][-1] = bl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
-                            print(tempPos)
             tempPos[1]+=1
         count += 1           
         tempPos[1]=0
@@ -78,6 +73,7 @@ def import_save() -> bool:
     runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
     runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
     runtime_values.players[0].inventory = json.loads(saveData["inv"])
+    runtime_values.players[0].gold = int(saveData["gold"])
     runtime_values.logs.info("불러오기")
     del saveData
     return True

@@ -10,8 +10,6 @@ from lib.farm import tileMap, Tiles
 from lib import items
 from lib.block import block_list
 
-print(plants_list.plants_seed_name)
-
 class Direction(Enum):
     UP = auto()
     DOWN = auto()
@@ -29,7 +27,7 @@ class player(Object):
     speed: float = 3
     inventory: Dict[str, int] = {}
     inventory_size: int = 8
-    gold: int = 1000
+    gold: int = 0
     handle_item: Union[plants_list.plants_type,block_list.block_type, items.Items] = items.Items.NONE
 
     def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface, window_size) -> None:

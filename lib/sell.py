@@ -27,5 +27,3 @@ def buy(plant):
         if runtime_values.players[0].gold > 15:
             runtime_values.players[0].gold -= 15
             runtime_values.players[0].inventory["VITAMIN"] += 1
-    
-    print(runtime_values.players[0].inventory)
