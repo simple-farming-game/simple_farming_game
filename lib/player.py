@@ -100,17 +100,17 @@ class player(Object):
         tPos = self.get_tile_pos()
 
         # check self
-        print(self.handle_item in plants_list.plants_list)
+        print(tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND)
         if not self.handle_item in plants_list.plants_list:
             return False
         if self.inventory[f"{self.handle_item.name}_seed"] <= 0:
             return False
 
         # check farm empty
-        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
+        if tileMap[int(tPos.x)][int(tPos.y)] != Tiles.FARMLAND:
             return False
 
-        self.inventory[f"{self.handle_item.name}_seed"] += -1
+        self.inventory[f"{self.handle_item.name}_seed"] -= 1
         tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
             tilePosToPos(tPos), screen)  # type: ignore
         return True
