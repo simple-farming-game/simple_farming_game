@@ -41,7 +41,7 @@ if __name__ == "__main__":
     farm.init()
 
     runtime_values.logs.info("import save...")
-    save.import_save()
+    #save.import_save()
 
     runtime_values.logs.info("end")
 
