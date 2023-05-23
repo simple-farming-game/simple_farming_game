@@ -6,7 +6,7 @@ from . import Plants
 
 class Carrots(Plants.Plants):
     name = "carrots"
-    price = 15
+    price = 10
     growCount = 0
     age = 0
     maxAge = 2
