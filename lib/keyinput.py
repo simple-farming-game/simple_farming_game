@@ -109,9 +109,7 @@ def process(nick):
                         runtime_values.players[0].handle_item = block_list.block_list[0]
 
                 case pygame.K_a:  # 판매
-                    sell.sell(runtime_values.players[0].handle_item) # type: ignore
-                case pygame.K_b:  # 구매
-                    sell.buy(runtime_values.players[0].handle_item) # type: ignore
+                    sell.sell(runtime_values.players[0].handle_item.name) # type: ignore
 
                 case pygame.K_SPACE:  # 달리기
                     runtime_values.players[0].speed = 4.5
