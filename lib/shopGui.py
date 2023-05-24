@@ -6,7 +6,6 @@ def init():
 def buy(name):
     from lib import sell
     sell.buy(name)
-    print(f"buy {name}")
 
 def shop_open(plants_list, block_list):
 
