@@ -65,15 +65,15 @@ def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: 
         smile_pos = positon.x + no_smile_one.get_width()
 
         if smile_msg_pos != -1:
-            screen.blit(imgs.emojis[f"<{i}>"], [smile_pos, positon.y])
+            screen.blit(imgs.emojis[f"{i}"], [smile_pos, positon.y])
+    
+    screen.blit(border, pygame.math.Vector2(positon.x-border_size, positon.y)) # type: ignore
+    screen.blit(border, pygame.math.Vector2(positon.x+border_size, positon.y)) # type: ignore
+    screen.blit(border, pygame.math.Vector2(positon.x, positon.y-border_size)) # type: ignore
+    screen.blit(border, pygame.math.Vector2(positon.x, positon.y+border_size)) # type: ignore
+    screen.blit(inside, positon) # type: ignore
 
-    screen.blit(border, pygame.math.Vector2(positon.x-border_size, positon.y))
-    screen.blit(border, pygame.math.Vector2(positon.x+border_size, positon.y))
-    screen.blit(border, pygame.math.Vector2(positon.x, positon.y-border_size))
-    screen.blit(border, pygame.math.Vector2(positon.x, positon.y+border_size))
-    screen.blit(inside, positon)
-
-    return inside
+    return inside # type: ignore
 
 def process(screen: pygame.Surface):
     draw_ground(screen)

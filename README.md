@@ -19,6 +19,19 @@ $ python main.py
 ```
 이후 lib폴더와 assets 폴더와 data폴더를 build폴더 안 main폴더에 넣어줍니다(복사 붙여넣기)
 
+## 이모지 사용법
+> <이모지 이름><br>
+> 이렇게 사용합니다<br>
+> 현재 이모지 리스트<br>
+
+> -   `smile`<br>
+
+>보더 텍스트라면 어디서든 사용가능하며<br>
+> 한 매시지 안에 여러 이모지는 사용이 불가능 합니다<br>
+> 예시: <br>
+> `hello <smile> asdfsd` 가능<br>
+> `hello <smile><smile>` 불가능<br>
+
 ## 조작법
 
 -   `방향키`: 이동
