@@ -117,7 +117,7 @@ if __name__ == "__main__":
     def title():
         pygame.mixer.music.load(musics["sfg"])
         pygame.mixer.music.play()
-        start = ui.Btn("시작!<smile>", run, pygame.Vector2(runtime_values.window_size[0]/2,runtime_values.window_size[1]/2))
+        start = ui.Btn("시작! <smile>", run, pygame.Vector2(runtime_values.window_size[0]/2,runtime_values.window_size[1]/2))
         codemos_btn = ui.Btn("코드모스", lambda: webbrowser.open("https://discord.gg/codemos"), pygame.math.Vector2(runtime_values.window_size[0]/2-30*4+10, runtime_values.window_size[1]/2+25))
         official_discord_btn = ui.Btn("공식사이트", lambda: webbrowser.open("https://newkini-dev.com/sfg"), pygame.math.Vector2(runtime_values.window_size[0]/2+30*4+10, runtime_values.window_size[1]/2+25))
         github_discord_btn = ui.Btn("공식깃허브", lambda: webbrowser.open("https://github.com/newkincode/simple_farming_game/releases/download/alpha/sfg-v1.1.1-windows.zip"), pygame.math.Vector2(runtime_values.window_size[0]/2-30*4+10, runtime_values.window_size[1]/2+50))

@@ -60,13 +60,10 @@ def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: 
     border = font.render(new_text, True, border_color)
     no_smile_one = font.render(text.split("<smile>")[0], True, inside_color)
 
-    # 소숫점 버림
-
-
     smile_pos = positon.x + no_smile_one.get_width()
 
     if smile_msg_pos != -1:
-        screen.blit(imgs.imgs["mus"], [smile_pos, positon.y])
+        screen.blit(imgs.emojis["smile"], [smile_pos, positon.y])
 
     screen.blit(border, pygame.math.Vector2(positon.x-border_size, positon.y))
     screen.blit(border, pygame.math.Vector2(positon.x+border_size, positon.y))
