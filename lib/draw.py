@@ -4,6 +4,8 @@ from lib.runtime_values import players
 from lib import farm
 from lib.plants import plants_list
 from lib.block import block_list
+from lib import defs
+from lib import imgs
 
 
 ground_images: dict[farm.Tiles, pygame.Surface] = {
@@ -51,8 +53,20 @@ def draw_players():
 
 
 def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: str, inside_color: pygame.Color, border_color: pygame.Color, border_size: float, positon: pygame.math.Vector2):
-    inside = font.render(text, True, inside_color)
-    border = font.render(text, True, border_color)
+    smile_msg_pos = text.find("<smile>")
+    new_text = text.replace("<smile>", "  ")
+
+    inside = font.render(new_text, True, inside_color)
+    border = font.render(new_text, True, border_color)
+    no_smile_one = font.render(text.split("<smile>")[0], True, inside_color)
+
+    # 소숫점 버림
+
+
+    smile_pos = positon.x + no_smile_one.get_width()
+
+    if smile_msg_pos != -1:
+        screen.blit(imgs.imgs["mus"], [smile_pos, positon.y])
 
     screen.blit(border, pygame.math.Vector2(positon.x-border_size, positon.y))
     screen.blit(border, pygame.math.Vector2(positon.x+border_size, positon.y))

@@ -1,6 +1,7 @@
 import json
 import requests
 import webbrowser
+import pygame
 
 def var_check(version):
         latest_response = requests.get('https://api.github.com/repos/newkincode/simple_farming_game/releases/latest')
@@ -34,3 +35,13 @@ def var_check(version):
         del latest_tag
         del latest_var
         del var_ranking
+
+def get_image_height(image: pygame.Surface) -> int:
+    return image.get_height()
+    
+def get_image_width(image: pygame.Surface):
+    try:
+        return image.get_width()
+    except pygame.error:
+        print("이미지를 열 수 없거나 잘못된 형식입니다.")
+        return None
