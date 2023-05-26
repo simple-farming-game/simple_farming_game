@@ -4,9 +4,9 @@ from lib import runtime_values
 
 def sell(plant):
     if plant in plants_list.plants_name:
-        if runtime_values.players[0].inventory[f"{plants_list.plants_list[plants_list.plants_list.index(plant)].name}"] > 0:
-            runtime_values.players[0].gold += plants_list.plants_list[plants_list.plants_list.index(plant)].price
-            runtime_values.players[0].inventory[f"{plants_list.plants_list[plants_list.plants_list.index(plant)].name}"] -= 1
+        if runtime_values.players[0].inventory[plant] > 0:
+            runtime_values.players[0].gold += plants_list.plants_list[plants_list.plants_name.index(plant)].price
+            runtime_values.players[0].inventory[plant] -= 1
 def buy(plant):
     if plant in plants_list.plants_name:
         if runtime_values.players[0].gold >= plants_list.plants_list[plants_list.plants_name.index(plant)].price:

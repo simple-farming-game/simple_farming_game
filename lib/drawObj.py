@@ -43,8 +43,15 @@ def drawObj():
                     try:
                         if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_seed_name:
                             runtime_values.screen.blit(
-                                plants_list.plants_image[
+                                plants_list.plants_seed_image[
                                     plants_list.plants_seed_name.index(
+                                        list(runtime_values.players[0].inventory.items())[count][0]
+                                    )
+                                ], [28*32-i+32,19*32])
+                        if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_name:
+                            runtime_values.screen.blit(
+                                plants_list.plants_image[
+                                    plants_list.plants_name.index(
                                         list(runtime_values.players[0].inventory.items())[count][0]
                                     )
                                 ], [28*32-i+32,19*32])
