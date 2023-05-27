@@ -7,7 +7,8 @@ imgs: dict[str, pygame.Surface] = {
     "item_bar_select" : pygame.image.load("assets/img/ui/select_item_bar.png")
 }
 emojis: dict[str, pygame.Surface] = {
-    "smile" : pygame.image.load("assets/img/emoji/smile.png")
+    "smile" : pygame.image.load("assets/img/emoji/smile.png"),
+    "angry" : pygame.image.load("assets/img/emoji/angry.png")
 }
 def img(imgName):
     return imgs[imgName] # type: ignore

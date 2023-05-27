@@ -25,12 +25,14 @@ $ python main.py
 > 현재 이모지 리스트<br>
 
 > -   `smile`<br>
+> -   `angry`<br>
 
 >보더 텍스트라면 어디서든 사용가능하며<br>
 > 한 매시지 안에 여러 이모지는 사용이 불가능 합니다<br>
 > 예시: <br>
 > `hello <smile> asdfsd` 가능<br>
 > `hello <smile><smile>` 불가능<br>
+> `hello <smile><angry>` 불가능<br>
 
 ## 조작법
 

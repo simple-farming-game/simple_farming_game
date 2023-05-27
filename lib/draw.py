@@ -51,7 +51,7 @@ def draw_players():
     for player in players:
         player.draw()
 
-emoji_list = ["smile"]
+emoji_list = ["smile", "angry"]
 
 def draw_text_with_border(screen: pygame.Surface, font: pygame.font.Font, text: str, inside_color: pygame.Color, border_color: pygame.Color, border_size: float, positon: pygame.math.Vector2):
     new_text = text
