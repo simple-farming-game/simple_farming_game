@@ -1,4 +1,5 @@
 import pygame
+import datetime
 import json
 
 if __name__ == "__main__":    
@@ -131,6 +132,10 @@ if __name__ == "__main__":
             github_discord_btn.draw()
             youtube_discord_btn.draw()
             start.draw()
+            draw.draw_text_with_border( # 돈
+                runtime_values.screen, font_renderer,
+                f"{datetime.datetime.now().strftime('%Y년 %m월 %d일 %H시 %M분 %S초')}",
+                WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
             runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
             pygame.display.update()  # 화면 업데이트
 
