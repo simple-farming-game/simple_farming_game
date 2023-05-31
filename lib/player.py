@@ -6,7 +6,7 @@ import random
 
 from lib.Object import Object
 from lib.plants import plants_list
-from lib.farm import tileMap, Tiles
+from lib.farm import *
 from lib import items
 from lib.block import block_list
 
@@ -25,7 +25,7 @@ class Direction(Enum):
 
 class player(Object):
     speed: float = 3
-    inventory: Dict[str, int] = {}
+    inventory: Dict[str, int] = {"sprinkle": 100}
     inventory_size: int = 8
     gold: int = 50
     handle_item: Union[plants_list.plants_type,block_list.block_type, items.Items] = items.Items.NONE
@@ -100,14 +100,13 @@ class player(Object):
         tPos = self.get_tile_pos()
 
         # check self
-        print(tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND)
         if not self.handle_item in plants_list.plants_list:
             return False
         if self.inventory[f"{self.handle_item.name}_seed"] <= 0:
             return False
 
         # check farm empty
-        if tileMap[int(tPos.x)][int(tPos.y)] != Tiles.FARMLAND:
+        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
             return False
 
         self.inventory[f"{self.handle_item.name}_seed"] -= 1
