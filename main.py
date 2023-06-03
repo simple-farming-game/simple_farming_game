@@ -161,6 +161,10 @@ if __name__ == "__main__":
             draw.draw_players() # 플래이어
             # ui
             drawObj.drawObj()
+            draw.draw_text_with_border( # 좌표
+                runtime_values.screen, font_renderer,
+                f"축하합니다! 당신은 이스터에그를 발견하였습니다.",
+                WHITE, BLACK, 2, pygame.math.Vector2(850, 20000))
 
             # 처리
             process.process()
