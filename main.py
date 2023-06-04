@@ -123,6 +123,12 @@ if __name__ == "__main__":
         official_discord_btn = ui.Btn("공식사이트", lambda: webbrowser.open("https://newkini-dev.com/sfg"), pygame.math.Vector2(runtime_values.window_size[0]/2+30*4+10, runtime_values.window_size[1]/2+25))
         github_discord_btn = ui.Btn("공식깃허브", lambda: webbrowser.open("https://github.com/newkincode/simple_farming_game/releases/download/alpha/sfg-v1.1.1-windows.zip"), pygame.math.Vector2(runtime_values.window_size[0]/2-30*4+10, runtime_values.window_size[1]/2+50))
         youtube_discord_btn = ui.Btn("공식유튜브", lambda: webbrowser.open("https://www.youtube.com/channel/UCa-gBibeaPPiNYl6t_3GOIw"), pygame.math.Vector2(runtime_values.window_size[0]/2+30*4+10, runtime_values.window_size[1]/2+50))
+        story_mod = ui.Btn(
+            "스토리모드", 
+            lambda: webbrowser.open("https://github.com/newkincode/sfg_story_mod"), 
+            pygame.math.Vector2(runtime_values.window_size[0]/2+30*4+10, runtime_values.window_size[1]/2+75)
+        )
+
         while runtime_values.running:
             musPos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)
@@ -132,7 +138,8 @@ if __name__ == "__main__":
             github_discord_btn.draw()
             youtube_discord_btn.draw()
             start.draw()
-            draw.draw_text_with_border( # 돈
+            story_mod.draw()
+            draw.draw_text_with_border( # 시간
                 runtime_values.screen, font_renderer,
                 f"{datetime.datetime.now().strftime('%Y년 %m월 %d일 %H시 %M분 %S초')}",
                 WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
