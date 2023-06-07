@@ -64,7 +64,6 @@ $ python main.py
 ## 기여자
 
 -   [newkincode](https://github.com/newkincode) - 메인테이너
--   [LynHan1110](https://github.com/LynHan1110) - 예정
 -   [ky0422](https://github.com/ky0422) - `README.md` 작성, 그 외 버그 수정
 -   [kdh8219](https://github.com/kdh8219) - 코드 리팩터링, 첫번째 관심자
 -   [copilot](https://github.com/features/copilot) - 코드 작성 도우미
