@@ -4,7 +4,9 @@ import pygame
 class Object:
     image: pygame.Surface
 
-    def __init__(self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface) -> None:
+    def __init__(
+        self, image: pygame.Surface, pos: pygame.math.Vector2, screen: pygame.Surface
+    ) -> None:
         self.image = image
         self.pos = pos
         self.screen = screen

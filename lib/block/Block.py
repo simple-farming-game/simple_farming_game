@@ -1,6 +1,7 @@
 from ..Object import Object
 import pygame
 
+
 class Block(Object):
     name: str  # 영어로 적고 lang 파일에서 참조.
 
@@ -10,6 +11,9 @@ class Block(Object):
         self.screen = screen
         self.init()
         super().__init__(self.image, pos, screen)
+
     def returnVar(self):
         return [self.image, self.pos, self.screen]
-    def init(self): ...
+
+    def init(self):
+        ...

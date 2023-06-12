@@ -6,9 +6,14 @@ name = "pypi"
 [packages]
 pygame = "*"
 requests = "*"
+mypy = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.10"
 python_full_version = "3.10.9"
+
+[pipenv]
+allow_prereleases = true

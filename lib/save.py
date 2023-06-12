@@ -9,7 +9,6 @@ from lib.plants import plants_list
 from lib.block import block_list
 
 
-
 def write_save():
     with open("save.sfgsave", "w") as save:
         data = {
@@ -18,7 +17,7 @@ def write_save():
             "player_pos_x": runtime_values.players[0].pos.x,
             "player_pos_y": runtime_values.players[0].pos.y,
             "inv": json.dumps(runtime_values.players[0].inventory),
-            "gold" : runtime_values.players[0].gold
+            "gold": runtime_values.players[0].gold,
         }
         data["tile"] = []
         count = 0
@@ -35,18 +34,18 @@ def import_save() -> bool:
     # import save
     saveData = {}
     try:
-        saveFile = open("save.sfgsave", "r", encoding='utf-8-sig')
+        saveFile = open("save.sfgsave", "r", encoding="utf-8-sig")
         saveData = json.load(saveFile)
         saveFile.close()
         del saveFile
-            
+
     except:
         runtime_values.logs.info("불러오기 실패: 파일 불러오기 실패.")
         return False
     # alpha 2.0.0
     farm.tileMap = []
     count = 0
-    tempPos = [0,0]
+    tempPos = [0, 0]
     for i in saveData["tile"]:
         farm.tileMap.append(list())
         for j in i:
@@ -58,18 +57,17 @@ def import_save() -> bool:
                     for pl in plants_list.plants_list:
                         if pl.name == j:
                             farm.tileMap[count].append(pl)
-                            farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
+                            farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0] * 32, tempPos[1] * 32), runtime_values.screen)  # type: ignore
                 elif j in block_list.block_name:
                     for bl in block_list.block_list:
                         if bl.name == j:
                             farm.tileMap[count].append(bl)
-                            farm.tileMap[count][-1] = bl(pygame.math.Vector2(tempPos[0]*32,tempPos[1]*32), runtime_values.screen) # type: ignore
-            tempPos[1]+=1
-        count += 1           
-        tempPos[1]=0
-        tempPos[0]+=1
-        
-            
+                            farm.tileMap[count][-1] = bl(pygame.math.Vector2(tempPos[0] * 32, tempPos[1] * 32), runtime_values.screen)  # type: ignore
+            tempPos[1] += 1
+        count += 1
+        tempPos[1] = 0
+        tempPos[0] += 1
+
     runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
     runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
     runtime_values.players[0].inventory = json.loads(saveData["inv"])

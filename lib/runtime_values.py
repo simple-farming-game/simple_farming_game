@@ -14,7 +14,7 @@ pcInfo = {
     "core": os.cpu_count(),
     "os": platform.system(),
     "processor": platform.processor(),
-    "osvar": platform.version()
+    "osvar": platform.version(),
 }
 
 setting = {}
