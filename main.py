@@ -1,6 +1,7 @@
 import datetime
 import json
 import pygame
+import sys
 
 if __name__ == "__main__":
     pygame.init()
@@ -255,3 +256,4 @@ if __name__ == "__main__":
     save.write_save()
     pygame.mixer.music.stop()
     pygame.quit()
+    sys.exit()
