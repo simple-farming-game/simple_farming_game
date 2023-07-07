@@ -8,6 +8,7 @@ pygame = "*"
 requests = "*"
 mypy = "*"
 fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 black = "*"

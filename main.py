@@ -3,6 +3,10 @@ import json
 import pygame
 import sys
 
+# api def
+def spp(posx:int, posy:int):
+    runtime_values.players[0].pos.xy = pygame.Vector2(posx, posy)
+
 if __name__ == "__main__":
     pygame.init()
 
@@ -97,7 +101,6 @@ if __name__ == "__main__":
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
-
     def opening() -> None:
         text_x_pos = 0
         target_x = runtime_values.window_size[0] / 2
