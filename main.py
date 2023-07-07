@@ -3,10 +3,6 @@ import json
 import pygame
 import sys
 
-# api def
-def spp(posx:int, posy:int):
-    runtime_values.players[0].pos.xy = pygame.Vector2(posx, posy)
-
 if __name__ == "__main__":
     pygame.init()
 
