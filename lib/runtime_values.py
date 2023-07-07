@@ -4,7 +4,7 @@ import json
 import os
 from typing import Tuple
 
-from lib.logger import logger
+from lib.logger import Logger
 from lib import player
 
 version_type = Tuple[str, int, int, int]
@@ -25,7 +25,7 @@ window_size = (960, 640)
 screen = pygame.display.set_mode(window_size)
 clock = pygame.time.Clock()
 
-logs = logger()
+logs = Logger()
 
 running: bool
 
