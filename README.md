@@ -1,5 +1,5 @@
 # 농사 게임
-
+![](https://capsule-render.vercel.app/api?type=waving&color=0:feac5e,50:c779d0,100:4bc0c8&height=300&section=header&text=Simple%20Farming%20Game&desc=Let%27s%20farm%20everything!&fontColor=fff)
 모든걸 농사짓자!
 
 ## 설치
