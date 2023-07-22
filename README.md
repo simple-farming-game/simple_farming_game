@@ -5,9 +5,11 @@
 ## 설치
 
 ```console
+$ pip install pipenv
 $ git clone https://github.com/newkincode/simple_farming_game.git
 $ cd simple_farming_game
-$ pip install pygame
+$ pipenv shell
+$ pipenv sync
 
 $ python main.py
 ```
@@ -16,6 +18,9 @@ $ python main.py
 
 ```console
 > ./build.bat
+```
+```console
+$ sh ./build.sh
 ```
 이후 lib폴더와 assets 폴더와 data폴더를 build폴더 안 main폴더에 넣어줍니다(복사 붙여넣기)
 
