@@ -65,6 +65,8 @@ $ sh ./build.sh
 -   [ ] 상자에 아이템 넣어서 판매
 -   [ ] 도전과제 만들기
 -   [ ] 상자 제작
+## 후원
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/newkinidev)
 
 ## 기여자
 
