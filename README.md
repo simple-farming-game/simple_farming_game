@@ -1,6 +1,13 @@
 # 농사 게임
-![](https://capsule-render.vercel.app/api?type=waving&color=0:feac5e,50:c779d0,100:4bc0c8&height=300&section=header&text=Simple%20Farming%20Game&desc=Let%27s%20farm%20everything!&fontColor=fff)
-모든걸 농사짓자!
+![](https://capsule-render.vercel.app/api?type=waving&color=0:feac5e,50:c779d0,100:4bc0c8&height=300&section=header&text=Simple%20Farming%20Game&desc=Let%27s%20farm%20everything!&fontColor=fff)<br>
+모든걸 농사짓자!<br><br>
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/newkinidev)<br>
+![GitHub all releases](https://img.shields.io/github/downloads/simple-farming-game/simple_farming_game/total)
+![Discord](https://img.shields.io/discord/1111933622543470643)
+![GitHub issues](https://img.shields.io/github/issues/simple-farming-game/simple_farming_game)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/simple-farming-game/simple_farming_game)
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsimple-farming-game%2Fsimple_farming_game%2Freleases%2Flatest&query=tag_name)
+
 
 ## 설치
 
@@ -32,7 +39,7 @@ $ sh ./build.sh
 > -   `smile`<br>
 > -   `angry`<br>
 
->보더 텍스트라면 어디서든 사용가능하며<br>
+> 보더 텍스트라면 어디서든 사용가능하며<br>
 > 한 매시지 안에 여러 이모지는 사용이 불가능 합니다<br>
 > 예시: <br>
 > `hello <smile> asdfsd` 가능<br>
