@@ -17,3 +17,6 @@ class Block(Object):
 
     def init(self):
         ...
+    
+    def update(self):
+        ...
