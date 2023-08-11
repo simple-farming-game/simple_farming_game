@@ -19,13 +19,14 @@ def setting():
             2,
             pygame.math.Vector2(15 * 32, 3 * 32),
         )
+
+        music = ui.Btn(
+                "음악 : 켜짐", lambda: print("hello world"), pygame.math.Vector2(15, 5) * 32
+            )
+        
+        music.draw()
+
         if runtime_values.setting["musicStart"]:
-            music = ui.Btn(
-                "음악 : 킴", not_musicStart, pygame.math.Vector2(15 * 32, 5 * 32)
-            )
-            music.draw()
+            music.text = "음악 : 켜짐"
         else:
-            music = ui.Btn(
-                "음악 : 끔", not_musicStart, pygame.math.Vector2(15 * 32, 5 * 32)
-            )
-            music.draw()
+            music.text = "음악 : 꺼짐"
