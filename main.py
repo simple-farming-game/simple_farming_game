@@ -18,7 +18,6 @@ if __name__ == "__main__":
     from lib import draw
     from lib import keyinput
     from lib import farm
-    from lib import setting
     from lib import ui
     from lib import defs
     from lib import drawObj
@@ -97,6 +96,33 @@ if __name__ == "__main__":
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
+
+    def not_musicStart():
+        runtime_values.setting["musicStart"] = not runtime_values.setting["musicStart"]
+
+    music = ui.Btn(
+                "음악 : 켜짐", not_musicStart, pygame.math.Vector2(15, 5) * 32
+            )
+    
+    def setting():
+        if runtime_values.on_setting == True:
+            draw.draw_text_with_border(
+                runtime_values.screen,
+                runtime_values.font,
+                "셋팅",
+                runtime_values.WHITE,
+                runtime_values.BLACK,
+                2,
+                pygame.math.Vector2(15 * 32, 3 * 32),
+            )
+            
+            music.draw()
+        
+        if runtime_values.setting["musicStart"]:
+            music.text = "음악 : 켜짐"
+        else:
+            music.text = "음악 : 꺼짐"
+
     def opening() -> None:
         text_x_pos = 0
         target_x = runtime_values.window_size[0] / 2
@@ -243,7 +269,7 @@ if __name__ == "__main__":
             runtime_values.players[0].move(runtime_values.my_dir, d_f)
             farm.grow_plants()
             farm.rot_plants(runtime_values)
-            setting.setting()
+            setting()
             pygame.display.update()  # 화면 업데이트
 
     defs.var_check(runtime_values.version)
