@@ -14,71 +14,121 @@ SKYBLUE = pygame.Color(113, 199, 245)
 BLACK = pygame.Color(0, 0, 0)
 WHITE = pygame.Color(255, 255, 255)
 
+
 def drawObj():
-            musPos: tuple = pygame.mouse.get_pos()
+    musPos: tuple = pygame.mouse.get_pos()
     # 글시
-            draw.draw_text_with_border( # 버전명
-                runtime_values.screen, font_renderer,
-                f"SFG {version_text}!  {runtime_values.lang['guid']}",
-                WHITE, BLACK, 2, pygame.math.Vector2(10, 10))
-            
-            draw.draw_text_with_border( # 좌표
-                runtime_values.screen, font_renderer,
-                f"{runtime_values.players[0].get_tile_pos().x} {runtime_values.players[0].get_tile_pos().y}",
-                WHITE, BLACK, 2, pygame.math.Vector2(850, 35))
-                
-            draw.draw_text_with_border( # 돈
-                runtime_values.screen, font_renderer,
-                f"{runtime_values.lang['gold']} : {runtime_values.players[0].gold}",
-                WHITE, BLACK, 2, pygame.math.Vector2(10, 85))
-            
-            # ui
-            runtime_values.screen.blit(imgs.img("item_bar"), [28*32-(256-64),20*32-32])
+    draw.draw_text_with_border(  # 버전명
+        runtime_values.screen,
+        font_renderer,
+        f"SFG {version_text}!  {runtime_values.lang['guid']}",
+        WHITE,
+        BLACK,
+        2,
+        pygame.math.Vector2(10, 10),
+    )
 
-            # itmebar item
-            runtime_values.screen.blit(imgs.img("item_bar_select"),[28*32-keyinput.select_bar*32+64,20*32-32])
-            count = 0
-            for i in range(0,256,32):
-                    # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
-                    try:
-                        if list(runtime_values.players[0].inventory.items())[count][0] in plants_list.plants_seed_name:
-                            runtime_values.screen.blit(
-                                plants_list.plants_image[
-                                    plants_list.plants_seed_name.index(
-                                        list(runtime_values.players[0].inventory.items())[count][0]
-                                    )
-                                ], [28*32-i+32,19*32])
+    draw.draw_text_with_border(  # 좌표
+        runtime_values.screen,
+        font_renderer,
+        f"{runtime_values.players[0].get_tile_pos().x} {runtime_values.players[0].get_tile_pos().y}",
+        WHITE,
+        BLACK,
+        2,
+        pygame.math.Vector2(850, 35),
+    )
 
-                        elif list(runtime_values.players[0].inventory.items())[count][0] in block_list.block_name:
-                            runtime_values.screen.blit(
-                                block_list.block_image[
-                                    block_list.block_name.index(
-                                        list(runtime_values.players[0].inventory.items())[count][0]
-                                        )], 
-                                        [28*32-i+32,19*32])
+    draw.draw_text_with_border(  # 돈
+        runtime_values.screen,
+        font_renderer,
+        f"{runtime_values.lang['gold']} : {runtime_values.players[0].gold}",
+        WHITE,
+        BLACK,
+        2,
+        pygame.math.Vector2(10, 85),
+    )
 
-                        else:
-                            runtime_values.screen.blit(
-                                pygame.image.load(
-                                    item.get_value(
-                                        list(runtime_values.players[0]. # type: ignore
-                                            inventory.items()
-                                        )[count][0]
-                                    )
-                                ), [28*32-i+32,19*32]
-                            )
-                    except IndexError:
-                          pass
-                    except ValueError:
-                          pass
-                    count += 1
-            del count
-            
+    # ui
+    runtime_values.screen.blit(
+        imgs.img("item_bar"), [28 * 32 - (256 - 64), 20 * 32 - 32]
+    )
 
-            runtime_values.screen.blit(imgs.img("mus"),musPos) # 마우스 커서
+    # itmebar item
+    runtime_values.screen.blit(
+        imgs.img("item_bar_select"),
+        [28 * 32 - keyinput.select_bar * 32 + 64, 20 * 32 - 32],
+    )
+    count = 0
+    for i in range(0, 256, 32):
+        # TODO: 빈칸을 선택할 경우 none을 선택하게 변경
+        try:
+            if (
+                list(runtime_values.players[0].inventory.items())[count][0]
+                in plants_list.plants_seed_name
+            ):
+                runtime_values.screen.blit(
+                    plants_list.plants_seed_image[
+                        plants_list.plants_seed_name.index(
+                            list(runtime_values.players[0].inventory.items())[count][0]
+                        )
+                    ],
+                    [28 * 32 - i + 32, 19 * 32],
+                )
+            if (
+                list(runtime_values.players[0].inventory.items())[count][0]
+                in plants_list.plants_name
+            ):
+                runtime_values.screen.blit(
+                    plants_list.plants_image[
+                        plants_list.plants_name.index(
+                            list(runtime_values.players[0].inventory.items())[count][0]
+                        )
+                    ],
+                    [28 * 32 - i + 32, 19 * 32],
+                )
 
-            # 채팅 드로우
-            draw.draw_text_with_border( # 
-            runtime_values.screen, font_renderer,
-            f"{chat.chat_list[-1][0]} : {chat.chat_list[-1][1]}",
-            WHITE, BLACK, 2, pygame.math.Vector2(10, 576))
+            elif (
+                list(runtime_values.players[0].inventory.items())[count][0]
+                in block_list.block_name
+            ):
+                runtime_values.screen.blit(
+                    block_list.block_image[
+                        block_list.block_name.index(
+                            list(runtime_values.players[0].inventory.items())[count][0]
+                        )
+                    ],
+                    [28 * 32 - i + 32, 19 * 32],
+                )
+
+            else:
+                runtime_values.screen.blit(
+                    pygame.image.load(
+                        item.get_value(
+                            list(
+                                runtime_values.players[
+                                    0
+                                ].inventory.items()  # type: ignore
+                            )[count][0]
+                        )
+                    ),
+                    [28 * 32 - i + 32, 19 * 32],
+                )
+        except IndexError:
+            pass
+        except ValueError:
+            pass
+        count += 1
+    del count
+
+    runtime_values.screen.blit(imgs.img("mus"), musPos)  # 마우스 커서
+
+    # 채팅 드로우
+    draw.draw_text_with_border(  #
+        runtime_values.screen,
+        font_renderer,
+        f"{chat.chat_list[-1][0]} : {chat.chat_list[-1][1]}",
+        WHITE,
+        BLACK,
+        2,
+        pygame.math.Vector2(10, 576),
+    )

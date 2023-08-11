@@ -6,3 +6,4 @@ main.spec
 *.sfgsave
 log/
 dist.zip
+buildandrelese.bat
