@@ -7,6 +7,10 @@
 [![GitHub issues](https://img.shields.io/github/issues/simple-farming-game/simple_farming_game)](https://github.com/simple-farming-game/simple_farming_game/issues)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/simple-farming-game/simple_farming_game)](https://github.com/simple-farming-game/simple_farming_game)
 [![Latest Release](https://img.shields.io/github/v/release/simple-farming-game/simple_farming_game)](https://github.com/simple-farming-game/simple_farming_game/releases)
+[![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/simple-farming-game/simple_farming_game)](https://github.com/simple-farming-game/simple_farming_game)
+[![GitHub contributors](https://img.shields.io/github/contributors/simple-farming-game/simple_farming_game)](https://github.com/simple-farming-game/simple_farming_game)
+
+
 
 
 ## 설치
