@@ -6,7 +6,7 @@
 ![Discord](https://img.shields.io/discord/1111933622543470643)
 ![GitHub issues](https://img.shields.io/github/issues/simple-farming-game/simple_farming_game)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/simple-farming-game/simple_farming_game)
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsimple-farming-game%2Fsimple_farming_game%2Freleases%2Flatest&query=tag_name)
+[![Latest Release](https://img.shields.io/github/v/release/simple-farming-game/simple_farming_game)](https://github.com/simple-farming-game/simple_farming_game/releases)
 
 
 ## 설치
