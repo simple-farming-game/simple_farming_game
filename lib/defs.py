@@ -1,8 +1,8 @@
+import os
 import json
+import pygame
 import requests
 import webbrowser
-import pygame
-
 
 def var_check(version):
     latest_response = requests.get(
@@ -46,3 +46,9 @@ def get_image_width(image: pygame.Surface):
     except pygame.error:
         print("이미지를 열 수 없거나 잘못된 형식입니다.")
         return None
+
+def has_audio_devices():
+    with open(os.devnull, 'w') as devnull:
+        # Try to play a silent WAV file, suppressing any output
+        exit_code = os.system('aplay -q /dev/null', stderr=devnull)
+    return exit_code == 0
