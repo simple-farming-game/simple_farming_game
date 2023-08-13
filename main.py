@@ -3,9 +3,9 @@ import json
 import pygame
 import sys
 
-if __name__ == "__main__":
-    pygame.init()
+pygame.init()
 
+if __name__ == "__main__":
     # runtime values
 
     from lib import player
