@@ -27,7 +27,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pipenv lock  # Generate a lock file if not present
-        pipenv sync
+        pipenv install --deploy --ignore-pipfile --python /opt/hostedtoolcache/Python/3.10.12/x64/bin/python3.10
     - name: Run Tests and Linting
       run: |
         pipenv run python main.py  # Adjust the command as needed
