@@ -8,9 +8,9 @@ from .. import shopGui
 
 
 class Shop(Block.Block):
-    is_shop_opne: bool = False
-    name: str = "shop"
-    price: int = 999999999
+    is_shop_opne = False
+    name = "shop"
+    price = 999999999
 
     def init(self):
         shopGui.init()

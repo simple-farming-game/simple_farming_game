@@ -100,10 +100,8 @@ if __name__ == "__main__":
     def not_musicStart():
         runtime_values.setting["musicStart"] = not runtime_values.setting["musicStart"]
 
-    music = ui.Btn(
-                "음악 : 켜짐", not_musicStart, pygame.math.Vector2(15, 5) * 32
-            )
-    
+    music = ui.Btn("음악 : 켜짐", not_musicStart, pygame.math.Vector2(15, 5) * 32)
+
     def setting():
         if runtime_values.on_setting == True:
             draw.draw_text_with_border(
@@ -115,9 +113,9 @@ if __name__ == "__main__":
                 2,
                 pygame.math.Vector2(15 * 32, 3 * 32),
             )
-            
+
             music.draw()
-        
+
         if runtime_values.setting["musicStart"]:
             music.text = "음악 : 켜짐"
         else:

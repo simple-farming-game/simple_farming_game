@@ -12,7 +12,7 @@ class Plants(Object):
     rotCount: int
 
     def __init__(self, pos: pygame.math.Vector2, screen: pygame.Surface) -> None:
-        image = pygame.image.load(f"assets/img/plants/{self.name}/farm_0.png")
+        image: pygame.Surface = pygame.image.load(f"assets/img/plants/{self.name}/farm_0.png")
         super().__init__(image, pos, screen)
 
     def grow(self) -> None:
