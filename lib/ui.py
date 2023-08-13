@@ -23,7 +23,7 @@ class Trigger:
 
 
 class Btn:
-    def __init__(self, text: str, _def, pos: pygame.Vector2) -> None:
+    def __init__(self, text: str, _def, pos: pygame.Vector2):
         self.trg = Trigger(_def)
 
         self.btn_var = dw.draw_text_with_border(
