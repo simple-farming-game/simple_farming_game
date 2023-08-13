@@ -23,12 +23,15 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    - name: Install dependencies
+    - name: pip Update
       run: |
         python -m pip install --upgrade pip
+    - name: Install Pipenv
+      run: |
         pip install pipenv
-        pipenv shell
-        pipenv sync
+    - name: Install Dependencies
+      run: |
+        pipenv install --ignore-pipfile  # Pipfile.lock 무시하고 의존성 설치
     - name: build
       run: |
         python main.py
