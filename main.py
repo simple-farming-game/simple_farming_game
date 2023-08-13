@@ -4,6 +4,7 @@ import pygame
 import sys
 
 pygame.init()
+pygame.mixer.init()
 
 if __name__ == "__main__":
     # runtime values
