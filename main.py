@@ -2,6 +2,9 @@ import datetime
 import json
 import pygame
 import sys
+import os
+
+os.environ['SDL_AUDIODRIVER'] = 'dsp'
 
 pygame.init()
 pygame.mixer.init()
