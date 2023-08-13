@@ -10,7 +10,7 @@ from .. import shopGui
 class Shop(Block.Block):
     is_shop_opne = False
     name = "shop"
-    price = 999999999
+    price = 100
 
     def init(self):
         shopGui.init()
