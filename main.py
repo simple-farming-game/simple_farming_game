@@ -1,9 +1,10 @@
-import datetime
+import sys
 import json
 import pygame
-import sys
+import datetime
 
 pygame.init()
+pygame.mixer.init()
 
 if __name__ == "__main__":
     # runtime values
