@@ -1,8 +1,7 @@
-import datetime
+import sys
 import json
 import pygame
-import sys
-import os
+import datetime
 
 pygame.init()
 pygame.mixer.init()
@@ -153,9 +152,7 @@ if __name__ == "__main__":
         title()
 
     def title():
-        if defs.has_audio_devices():
-            pygame.mixer.music.load(musics["sfg"])
-        else: print("오디오 장치가 없음!")
+        pygame.mixer.music.load(musics["sfg"])
         pygame.mixer.music.play()
         start = ui.Btn(
             "시작! <smile>",
@@ -235,9 +232,7 @@ if __name__ == "__main__":
 
     def run():
         pygame.mixer.music.stop()
-        if defs.has_audio_devices():
-            pygame.mixer.music.load(musics["windless"])
-        else: print("오디오 장치가 없음!")
+        pygame.mixer.music.load(musics["windless"])
         pygame.mixer.music.play(-1)
         while runtime_values.running:
             d_f = runtime_values.clock.tick(runtime_values.fps) / 1000
