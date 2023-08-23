@@ -1,5 +1,4 @@
 {
-  "guid": "h:help",
   "fail": {
     "save": "실패 : 문제가 발생했습니다",
     "d": "실패 : 파일이 없습니다"
@@ -18,6 +17,22 @@
     "box": "상자",
     "sprinkle": "스프링 쿨러"
   },
+  "setting_page" : {
+    "setting" : "설정",
+    "music" : "음악",
+    "on" : "켜짐",
+    "off" : "꺼짐"
+  },
+  "main_page" : {
+    "start" : "시작",
+    "codemos" : "코드모스",
+    "site" : "사이트",
+    "github" : "깃허브",
+    "youtube" : "유튜브",
+    "storymode" : "스토리모드",
+    "date_type" : "%Y년 %m월 %d일 %H시 %M분 %S초"
+  },
+  "guid": "h:help",
   "count" : "겟수",
   "name" : "이름",
   "select" : "선택",

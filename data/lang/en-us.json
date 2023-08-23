@@ -1,5 +1,4 @@
 {
-  "guid": "h:help",
   "fail": {
     "save": "Failure: An issue occurred",
     "d": "Failure: File doesn't exist"
@@ -18,9 +17,25 @@
     "box": "Box",
     "sprinkle": "Sprinkler"
   },
-  "count" : "Count",
-  "name" : "Name",
-  "select" : "Select",
-  "seed" : "Seed",
-  "gold" : "Gold"
+  "setting_page": {
+    "setting": "Settings",
+    "music": "Music",
+    "on": "On",
+    "off": "Off"
+  },
+  "main_page": {
+    "start": "Start",
+    "codemos": "Codemos",
+    "site": "Website",
+    "github": "GitHub",
+    "youtube": "YouTube",
+    "storymode": "Story Mode",
+    "date_type": "%Y-%m-%d %H:%M:%S"
+  },
+  "guid": "h:help",
+  "count": "Count",
+  "name": "Name",
+  "select": "Select",
+  "seed": "Seed",
+  "gold": "Gold"
 }
