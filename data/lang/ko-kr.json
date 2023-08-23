@@ -5,16 +5,16 @@
     "d": "실패 : 파일이 없습니다"
   },
   "items": {
-    "HOE": "괭이",
-    "SHOVEL": "삽",
-    "SICKLE": "낫",
+    "hoe": "괭이",
+    "shovel": "삽",
+    "sickle": "낫",
     "rice": "쌀",
     "tomato": "토마토",
-    "sunFlower": "해바라기",
+    "sun_flower": "해바라기",
     "carrots": "당근",
-    "NONE": "없음",
-    "WATER": "물뿌리게",
-    "VITAMIN": "비타민",
+    "none": "없음",
+    "water": "물뿌리게",
+    "vitamin": "비타민",
     "box": "상자",
     "sprinkle": "스프링 쿨러"
   },
