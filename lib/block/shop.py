@@ -13,7 +13,7 @@ class Shop(Block.Block):
     price = 100
 
     def init(self):
-        shopGui.init(block_list.block_list, plants_list.plants_list)
+        shopGui.init(plants_list.plants_list, block_list.block_list)
 
     def interact(self):
         self.is_shop_opne = not self.is_shop_opne

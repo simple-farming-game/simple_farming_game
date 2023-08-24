@@ -1,13 +1,19 @@
 import pygame
 
 btn_list = []
-btn_y = 0
 
 def init(plants_list, block_list):
+    from lib.lang import text
     from lib import ui
-    global btn_y
-    for index, item in enumerate(plants_list + block_list):
-        btn_list.append(ui.Btn(f"{index}. {item.name}", lambda: buy(item.name), pygame.math.Vector2(50,btn_y)))
+    btn_y = 0
+    index = 1
+    for item in plants_list:
+        btn_list.append(ui.Btn(f"{index}. {text(f'items.{item.name}')}", lambda: buy(item.name), pygame.math.Vector2(50,btn_y)))
+        index+=1
+        btn_y+=50
+    for item in block_list:
+        btn_list.append(ui.Btn(f"{index}. {text(f'blocks.{item.name}')}", lambda: buy(item.name), pygame.math.Vector2(50,btn_y)))
+        index+=1
         btn_y+=50
 
 def buy(name):
