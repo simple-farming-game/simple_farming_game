@@ -13,6 +13,13 @@ class SunFlower(Plants.Plants):
     water = False
     rotCount = 0
 
+    # 이벤트
+    GROW_EVENT = pygame.USEREVENT
+    
+    def __init__(self, pos: pygame.Vector2, screen: pygame.Surface) -> None:
+        super().__init__(pos, screen)
+        pygame.time.set_timer(self.GROW_EVENT, 10000)
+    
     def grow(self):
         if self.water:
             self.growCount += random.randint(0, 10)

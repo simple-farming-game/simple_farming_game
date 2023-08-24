@@ -22,14 +22,6 @@ def init():
 
     tileMap[3][3] = block_list.block_list[1](pygame.Vector2(3 * 32, 3 * 32), runtime_values.screen)  # type: ignore
 
-
-def grow_plants():
-    for line in tileMap:
-        for tile in line:
-            if isinstance(tile, plants_list.plants_list):  # type: ignore
-                tile.grow()  # type: ignore
-
-
 def rot_plants(runtime_values):
     tilePos = [0, 0]
     for line in tileMap:
