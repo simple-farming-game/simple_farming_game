@@ -23,6 +23,7 @@ if __name__ == "__main__":
     from lib import defs
     from lib import drawObj
     from lib import save
+    from lib import lang
     import webbrowser
 
     runtime_values.logs.info("end")
@@ -101,14 +102,14 @@ if __name__ == "__main__":
     def not_musicStart():
         runtime_values.setting["musicStart"] = not runtime_values.setting["musicStart"]
 
-    music = ui.Btn("음악 : 켜짐", not_musicStart, pygame.math.Vector2(15, 5) * 32)
+    music = ui.Btn(f"{lang.text('setting_page.music')} : {lang.text('setting_page.on')}", not_musicStart, pygame.math.Vector2(15, 5) * 32)
 
     def setting():
         if runtime_values.on_setting == True:
             draw.draw_text_with_border(
                 runtime_values.screen,
                 runtime_values.font,
-                "셋팅",
+                lang.text('setting_page.setting'),
                 runtime_values.WHITE,
                 runtime_values.BLACK,
                 2,
@@ -118,9 +119,9 @@ if __name__ == "__main__":
             music.draw()
 
         if runtime_values.setting["musicStart"]:
-            music.text = "음악 : 켜짐"
+            music.text = f"{lang.text('setting_page.music')} : {lang.text('setting_page.on')}"
         else:
-            music.text = "음악 : 꺼짐"
+            music.text = f"{lang.text('setting_page.music')} : {lang.text('setting_page.off')}"
 
     def opening() -> None:
         text_x_pos = 0
@@ -155,14 +156,14 @@ if __name__ == "__main__":
         pygame.mixer.music.load(musics["sfg"])
         pygame.mixer.music.play()
         start = ui.Btn(
-            "시작! <smile>",
+            f"{lang.text('main_page.start')}! <smile>",
             run,
             pygame.Vector2(
                 runtime_values.window_size[0] / 2, runtime_values.window_size[1] / 2
             ),
         )
         codemos_btn = ui.Btn(
-            "코드모스",
+            lang.text("main_page.codemos"),
             lambda: webbrowser.open("https://discord.gg/codemos"),
             pygame.math.Vector2(
                 runtime_values.window_size[0] / 2 - 30 * 4 + 10,
@@ -170,7 +171,7 @@ if __name__ == "__main__":
             ),
         )
         official_discord_btn = ui.Btn(
-            "공식사이트",
+            lang.text("main_page.site"),
             lambda: webbrowser.open("https://newkini-dev.com/sfg"),
             pygame.math.Vector2(
                 runtime_values.window_size[0] / 2 + 30 * 4 + 10,
@@ -178,7 +179,7 @@ if __name__ == "__main__":
             ),
         )
         github_discord_btn = ui.Btn(
-            "공식깃허브",
+            lang.text("main_page.github"),
             lambda: webbrowser.open(
                 "https://github.com/simple-farming-game/simple_farming_game/"
             ),
@@ -188,7 +189,7 @@ if __name__ == "__main__":
             ),
         )
         youtube_discord_btn = ui.Btn(
-            "공식유튜브",
+            lang.text("main_page.youtube"),
             lambda: webbrowser.open(
                 "https://www.youtube.com/channel/UCa-gBibeaPPiNYl6t_3GOIw"
             ),
@@ -198,7 +199,7 @@ if __name__ == "__main__":
             ),
         )
         story_mod = ui.Btn(
-            "스토리모드",
+            lang.text("main_page.storymode"),
             lambda: webbrowser.open(
                 "https://github.com/simple-farming-game/sfg_story_mod"
             ),
@@ -221,7 +222,7 @@ if __name__ == "__main__":
             draw.draw_text_with_border(  # 시간
                 runtime_values.screen,
                 font_renderer,
-                f"{datetime.datetime.now().strftime('%Y년 %m월 %d일 %H시 %M분 %S초')}",
+                datetime.datetime.now().strftime(lang.text("main_page.date_type")),
                 WHITE,
                 BLACK,
                 2,

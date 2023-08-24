@@ -5,7 +5,7 @@ from . import Plants
 
 
 class SunFlower(Plants.Plants):
-    name = "sunFlower"
+    name = "sun_flower"
     price = 15
     growCount = 0
     age = 0
