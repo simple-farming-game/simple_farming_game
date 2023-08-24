@@ -1,24 +1,41 @@
 {
-  "guid": "h:help",
   "fail": {
-    "save": "failed: a problem occurred",
-    "d": "failed: file not found"
+    "save": "Failure: An issue occurred",
+    "d": "Failure: File doesn't exist"
   },
   "items": {
-    "HOE" : "hoe",
-    "SHOVEL": "shovel",
-    "SICKLE": "sickle",
-    "rice": "rice",
-    "tomato": "tomato",
-    "sunFlower": "sunflower",
-    "carrots": "carrots",
-    "NONE": "none",
-    "WATER": "watering can"
+    "hoe": "Hoe",
+    "shovel": "Shovel",
+    "sickle": "Sickle",
+    "rice": "Rice",
+    "tomato": "Tomato",
+    "sun_flower": "Sunflower",
+    "carrots": "Carrots",
+    "none": "None",
+    "water": "Watering Can",
+    "vitamin": "Vitamin",
+    "box": "Box",
+    "sprinkle": "Sprinkler"
   },
-  "count" : "get number",
-  "name" : "name",
-  "select" : "select",
-  "seed" : "seed",
-  "gold" : "money"
+  "setting_page": {
+    "setting": "Settings",
+    "music": "Music",
+    "on": "On",
+    "off": "Off"
+  },
+  "main_page": {
+    "start": "Start",
+    "codemos": "Codemos",
+    "site": "Website",
+    "github": "GitHub",
+    "youtube": "YouTube",
+    "storymode": "Story Mode",
+    "date_type": "%Y-%m-%d %H:%M:%S"
+  },
+  "guid": "h:help",
+  "count": "Count",
+  "name": "Name",
+  "select": "Select",
+  "seed": "Seed",
+  "gold": "Gold"
 }
-

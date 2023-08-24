@@ -1,8 +1,8 @@
+import os
 import json
+import pygame
 import requests
 import webbrowser
-import pygame
-
 
 def var_check(version):
     latest_response = requests.get(
