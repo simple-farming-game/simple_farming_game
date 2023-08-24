@@ -8,6 +8,7 @@ pygame = "*"
 requests = "*"
 mypy = "*"
 charset-normalizer = "*"
+black = "*"
 
 [dev-packages]
 black = "*"

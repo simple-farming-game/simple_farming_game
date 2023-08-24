@@ -1,13 +1,9 @@
 {
-  "guid": "h:help",
   "fail": {
     "save": "실패 : 문제가 발생했습니다",
     "d": "실패 : 파일이 없습니다"
   },
   "items": {
-    "HOE": "괭이",
-    "SHOVEL": "삽",
-    "SICKLE": "낫",
     "rice": "쌀",
     "tomato": "토마토",
     "sun_flower": "해바라기",
@@ -16,8 +12,30 @@
     "water": "물뿌리게",
     "vitamin": "비타민",
     "box": "상자",
-    "sprinkle": "스프링 쿨러"
+    "hoe": "괭이",
+    "shovel": "삽",
+    "sickle": "낫"
   },
+  "blocks" : {
+    "sprinkle": "스프링 쿨러",
+    "shop" : "상점"
+  },
+  "setting_page" : {
+    "setting" : "설정",
+    "music" : "음악",
+    "on" : "켜짐",
+    "off" : "꺼짐"
+  },
+  "main_page" : {
+    "start" : "시작",
+    "codemos" : "코드모스",
+    "site" : "사이트",
+    "github" : "깃허브",
+    "youtube" : "유튜브",
+    "storymode" : "스토리모드",
+    "date_type" : "%Y년 %m월 %d일 %H시 %M분 %S초"
+  },
+  "guid": "h:help",
   "count" : "겟수",
   "name" : "이름",
   "select" : "선택",

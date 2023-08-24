@@ -1,4 +1,4 @@
-chat_list = [["tsetus", "testmsg"], ["tsetu1s", "testmsg"]]
+chat_list: list[list[str]] = [["tsetus", "testmsg"], ["tsetu1s", "testmsg"]]
 
 
 def sand(msg, nick):

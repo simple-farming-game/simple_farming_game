@@ -2,25 +2,28 @@ import lib.draw as dw
 from lib import runtime_values
 import pygame
 
+
 class Trigger:
-  def __init__( self, fun ):
-    self.__value = 0
-    self.fun = fun
-  
-  # getter, 변수값 읽기.
-  @property
-  def value( self ):
-    return self.__value
-  # setter, 변수에 값 대입하기.
-  @value.setter
-  def value( self, value ):
-    if self.__value==0 and value==1:
-      self.fun()
-    # 마지막에 변수값 대입.
-    self.__value = value
+    def __init__(self, fun):
+        self.__value = 0
+        self.fun = fun
+
+    # getter, 변수값 읽기.
+    @property
+    def value(self):
+        return self.__value
+
+    # setter, 변수에 값 대입하기.
+    @value.setter
+    def value(self, value):
+        if self.__value == 0 and value == 1:
+            self.fun()
+        # 마지막에 변수값 대입.
+        self.__value = value
+
 
 class Btn:
-    def __init__(self, text: str, _def, pos: pygame.Vector2) -> None:
+    def __init__(self, text: str, _def, pos: pygame.Vector2):
         self.trg = Trigger(_def)
 
         self.btn_var = dw.draw_text_with_border(
