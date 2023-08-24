@@ -4,9 +4,6 @@
     "d": "실패 : 파일이 없습니다"
   },
   "items": {
-    "hoe": "괭이",
-    "shovel": "삽",
-    "sickle": "낫",
     "rice": "쌀",
     "tomato": "토마토",
     "sun_flower": "해바라기",
@@ -15,7 +12,13 @@
     "water": "물뿌리게",
     "vitamin": "비타민",
     "box": "상자",
-    "sprinkle": "스프링 쿨러"
+    "hoe": "괭이",
+    "shovel": "삽",
+    "sickle": "낫"
+  },
+  "blocks" : {
+    "sprinkle": "스프링 쿨러",
+    "shop" : "상점"
   },
   "setting_page" : {
     "setting" : "설정",

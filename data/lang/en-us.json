@@ -4,9 +4,6 @@
     "d": "Failure: File doesn't exist"
   },
   "items": {
-    "hoe": "Hoe",
-    "shovel": "Shovel",
-    "sickle": "Sickle",
     "rice": "Rice",
     "tomato": "Tomato",
     "sun_flower": "Sunflower",
@@ -15,27 +12,33 @@
     "water": "Watering Can",
     "vitamin": "Vitamin",
     "box": "Box",
-    "sprinkle": "Sprinkler"
+    "hoe": "Hoe",
+    "shovel": "Shovel",
+    "sickle": "Sickle"
   },
-  "setting_page": {
-    "setting": "Settings",
-    "music": "Music",
-    "on": "On",
-    "off": "Off"
+  "blocks" : {
+    "sprinkle": "Sprinkler",
+    "shop" : "Shop"
   },
-  "main_page": {
-    "start": "Start",
-    "codemos": "Codemos",
-    "site": "Website",
-    "github": "GitHub",
-    "youtube": "YouTube",
-    "storymode": "Story Mode",
-    "date_type": "%Y-%m-%d %H:%M:%S"
+  "setting_page" : {
+    "setting" : "Settings",
+    "music" : "Music",
+    "on" : "On",
+    "off" : "Off"
+  },
+  "main_page" : {
+    "start" : "Start",
+    "codemos" : "Codemos",
+    "site" : "Website",
+    "github" : "GitHub",
+    "youtube" : "YouTube",
+    "storymode" : "Story Mode",
+    "date_type" : "%Y-%m-%d %H:%M:%S"
   },
   "guid": "h:help",
-  "count": "Count",
-  "name": "Name",
-  "select": "Select",
-  "seed": "Seed",
-  "gold": "Gold"
+  "count" : "Count",
+  "name" : "Name",
+  "select" : "Select",
+  "seed" : "Seed",
+  "gold" : "Gold"
 }
