@@ -270,21 +270,9 @@ def moving(event: pygame.event.Event):
                 if runtime_values.my_dir == player.Direction.DOWN_RIGHT:
                     runtime_values.my_dir = player.Direction.RIGHT
 
-
-def esteregg():
-    inp = int(input("code\n"))
-    if inp == 3927399:
-        print("over 9000")
-    if inp == 5977298:
-        print("north korea is best korea")
-    if inp == 9907926:
-        print(
-            """
-helloworld:
-We are Anonymous.
-We are Legion.
-We do not forgive.
-We do not forget.
-Expect us!
-        """
-        )
+def grow_plants(event: pygame.event.Event):
+    for line in farm.tileMap:
+        for tile in line:
+            if isinstance(tile, plants_list.plants_list):  # type: ignore
+                if event.type == tile.GROW_EVENT:
+                    tile.grow() # type: ignore

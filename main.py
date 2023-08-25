@@ -230,7 +230,7 @@ if __name__ == "__main__":
             )
             runtime_values.screen.blit(imgs.img("mus"), mus_pos)  # 마우스 커서
             pygame.display.update()  # 화면 업데이트
-
+    
     def run():
         pygame.mixer.music.stop()
         pygame.mixer.music.load(musics["windless"])
@@ -267,7 +267,6 @@ if __name__ == "__main__":
             process.process()
             keyinput.process(NICK)
             runtime_values.players[0].move(runtime_values.my_dir, d_f)
-            farm.grow_plants()
             farm.rot_plants(runtime_values)
             setting()
             pygame.display.update()  # 화면 업데이트
