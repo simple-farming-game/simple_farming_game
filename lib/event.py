@@ -1,18 +1,17 @@
 import pygame
-
+import random
 import lib.save
-from lib.plants import plants_list
-from lib.items import Items
-from lib import items
-from lib import runtime_values
 from lib import farm
-from lib import player
 from lib import sell
 from lib import help
-from lib.block import block_list
-import random
 from lib import chat
 from lib import debug
+from lib import items
+from lib import player
+from lib.items import Items
+from lib import runtime_values
+from lib.block import block_list
+from lib.plants import plants_list
 
 SELECT_KEY = {
     pygame.K_1: 1,

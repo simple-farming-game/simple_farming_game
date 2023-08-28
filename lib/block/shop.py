@@ -17,7 +17,6 @@ class Shop(Block.Block):
 
     def interact(self):
         self.is_shop_opne = not self.is_shop_opne
-        print(self.is_shop_opne)
     
     def update(self):
         if self.is_shop_opne:
