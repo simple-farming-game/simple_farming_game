@@ -276,8 +276,8 @@ if __name__ == "__main__":
 
     runtime_values.logs.info("quit")
     runtime_values.logs.info("저장중입니다...")
-    runtime_values.logs.save()
     save.write_save()
+    runtime_values.logs.save()
     pygame.mixer.music.stop()
     pygame.quit()
     sys.exit()
