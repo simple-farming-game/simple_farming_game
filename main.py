@@ -17,7 +17,7 @@ if __name__ == "__main__":
     from lib import imgs
     from lib import process
     from lib import draw
-    from lib import keyinput
+    from lib import event
     from lib import farm
     from lib import ui
     from lib import defs
@@ -147,7 +147,7 @@ if __name__ == "__main__":
                 break
             text_x_pos += (target_x - text_x_pos) / 15
 
-            keyinput.process(NICK)
+            event.process(NICK)
             runtime_values.screen.blit(imgs.img("mus"), mus_pos)  # 마우스 커서
             pygame.display.update()  # 화면 업데이트
         title()
@@ -212,7 +212,7 @@ if __name__ == "__main__":
         while runtime_values.running:
             mus_pos: tuple = pygame.mouse.get_pos()
             runtime_values.screen.fill(SKYBLUE)
-            keyinput.process(NICK)
+            event.process(NICK)
             codemos_btn.draw()
             official_discord_btn.draw()
             github_discord_btn.draw()
@@ -265,7 +265,7 @@ if __name__ == "__main__":
 
             # 처리
             process.process()
-            keyinput.process(NICK)
+            event.process(NICK)
             runtime_values.players[0].move(runtime_values.my_dir, d_f)
             farm.rot_plants(runtime_values)
             setting()
@@ -276,8 +276,8 @@ if __name__ == "__main__":
 
     runtime_values.logs.info("quit")
     runtime_values.logs.info("저장중입니다...")
-    runtime_values.logs.save()
     save.write_save()
+    runtime_values.logs.save()
     pygame.mixer.music.stop()
     pygame.quit()
     sys.exit()

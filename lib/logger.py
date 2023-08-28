@@ -49,18 +49,22 @@ class Logger:
 
     def save(self):
         self.now = datetime.datetime.now()
+        os.chdir(os.getcwd())
         try:
+            os.chdir(os.path.realpath("log"))
             f = open(
-                f"{os.getcwd()}\\log\\{self.now.strftime('%Y-%m-%d %H-%M-%S')}.log", "w"
+                f"{self.now.strftime('%Y-%m-%d %H-%M-%S')}.log", "w"
             )
             for i in self.log:
                 f.write(f"{i}\n")
             f.close()
         except:
-            os.mkdir("log")
+            os.mkdir(os.path.realpath("log"))
+            os.chdir(os.path.realpath("log"))
             f = open(
-                f"{os.getcwd()}\\log\\{self.now.strftime('%Y-%m-%d %H-%M-%S')}.log", "w"
+                f"{self.now.strftime('%Y-%m-%d %H-%M-%S')}.log", "w"
             )
             for i in self.log:
                 f.write(f"{i}\n")
             f.close()
+        os.chdir(os.getcwd())
