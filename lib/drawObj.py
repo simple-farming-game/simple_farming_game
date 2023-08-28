@@ -4,7 +4,7 @@ import lib.imgs as imgs
 import lib.block.block_list as block_list
 import lib.plants.plants_list as plants_list
 import lib.items as item
-from lib import keyinput
+from lib import event
 from lib import chat
 import pygame
 
@@ -56,7 +56,7 @@ def drawObj():
     # itmebar item
     runtime_values.screen.blit(
         imgs.img("item_bar_select"),
-        [28 * 32 - keyinput.select_bar * 32 + 64, 20 * 32 - 32],
+        [28 * 32 - event.select_bar * 32 + 64, 20 * 32 - 32],
     )
     count = 0
     for i in range(0, 256, 32):
