@@ -24,6 +24,8 @@ if __name__ == "__main__":
     from lib import drawObj
     from lib import save
     from lib import lang
+    from lib import sound
+    import os
     import webbrowser
 
     runtime_values.logs.info("end")
@@ -278,6 +280,13 @@ if __name__ == "__main__":
     runtime_values.logs.info("저장중입니다...")
     save.write_save()
     runtime_values.logs.save()
+    runtime_values.logs.info("소리관련 처리중")
     pygame.mixer.music.stop()
     pygame.quit()
+    file_list = os.listdir(f"{os.path.dirname(os.path.realpath(__file__))}/assets/sound")
+    for file in file_list:
+        if file.find(".mp3") != -1:
+            try:
+                os.remove(f"{os.path.dirname(os.path.realpath(__file__))}/assets/sound/{file.replace('.mp3','')}.ogg")
+            except: pass
     sys.exit()

@@ -9,6 +9,8 @@ requests = "*"
 mypy = "*"
 charset-normalizer = "*"
 black = "*"
+pydub = "*"
+ffmpeg-python = "*"
 
 [dev-packages]
 black = "*"

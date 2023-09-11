@@ -13,6 +13,7 @@ from lib.block import block_list
 import random
 from lib import chat
 from lib import debug
+from lib import sound
 
 SELECT_KEY = {
     pygame.K_1: 1,
@@ -33,7 +34,8 @@ def use():
     runtime_values.logs.info("using item")
     runtime_values.logs.info(f"at  X:{x} Y:{y}")
 
-    if runtime_values.players[0].handle_item in plants_list.plants_list:
+    if runtime_values.players[0].handle_item in plants_list.plants_list: # 식물 설치
+        sound.sounds["planting"].play()
         runtime_values.logs.info(
             f"Try to plant:{runtime_values.players[0].handle_item.name}"
         )
@@ -42,7 +44,7 @@ def use():
         else:
             runtime_values.logs.info("Fail planting")
 
-    if runtime_values.players[0].handle_item in block_list.block_list:
+    if runtime_values.players[0].handle_item in block_list.block_list: # 블록 설치
         runtime_values.logs.info(
             f"Try to put:{runtime_values.players[0].handle_item.name}"
         )
@@ -51,32 +53,35 @@ def use():
         else:
             runtime_values.logs.info("Fail put")
 
-    elif (runtime_values.players[0].handle_item == Items.HOE) and (
+    elif (runtime_values.players[0].handle_item == Items.HOE) and ( # 괭이
         tile == farm.Tiles.DIRT
     ):  # 경작
+        sound.sounds["farm"].play()
         farm.tileMap[x][y] = farm.Tiles.FARMLAND
         runtime_values.logs.info("Hoe")
 
     elif runtime_values.players[0].handle_item == Items.SICKLE:  # 낫
         if isinstance(tile, plants_list.plants_list):  # type: ignore
+            sound.sounds["harvest"].play()
             runtime_values.players[0].farm_plant()
             runtime_values.logs.info(f"Sickle")
 
-    elif (runtime_values.players[0].handle_item == Items.SHOVEL) and (
+    elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ( # 삽 
         (tile == farm.Tiles.FARMLAND)
     ):  # 삽
         farm.tileMap[x][y] = farm.Tiles.DIRT
         runtime_values.logs.info(f"Shovel")
-    elif runtime_values.players[0].handle_item == Items.NONE:
+    elif runtime_values.players[0].handle_item == Items.NONE: # 없을때
         pass
 
-    elif (runtime_values.players[0].handle_item == Items.WATER) and (
+    elif (runtime_values.players[0].handle_item == Items.WATER) and ( # 물
         isinstance(tile, plants_list.plants_list)
     ):  # 경작 # type: ignore
+        sound.sounds["watering"].play()
         farm.tileMap[x][y].water = True  # type: ignore
         runtime_values.logs.info("Warter")
 
-    elif (runtime_values.players[0].handle_item == Items.VITAMIN) and (
+    elif (runtime_values.players[0].handle_item == Items.VITAMIN) and ( # 비타민
         isinstance(tile, plants_list.plants_list)
     ):  # 경작 # type: ignore
         if farm.tileMap[x][y].water and runtime_values.players[0].inventory["VITAMIN"] > 0:  # type: ignore
