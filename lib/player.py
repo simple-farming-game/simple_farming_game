@@ -25,7 +25,7 @@ class Direction(Enum):
 
 class player(Object):
     speed: float = 3
-    inventory: Dict[str, int] = {}
+    inventory: Dict[str, int] = {"sprinkle": 100}
     inventory_size: int = 8
     gold: int = 50
     handle_item: Union[
@@ -84,11 +84,7 @@ class player(Object):
             self.pos.y = 1
 
     def get_tile_pos(self) -> pygame.math.Vector2:
-<<<<<<< Updated upstream
         return self.pos // 32
-=======
-        return self.pos//32
->>>>>>> Stashed changes
 
     def farm_plant(self):
         tPos = self.get_tile_pos()
@@ -105,21 +101,21 @@ class player(Object):
                 tileMap[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND
 
     def plant_plant(self, screen: pygame.Surface) -> bool:
-        x, y = map(int, self.get_tile_pos())
+        tPos = self.get_tile_pos()
 
-        # 씨를 들고 있는가?
+        # check self
         if not self.handle_item in plants_list.plants_list:
-            print("씨를 들고 있지 않음")
-            return False # 아니면 리턴
+            return False
         if self.inventory[f"{self.handle_item.name}_seed"] <= 0:
-            print("씨가 부족함")
-            return False # 아니면 리턴
+            return False
 
-        print(f"{x}:{y}")
-        
-        self.inventory[f"{self.handle_item.name}_seed"] -= 1 # 씨 지우기
-        tileMap[int(x)][int(y)] = self.handle_item(
-            pygame.Vector2(x,y), screen
+        # check farm empty
+        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
+            return False
+
+        self.inventory[f"{self.handle_item.name}_seed"] -= 1
+        tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
+            tilePosToPos(tPos), screen
         )  # type: ignore
         return True
 
@@ -129,7 +125,7 @@ class player(Object):
         # check self
         if not self.handle_item in block_list.block_list:
             return False
-        if self.inventory[f"{self.handle_item.name}"] <= 0:
+        if self.inventory[f"{self.handle_item.name}"] == 0:
             return False
 
         # check farm empty

@@ -6,13 +6,8 @@ from lib.items import Items
 from lib import items
 from lib import runtime_values
 from lib import farm
-<<<<<<< Updated upstream
 from lib import player
 from lib import sell
-=======
-from lib.farm import Tiles
-from lib import shop_system
->>>>>>> Stashed changes
 from lib import help
 from lib.block import block_list
 import random
@@ -71,13 +66,8 @@ def use():
             runtime_values.players[0].farm_plant()
             runtime_values.logs.info(f"Sickle")
 
-<<<<<<< Updated upstream
     elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ( # 삽 
         (tile == farm.Tiles.FARMLAND)
-=======
-    elif (runtime_values.players[0].handle_item == Items.SHOVEL) and (
-        (tile == Tiles.FARMLAND)
->>>>>>> Stashed changes
     ):  # 삽
         farm.tileMap[x][y] = farm.Tiles.DIRT
         runtime_values.logs.info(f"Shovel")

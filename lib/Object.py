@@ -13,7 +13,6 @@ class Object:
 
     def update_image(self, image: pygame.Surface):
         self.image = image
-        
 
     def draw(self) -> None:
         self.screen.blit(self.image, self.pos)
