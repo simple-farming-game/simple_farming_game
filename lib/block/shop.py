@@ -21,4 +21,7 @@ class Shop(Block.Block):
     
     def update(self):
         if self.is_shop_opne:
+            pygame.mouse.set_visible(True) 
             shopGui.shop_open()
+        else:
+            pygame.mouse.set_visible(False) 
