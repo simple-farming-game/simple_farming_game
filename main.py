@@ -269,6 +269,7 @@ if __name__ == "__main__":
             runtime_values.players[0].move(runtime_values.my_dir, d_f)
             farm.rot_plants(runtime_values)
             setting()
+            pygame.draw.circle(runtime_values.screen, [255,255,255], runtime_values.players[0].pos, 1, 2)
             pygame.display.update()  # 화면 업데이트
 
     defs.var_check(runtime_values.version)
