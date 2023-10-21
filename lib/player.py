@@ -1,5 +1,4 @@
 from enum import Enum, auto
-import math
 from typing import Dict, Union
 import pygame
 import random
@@ -85,9 +84,7 @@ class player(Object):
             self.pos.y = 1
 
     def get_tile_pos(self) -> pygame.math.Vector2:
-        return pygame.math.Vector2(
-            math.trunc(self.pos.x / 32), math.trunc(self.pos.y / 32)
-        )
+        return self.pos // 32
 
     def farm_plant(self):
         tPos = self.get_tile_pos()
