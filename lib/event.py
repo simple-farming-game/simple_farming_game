@@ -7,9 +7,15 @@ from lib import items
 from lib import runtime_values
 from lib import farm
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from lib import player
 from lib import sell
 =======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 from lib.farm import Tiles
 from lib import shop_system
 >>>>>>> Stashed changes
@@ -72,8 +78,18 @@ def use():
             runtime_values.logs.info(f"Sickle")
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     elif (runtime_values.players[0].handle_item == Items.SHOVEL) and ( # 삽 
         (tile == farm.Tiles.FARMLAND)
+=======
+    elif (runtime_values.players[0].handle_item == Items.SHOVEL) and (
+        (tile == Tiles.FARMLAND)
+>>>>>>> Stashed changes
+=======
+    elif (runtime_values.players[0].handle_item == Items.SHOVEL) and (
+        (tile == Tiles.FARMLAND)
+>>>>>>> Stashed changes
 =======
     elif (runtime_values.players[0].handle_item == Items.SHOVEL) and (
         (tile == Tiles.FARMLAND)
