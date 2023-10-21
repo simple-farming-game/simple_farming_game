@@ -85,15 +85,7 @@ class player(Object):
 
     def get_tile_pos(self) -> pygame.math.Vector2:
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         return self.pos // 32
-=======
-        return self.pos//32
->>>>>>> Stashed changes
-=======
-        return self.pos//32
->>>>>>> Stashed changes
 =======
         return self.pos//32
 >>>>>>> Stashed changes
