@@ -8,11 +8,11 @@ def init(plants_list, block_list):
     btn_y = 10
     index = 1
     for item in plants_list:
-        btn_list.append(ui.Btn(f"{index}. {text(f'items.{item.name}')}", lambda: buy(item.name), pygame.math.Vector2(10,btn_y)))
+        btn_list.append(ui.Btn(f"{index}. {text(f'items.{item.name}')} {text(f'gold')} : {item.price}", lambda: buy(item.name), pygame.math.Vector2(10,btn_y)))
         index+=1
         btn_y+=30
     for item in block_list:
-        btn_list.append(ui.Btn(f"{index}. {text(f'blocks.{item.name}')}", lambda: buy(item.name), pygame.math.Vector2(10,btn_y)))
+        btn_list.append(ui.Btn(f"{index}. {text(f'blocks.{item.name}')} {text(f'gold')} : {item.price}", lambda: buy(item.name), pygame.math.Vector2(10,btn_y)))
         index+=1
         btn_y+=30
 
