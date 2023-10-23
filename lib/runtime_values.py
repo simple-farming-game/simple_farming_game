@@ -1,14 +1,14 @@
+import os
 import pygame
 import platform
-import json
-import os
 from typing import Tuple
 
-from lib.logger import Logger
 from lib import player
+from lib.logger import Logger
 
 version_type = Tuple[str, int, int, int]
 version: version_type = ("beta", 1, 0, 4)
+version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
 
 pcInfo = {
     "core": os.cpu_count(),

@@ -2,27 +2,31 @@ import sys
 import json
 import pygame
 import datetime
+import webbrowser
 
 pygame.init()
 pygame.mixer.init()
 
 if __name__ == "__main__":
     # runtime values
-
     from lib import player
     from lib import runtime_values
 
     runtime_values.logs.info("Start Loading")
     runtime_values.logs.info("import lib...")
+    import lib
+    from lib import ui
     from lib import imgs
-    from lib import process
     from lib import draw
     from lib import event
     from lib import farm
-    from lib import ui
     from lib import defs
+    from lib import save
+    from lib import process
     from lib import drawObj
     from lib import save
+    from lib import event
+    from lib import new_screen
     from lib import lang
     import webbrowser
 
@@ -53,12 +57,7 @@ if __name__ == "__main__":
     save.import_save()
 
     runtime_values.logs.info("end")
-
-    # 버전변수
-    version = runtime_values.version
-    version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
-    del version
-
+    
     runtime_values.logs.info("                     _    ___       ___")
     runtime_values.logs.info(" _ __   _____      _| | _|_ _|_ __ |_ _|")
     runtime_values.logs.info("| '_ \\ / _ \\ \\ /\\ / / |/ /| || '_ \\ | |")
@@ -69,9 +68,8 @@ if __name__ == "__main__":
     runtime_values.logs.info("\\___ \\       | |_         | |  _")
     runtime_values.logs.info(" ___) |      | _|         | |_| |")
     runtime_values.logs.info("|____/ imple |_|  arming   \\____|ame\n")
-    runtime_values.logs.info("코드모스 참여링크 : 디코쥐쥐 codemos")
 
-    runtime_values.logs.info(f"V. {version_text}")
+    runtime_values.logs.info(f"V. {runtime_values.version_text}")
 
     runtime_values.logs.info("setting var...")
     # 변수
@@ -90,7 +88,7 @@ if __name__ == "__main__":
 
     # 세팅
     NICK = "없음"
-    pygame.display.set_caption(f"sfg {version_text}! - by newkini")
+    pygame.display.set_caption(f"sfg {runtime_values.version_text}! - by newkini")
     pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
     pygame.mouse.set_visible(False)
 
@@ -98,7 +96,7 @@ if __name__ == "__main__":
 
     # 게임와일
     runtime_values.logs.info("Finish Loading")
-
+        
     def not_musicStart():
         runtime_values.setting["musicStart"] = not runtime_values.setting["musicStart"]
 

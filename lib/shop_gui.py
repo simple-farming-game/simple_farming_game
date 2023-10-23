@@ -17,9 +17,9 @@ def init(plants_list, block_list):
         btn_y+=30
 
 def buy(name):
-    from lib import sell
+    from lib import shop_system
 
-    sell.buy(name)
+    shop_system.buy(name)
 
 def shop_open():
     from lib.new_screen import background
