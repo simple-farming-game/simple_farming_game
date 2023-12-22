@@ -13,6 +13,7 @@ def sell(plant):
 
 
 def buy(plant):
+    print(plant)
     if plant in plants_list.plants_name:
         if (
             runtime_values.players[0].gold
