@@ -15,6 +15,9 @@ ground_images: dict[farm.Tiles, pygame.Surface] = {
 
 save.import_save()
 
+pygame.display.set_caption(f"sfg {ver_text} by newkini")
+pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
+
 while is_running:
     dt: float = clock.tick(100) / 1000
     
