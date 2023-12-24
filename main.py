@@ -1,8 +1,11 @@
 import sys
 import pygame
 from lib.runtime_values import *
+from lib.runtime_values import playerc
 from lib import farm
 from lib import save
+from lib import player
+from lib.player import Direction
 
 pygame.init()
 logger.info("파이게임 초기화.")
@@ -13,10 +16,10 @@ ground_images: dict[farm.Tiles, pygame.Surface] = {
     farm.Tiles.WATER_FARMLAND: pygame.image.load("assets/img/ground/water_farmland.png"),
 }
 
-save.import_save()
-
 pygame.display.set_caption(f"sfg {ver_text} by newkini")
 pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
+
+save.import_save()
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -24,6 +27,68 @@ while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
+        
+        if event.type == pygame.KEYDOWN:
+            match event.key:
+                case pygame.K_LEFT:
+                    if player_dir == player.Direction.STOP:
+                        player_dir = player.Direction.LEFT
+                    if player_dir == player.Direction.UP:
+                        player_dir = player.Direction.UP_LEFT
+                    if player_dir == player.Direction.DOWN:
+                        player_dir = player.Direction.DOWN_LEFT
+                case pygame.K_RIGHT:
+                    if player_dir == player.Direction.STOP:
+                        player_dir = player.Direction.RIGHT
+                    if player_dir == player.Direction.UP:
+                        player_dir = player.Direction.UP_RIGHT
+                    if player_dir == player.Direction.DOWN:
+                        player_dir = player.Direction.DOWN_RIGHT
+                case pygame.K_UP:
+                    if player_dir == player.Direction.STOP:
+                        player_dir = player.Direction.UP
+                    if player_dir == player.Direction.LEFT:
+                        player_dir = player.Direction.UP_LEFT
+                    if player_dir == player.Direction.RIGHT:
+                        player_dir = player.Direction.UP_RIGHT
+                case pygame.K_DOWN:
+                    if player_dir == player.Direction.STOP:
+                        player_dir = player.Direction.DOWN
+                    if player_dir == player.Direction.LEFT:
+                        player_dir = player.Direction.DOWN_LEFT
+                    if player_dir == player.Direction.RIGHT:
+                        player_dir = player.Direction.DOWN_RIGHT
+        if event.type == pygame.KEYUP:
+            match event.key:
+                case pygame.K_LEFT:
+                    if player_dir == player.Direction.LEFT:
+                        player_dir = player.Direction.STOP
+                    if player_dir == player.Direction.UP_LEFT:
+                        player_dir = player.Direction.UP
+                    if player_dir == player.Direction.DOWN_LEFT:
+                        player_dir = player.Direction.DOWN
+                case pygame.K_RIGHT:
+                    if player_dir == player.Direction.RIGHT:
+                        player_dir = player.Direction.STOP
+                    if player_dir == player.Direction.UP_RIGHT:
+                        player_dir = player.Direction.UP
+                    if player_dir == player.Direction.DOWN_RIGHT:
+                        player_dir = player.Direction.DOWN
+                case pygame.K_UP:
+                    if player_dir == player.Direction.UP:
+                        player_dir = player.Direction.STOP
+                    if player_dir == player.Direction.UP_LEFT:
+                        player_dir = player.Direction.LEFT
+                    if player_dir == player.Direction.UP_RIGHT:
+                        player_dir = player.Direction.RIGHT
+                case pygame.K_DOWN:
+                    if player_dir == player.Direction.DOWN:
+                        player_dir = player.Direction.STOP
+                    if player_dir == player.Direction.DOWN_LEFT:
+                        player_dir = player.Direction.LEFT
+                    if player_dir == player.Direction.DOWN_RIGHT:
+                        player_dir = player.Direction.RIGHT
+                    
     
     screen.fill(SKYBLUE)
     
@@ -35,6 +100,9 @@ while is_running:
             tilePos.y += 32
         tilePos.x += 32
         tilePos.y = 0
+        
+    playerc.draw()
+    playerc.move(player_dir, dt)
     
     pygame.display.update()
 

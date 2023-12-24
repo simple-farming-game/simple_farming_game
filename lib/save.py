@@ -6,7 +6,12 @@ def write_save():
     with open("save.sfgsave", "w") as save:
         data = {
             "tile": [],
+            "player":{"gold":0,"inventory":[],"pos":[]}
         }
+        data["player"]["gold"] = playerc.gold
+        data["player"]["inventory"] = playerc.inventory
+        data["player"]["pos"] = list(playerc.pos)
+        
         for i in farm.tileMap:
             row = []  # Create a new row list for each iteration
             for j in i:
@@ -23,7 +28,10 @@ def import_save():
                 row = []  # Create a new row list for each iteration
                 for j in i:
                     row.append(getattr(farm.Tiles, j))  # Append the name of the Enum member
-                farm.tileMap.append(row)  # Append the row to the "tile" list             
+                farm.tileMap.append(row)  # Append the row to the "tile" list   
+            playerc.gold = data["player"]["gold"]
+            playerc.inventory = data["player"]["inventory"]
+            playerc.pos = pygame.Vector2(data["player"]["pos"])     
 
     except (json.JSONDecodeError, FileNotFoundError, ValueError) as e:
         # Handle the case when there's an issue decoding JSON, the file is not found, or the data is invalid
