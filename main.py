@@ -1,6 +1,6 @@
 import sys
 import pygame
-from lib.runtime_var import *
+from lib.runtime_values import *
 from lib import farm
 from lib import save
 
@@ -10,12 +10,10 @@ logger.info("파이게임 초기화.")
 ground_images: dict[farm.Tiles, pygame.Surface] = {
     farm.Tiles.DIRT: pygame.image.load("assets/img/ground/dirt.png"),
     farm.Tiles.FARMLAND: pygame.image.load("assets/img/ground/farmland.png"),
-    farm.Tiles.WATER_FARMLAND: pygame.image.load(
-        "assets/img/ground/water_farmland.png"
-    ),
+    farm.Tiles.WATER_FARMLAND: pygame.image.load("assets/img/ground/water_farmland.png"),
 }
 
-
+save.import_save()
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -38,8 +36,8 @@ while is_running:
     pygame.display.update()
 
 logger.info("로그, 세이브저장, 종료를 시작합니다.")
-logger.save()
 save.write_save()
+logger.save()
 logger.info("저장성공!")
 pygame.quit()
 sys.exit()
