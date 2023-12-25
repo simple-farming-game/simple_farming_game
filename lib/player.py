@@ -60,8 +60,8 @@ class Player:
     
     def tile_pos(self):
         return self.pos // 32
-
+        
     def farm_tile(self, pos):
-        x, y = map(int, self.tile_pos())
+        x, y = map(int, pos)
         if self.hendle_item == item.Items.HOE:
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
