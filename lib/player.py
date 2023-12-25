@@ -2,6 +2,7 @@ from enum import Enum, auto
 from typing import Dict, Union
 import pygame
 from lib import runtime_values
+from lib import item
 
 class Direction(Enum):
     UP = auto()
@@ -16,8 +17,9 @@ class Direction(Enum):
 
 class Player:
     gold: int = 0
-    inventory: list = []
+    inventory: list[item.Items] = [item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE]
     pos: pygame.Vector2 = pygame.Vector2(0,0)
+    hendle_item = item.Items.NONE
     # 방향 구하기 (x2−x1,y2−y1)
     # (1,0) <
     # (-1,0) >

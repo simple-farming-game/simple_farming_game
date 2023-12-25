@@ -1,15 +1,27 @@
 from lib import farm
 from lib.runtime_values import *
+from lib.item import Items
+from lib.item import item_name_list
 import json
 
 def write_save():
     with open("save.sfgsave", "w") as save:
         data = {
             "tile": [],
-            "player":{"gold":0,"inventory":[],"pos":[]}
+            "player":{
+                "gold":0,
+                "inventory":[],
+                "pos":[],
+                "hendle_item":Items.NONE
+                }
         }
         data["player"]["gold"] = playerc.gold
-        data["player"]["inventory"] = playerc.inventory
+        row = []
+        for item in playerc.inventory:
+            if isinstance(item, Items):
+                row.append(item.name)
+        data["player"]["inventory"] = row
+        data["player"]["hendle_item"] = playerc.hendle_item.name
         data["player"]["pos"] = list(playerc.pos)
         
         for i in farm.tileMap:
@@ -22,6 +34,7 @@ def write_save():
 def import_save():
     try:
         with open("save.sfgsave", "r") as save:
+            logger.info("불러오기")
             data = json.loads(save.read())
             farm.tileMap = []
             for i in data["tile"]:
@@ -30,10 +43,22 @@ def import_save():
                     row.append(getattr(farm.Tiles, j))  # Append the name of the Enum member
                 farm.tileMap.append(row)  # Append the row to the "tile" list   
             playerc.gold = data["player"]["gold"]
-            playerc.inventory = data["player"]["inventory"]
-            playerc.pos = pygame.Vector2(data["player"]["pos"])     
+            row = []
+            for item in data["player"]["inventory"]:
+                if item in item_name_list:
+                    for member in Items:
+                        if member.name == item:
+                            row.append(member)
+            playerc.pos = pygame.Vector2(data["player"]["pos"])    
+            if data["player"]["hendle_item"] in item_name_list:
+                for member in Items:
+                    if member.name == data["player"]["hendle_item"]:
+                        playerc.hendle_item = member
+        return True
 
-    except (json.JSONDecodeError, FileNotFoundError, ValueError) as e:
+    except (json.JSONDecodeError, ValueError) as e:
         # Handle the case when there's an issue decoding JSON, the file is not found, or the data is invalid
-        print(f"Error importing save: {e}")
+        logger.error(f"Error importing save: {e}")
+    except FileNotFoundError:return False
+        
 

@@ -5,7 +5,7 @@ from lib.runtime_values import playerc
 from lib import farm
 from lib import save
 from lib import player
-from lib.player import Direction
+from lib import item
 
 pygame.init()
 logger.info("파이게임 초기화.")
@@ -19,7 +19,11 @@ ground_images: dict[farm.Tiles, pygame.Surface] = {
 pygame.display.set_caption(f"sfg {ver_text} by newkini")
 pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
 
-save.import_save()
+select_inventory = 0
+
+if not save.import_save():
+    for i, j in enumerate(item.Items):
+        playerc.inventory[i] = j
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -103,6 +107,14 @@ while is_running:
         
     playerc.draw()
     playerc.move(player_dir, dt)
+    
+    screen.blit(pygame.transform.scale(pygame.image.load("assets/img/ui/item_bar.png"), (256, 32)), [28 * 32 - (256 - 64), 20 * 32 - 32])
+    screen.blit(pygame.image.load("assets/img/ui/select_item_bar.png"), [28 * 32 - (256 - 64) + (select_inventory * 32), 20 * 32 - 32])
+    for index, i in enumerate(playerc.inventory):
+        screen.blit(pygame.image.load(f"assets/img/items/{i.name.lower()}.png"), [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32])
+    try:
+        playerc.hendle_item = playerc.inventory[select_inventory]
+    except:pass
     
     pygame.display.update()
 
