@@ -3,6 +3,8 @@ from typing import Dict, Union
 import pygame
 from lib import runtime_values
 from lib import item
+from lib import farm
+from math import trunc
 
 class Direction(Enum):
     UP = auto()
@@ -17,7 +19,7 @@ class Direction(Enum):
 
 class Player:
     gold: int = 0
-    inventory: list[item.Items] = [item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE,item.Items.NONE]
+    inventory: list[item.Items] = []
     pos: pygame.Vector2 = pygame.Vector2(0,0)
     hendle_item = item.Items.NONE
     # 방향 구하기 (x2−x1,y2−y1)
@@ -55,3 +57,11 @@ class Player:
             case Direction.DOWN_RIGHT:
                 self.pos.x += self.speed + frame
                 self.pos.y += self.speed + frame
+    
+    def tile_pos(self):
+        return self.pos // 32
+
+    def farm_tile(self, pos):
+        x, y = map(int, self.tile_pos())
+        if self.hendle_item == item.Items.HOE:
+            farm.tile_map[x][y] = farm.Tiles.FARMLAND

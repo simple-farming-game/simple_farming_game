@@ -6,6 +6,6 @@ class Tiles(Enum):
     WATER_FARMLAND = auto()
 
 
-tileMap: list[list[Tiles]] = [
+tile_map: list[list[Tiles]] = [
     [Tiles.DIRT for _ in range(20)] for _ in range(30)
 ]

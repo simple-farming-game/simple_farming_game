@@ -22,6 +22,7 @@ pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
 select_inventory = 0
 
 if not save.import_save():
+    playerc.inventory = [item.Items.NONE for _ in range(0,8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = j
 
@@ -62,6 +63,8 @@ while is_running:
                         player_dir = player.Direction.DOWN_LEFT
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
+                case pygame.K_d:
+                    playerc.farm_tile(playerc.tile_pos())
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_LEFT:
@@ -92,12 +95,13 @@ while is_running:
                         player_dir = player.Direction.LEFT
                     if player_dir == player.Direction.DOWN_RIGHT:
                         player_dir = player.Direction.RIGHT
+                
                     
     
     screen.fill(SKYBLUE)
     
     tilePos = pygame.math.Vector2(0, 0)
-    for line in farm.tileMap:
+    for line in farm.tile_map:
         for tile in line:
             screen.blit(ground_images[farm.Tiles.DIRT], tilePos)
             screen.blit(ground_images[tile], tilePos)
@@ -113,6 +117,10 @@ while is_running:
     for index, i in enumerate(playerc.inventory):
         screen.blit(pygame.image.load(f"assets/img/items/{i.name.lower()}.png"), [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32])
     try:
+        for i in range(1,9):
+            keys = pygame.key.get_pressed()
+            if keys[getattr(pygame, f"K_{i}")]:
+                select_inventory = i-1
         playerc.hendle_item = playerc.inventory[select_inventory]
     except:pass
     
