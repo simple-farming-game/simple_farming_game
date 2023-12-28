@@ -1,14 +1,12 @@
 from enum import Enum, auto
 from typing import Dict, Union
 import pygame
-import random
-
-from lib.Object import Object
-from lib.plants import plants_list
-from lib.farm import *
-from lib import items
-from lib.block import block_list
-
+from lib import runtime_values
+from lib import item
+from lib import farm
+from math import trunc
+from lib.crops.Crops import Crops
+from lib.crops.crops_item import CropsItem
 
 class Direction(Enum):
     UP = auto()
@@ -20,37 +18,25 @@ class Direction(Enum):
     UP_RIGHT = auto()
     DOWN_LEFT = auto()
     DOWN_RIGHT = auto()
-    NONE = auto()
 
-
-class player(Object):
-    speed: float = 3
-    inventory: Dict[str, int] = {"sprinkle": 100}
-    inventory_size: int = 8
-    gold: int = 50
-    handle_item: Union[
-        plants_list.plants_type, block_list.block_type, items.Items
-    ] = items.Items.NONE
-
-    def __init__(
-        self,
-        image: pygame.Surface,
-        pos: pygame.math.Vector2,
-        screen: pygame.Surface,
-        window_size,
-    ) -> None:
-        super().__init__(image, pos, screen)
-        self.window_size = window_size
-
-        for i in items.value_name:
-            self.inventory[f"{i}"] = 1
-
-    def update(self):
-        for key, value in dict(self.inventory).items():
-            if value == 0:
-                del self.inventory[key]
-                self.handle_item = items.Items.NONE
-
+class Player:
+    gold: int = 0
+    inventory: list[Union[item.Items, CropsItem]] = []
+    pos: pygame.Vector2 = pygame.Vector2(0,0)
+    hendle_item = item.Items.NONE
+    # 방향 구하기 (x2−x1,y2−y1)
+    # (1,0) <
+    # (-1,0) >
+    # (0,1) ^
+    
+    def __init__(self, img: pygame.Surface, pos: pygame.Vector2, speed: int) -> None:
+        self.img: pygame.Surface = img
+        self.pos: pygame.Vector2 = pos
+        self.speed: float = speed
+        
+    def draw(self):
+        runtime_values.screen.blit(self.img, self.pos)
+    
     def move(self, direction: Direction, frame):
         match direction:
             case Direction.LEFT:
@@ -73,71 +59,17 @@ class player(Object):
             case Direction.DOWN_RIGHT:
                 self.pos.x += self.speed + frame
                 self.pos.y += self.speed + frame
-
-        if self.pos.x >= self.window_size[0] - 32:
-            self.pos.x = self.window_size[0] - 32
-        if self.pos.x <= 0:
-            self.pos.x = 0
-        if self.pos.y >= self.window_size[1] - 32:
-            self.pos.y = self.window_size[1] - 32
-        if self.pos.y <= 1:
-            self.pos.y = 1
-
-    def get_tile_pos(self) -> pygame.math.Vector2:
+    
+    def tile_pos(self):
         return self.pos // 32
-
-    def farm_plant(self):
-        tPos = self.get_tile_pos()
-        tile = tileMap[int(tPos.x)][int(tPos.y)]
-        if isinstance(tile, plants_list.plants_list):  # type: ignore
-            if tile.maxAge == tile.age:  # type: ignore
-                try:
-                    self.inventory[tile.name] += random.randint(1, 4)
-                    self.inventory[f"{tile.name}_seed"] += random.randint(1, 3)
-                except KeyError:
-                    self.inventory[tile.name] = random.randint(1, 4)
-                    self.inventory[f"{tile.name}_seed"] = random.randint(1, 3)
-
-                tileMap[int(tPos.x)][int(tPos.y)] = Tiles.FARMLAND
-
-    def plant_plant(self, screen: pygame.Surface) -> bool:
-        tPos = self.get_tile_pos()
-
-        # check self
-        if not self.handle_item in plants_list.plants_list:
-            return False
-        if self.inventory[f"{self.handle_item.name}_seed"] <= 0:
-            return False
-
-        # check farm empty
-        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.FARMLAND:
-            return False
-
-        self.inventory[f"{self.handle_item.name}_seed"] -= 1
-        tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
-            tilePosToPos(tPos), screen
-        )  # type: ignore
-        return True
-
-    def put_block(self, screen: pygame.Surface) -> bool:
-        tPos = self.get_tile_pos()
-
-        # check self
-        if not self.handle_item in block_list.block_list:
-            return False
-        if self.inventory[f"{self.handle_item.name}"] == 0:
-            return False
-
-        # check farm empty
-        if not tileMap[int(tPos.x)][int(tPos.y)] == Tiles.DIRT:
-            return False
-
-        self.inventory[f"{self.handle_item.name}"] += -1
-        tileMap[int(tPos.x)][int(tPos.y)] = self.handle_item(
-            tilePosToPos(tPos), screen
-        )  # type: ignore
-        return True
-
-
-def tilePosToPos(tilePos: pygame.math.Vector2) -> pygame.math.Vector2:
-    return pygame.math.Vector2(tilePos[0] * 32, tilePos[1] * 32)
+        
+    def farm_tile(self, pos):
+        x, y = map(int, pos)
+        if self.hendle_item == item.Items.HOE:
+            farm.tile_map[x][y] = farm.Tiles.FARMLAND
+    
+    def plant_crops(self):
+        #telnetover9000
+        x, y = map(int, self.tile_pos())
+        if isinstance(self.hendle_item, CropsItem):
+            farm.tile_map[x][y] = self.hendle_item.value

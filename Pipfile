@@ -7,9 +7,7 @@ name = "pypi"
 pygame = "*"
 requests = "*"
 mypy = "*"
-charset-normalizer = "*"
 black = "*"
-pydub = "*"
 
 [dev-packages]
 black = "*"

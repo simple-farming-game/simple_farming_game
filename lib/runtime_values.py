@@ -1,42 +1,22 @@
-import os
 import pygame
-import platform
-from typing import Tuple
-
+from lib.log4py import Logger
 from lib import player
-from lib.logger import Logger
+from lib.player import Direction
 
-version_type = Tuple[str, int, int, int]
-version: version_type = ("beta", 1, 1, 0)
-version_text = f"{version[0]} {version[1]}.{version[2]}.{version[3]}"
+# Var
+screen_size: tuple = (960, 640)
+is_running: bool = True
+logger: Logger = Logger()
+version: tuple[int, int, int, str] = (0, 3, 0, "alpha")
+ver_text = f"{version[0]}.{version[1]}.{version[2]} {version[3]}"
+# player var
+player_img: pygame.Surface = pygame.image.load("assets/img/player.png")
+playerc = player.Player(player_img, pygame.Vector2(0,0), 3)
+player_dir: Direction = Direction.STOP
 
-pcInfo = {
-    "core": os.cpu_count(),
-    "os": platform.system(),
-    "processor": platform.processor(),
-    "osvar": platform.version(),
-}
+# Color
+SKYBLUE:pygame.Color = pygame.Color(113, 199, 245)
 
-setting = {}
-lang = {}
-
-
-window_size = (960, 640)
-screen = pygame.display.set_mode(window_size)
-clock = pygame.time.Clock()
-
-logs = Logger()
-
-running: bool
-
-players: list[player.player] = []
-my_dir: player.Direction = player.Direction.STOP
-fps: int = 100
-
-on_setting = False
-font = pygame.font.Font("assets/font/Galmuri.ttf", 20)
-
-SKYBLUE = pygame.Color(113, 199, 245)
-BLACK = pygame.Color(0, 0, 0)
-WHITE = pygame.Color(255, 255, 255)
-BLUE = pygame.Color(61, 139, 255)
+# Pygame Var
+screen: pygame.Surface = pygame.display.set_mode(screen_size)
+clock: pygame.time.Clock = pygame.time.Clock()

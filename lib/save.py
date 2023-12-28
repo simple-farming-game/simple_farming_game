@@ -1,77 +1,65 @@
-import json
-from typing import Tuple
-import pygame
-
 from lib import farm
-from lib import draw
-from lib import runtime_values
-from lib.plants import plants_list
-from lib.block import block_list
-
+from lib.runtime_values import *
+from lib.item import Items
+from lib.item import item_name_list
+import json
 
 def write_save():
     with open("save.sfgsave", "w") as save:
         data = {
-            "version": runtime_values.version,
-            "tile": list(),
-            "player_pos_x": runtime_values.players[0].pos.x,
-            "player_pos_y": runtime_values.players[0].pos.y,
-            "inv": json.dumps(runtime_values.players[0].inventory),
-            "gold": runtime_values.players[0].gold,
+            "tile": [],
+            "player":{
+                "gold":0,
+                "inventory":[],
+                "pos":[],
+                "hendle_item":Items.NONE
+                }
         }
-        data["tile"] = []
-        count = 0
-        for i in farm.tileMap:
-            data["tile"].append(list())
-            for j in range(len(i)):
-                data["tile"][count].append(i[j].name)
-            count += 1
+        data["player"]["gold"] = playerc.gold
+        row = []
+        for item in playerc.inventory:
+            if isinstance(item, Items):
+                row.append(item.name)
+        data["player"]["inventory"] = row
+        data["player"]["hendle_item"] = playerc.hendle_item.name
+        data["player"]["pos"] = list(playerc.pos)
+        
+        for i in farm.tile_map:
+            row = []  # Create a new row list for each iteration
+            for j in i:
+                row.append(j.name)  # Append the name of the Enum member
+            data["tile"].append(row)  # Append the row to the "tile" list
         save.write(json.dumps(data))
-    runtime_values.logs.info("저장")
 
-
-def import_save() -> bool:
-    # import save
-    saveData = {}
+def import_save():
     try:
-        saveFile = open("save.sfgsave", "r", encoding="utf-8-sig")
-        saveData = json.load(saveFile)
-        saveFile.close()
-        del saveFile
+        with open("save.sfgsave", "r") as save:
+            logger.info("불러오기")
+            data = json.loads(save.read())
+            farm.tile_map = []
+            for i in data["tile"]:
+                row = []  # Create a new row list for each iteration
+                for j in i:
+                    row.append(getattr(farm.Tiles, j))  # Append the name of the Enum member
+                farm.tile_map.append(row)  # Append the row to the "tile" list   
+            playerc.gold = data["player"]["gold"]
+            row = []
+            for item in data["player"]["inventory"]:
+                if item in item_name_list:
+                    for member in Items:
+                        if member.name == item:
+                            row.append(member)
+            playerc.inventory = row
+            playerc.pos = pygame.Vector2(data["player"]["pos"])    
+            if data["player"]["hendle_item"] in item_name_list:
+                for member in Items:
+                    if member.name == data["player"]["hendle_item"]:
+                        playerc.hendle_item = member
+        return True
 
-    except:
-        runtime_values.logs.info("불러오기 실패: 파일 불러오기 실패.")
-        return False
-    # alpha 2.0.0
-    farm.tileMap = []
-    count = 0
-    tempPos = [0, 0]
-    for i in saveData["tile"]:
-        farm.tileMap.append(list())
-        for j in i:
-            try:
-                runtime_values.logs.info(f"import Tile : {j}")
-                farm.tileMap[count].append(getattr(farm.Tiles, j))
-            except:
-                if j in plants_list.plants_name:
-                    for pl in plants_list.plants_list:
-                        if pl.name == j:
-                            farm.tileMap[count].append(pl)
-                            farm.tileMap[count][-1] = pl(pygame.math.Vector2(tempPos[0] * 32, tempPos[1] * 32), runtime_values.screen)  # type: ignore
-                elif j in block_list.block_name:
-                    for bl in block_list.block_list:
-                        if bl.name == j:
-                            farm.tileMap[count].append(bl)
-                            farm.tileMap[count][-1] = bl(pygame.math.Vector2(tempPos[0] * 32, tempPos[1] * 32), runtime_values.screen)  # type: ignore
-            tempPos[1] += 1
-        count += 1
-        tempPos[1] = 0
-        tempPos[0] += 1
+    except (json.JSONDecodeError, ValueError) as e:
+        # Handle the case when there's an issue decoding JSON, the file is not found, or the data is invalid
+        logger.error(f"Error importing save: {e}")
+    except FileNotFoundError:return False
+        
 
-    runtime_values.players[0].pos.x = int(saveData["player_pos_x"])
-    runtime_values.players[0].pos.y = int(saveData["player_pos_y"])
-    runtime_values.players[0].inventory = json.loads(saveData["inv"])
-    runtime_values.players[0].gold = int(saveData["gold"])
-    runtime_values.logs.info("불러오기")
-    del saveData
-    return True
