@@ -6,6 +6,8 @@ from lib import farm
 from lib import save
 from lib import player
 from lib import item
+from lib.crops.Crops import Crops
+from lib.crops.crops_item import CropsItem
 
 pygame.init()
 logger.info("파이게임 초기화.")
@@ -25,6 +27,7 @@ if not save.import_save():
     playerc.inventory = [item.Items.NONE for _ in range(0,8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = j
+    playerc.inventory[len(item.Items)+1] = CropsItem.RICE
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -104,7 +107,12 @@ while is_running:
     for line in farm.tile_map:
         for tile in line:
             screen.blit(ground_images[farm.Tiles.DIRT], tilePos)
-            screen.blit(ground_images[tile], tilePos)
+            if isinstance(tile, farm.Tiles):
+                screen.blit(ground_images[tile], tilePos)
+            elif isinstance(tile, Crops):
+                tile.draw()
+                tile.grow(dt)
+                
             tilePos.y += 32
         tilePos.x += 32
         tilePos.y = 0

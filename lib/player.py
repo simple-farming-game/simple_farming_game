@@ -5,6 +5,8 @@ from lib import runtime_values
 from lib import item
 from lib import farm
 from math import trunc
+from lib.crops.Crops import Crops
+from lib.crops.crops_item import CropsItem
 
 class Direction(Enum):
     UP = auto()
@@ -19,7 +21,7 @@ class Direction(Enum):
 
 class Player:
     gold: int = 0
-    inventory: list[item.Items] = []
+    inventory: list[Union[item.Items, CropsItem]] = []
     pos: pygame.Vector2 = pygame.Vector2(0,0)
     hendle_item = item.Items.NONE
     # 방향 구하기 (x2−x1,y2−y1)
@@ -65,3 +67,9 @@ class Player:
         x, y = map(int, pos)
         if self.hendle_item == item.Items.HOE:
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
+    
+    def plant_crops(self):
+        #telnetover9000
+        x, y = map(int, self.tile_pos())
+        if isinstance(self.hendle_item, CropsItem):
+            farm.tile_map[x][y] = self.hendle_item.value

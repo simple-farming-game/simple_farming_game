@@ -1,4 +1,6 @@
 from enum import Enum, auto
+from typing import List, Union
+from lib.crops.Crops import Crops
 
 class Tiles(Enum):
     DIRT = auto()
@@ -6,6 +8,6 @@ class Tiles(Enum):
     WATER_FARMLAND = auto()
 
 
-tile_map: list[list[Tiles]] = [
+tile_map: List[List[Union[Tiles, Crops]]] = [
     [Tiles.DIRT for _ in range(20)] for _ in range(30)
 ]
