@@ -13,14 +13,3 @@
 
 ## 후원
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/newkinidev)
-
-## 기여자
-
-<<<<<<< HEAD
--   [newkincode](https://github.com/newkincode) - 메인테이너
--   [ky0422](https://github.com/ky0422) - `README.md` 작성, 그 외 버그 수정
--   [kdh8219](https://github.com/kdh8219) - 코드 리팩터링
--   [copilot](https://github.com/features/copilot) - 코드 작성 도우미
-=======
--   [newkincode](https://github.com/newkincode) - 메인테이너
->>>>>>> origin/rewrite
