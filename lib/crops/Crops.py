@@ -8,11 +8,12 @@ class Crops:
     age_count: int = 0
     
     def __init__(self, tile_pos: pygame.Vector2, screen: pygame.Surface) -> None:
-        self.image: pygame.Surface = pygame.image.load(
-            f"assets/img/plants/{self.name}/farm_0.png"
+        self.image = pygame.image.load(
+            f"/assets/img/plants/{self.name}/farm_0.png"
         )
         self.screen = screen
         self.tile_pos = tile_pos
+        self.age = 0
     
     def draw(self):
         self.screen.blit(self.image, self.tile_pos*32)

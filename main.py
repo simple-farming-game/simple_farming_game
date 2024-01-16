@@ -7,9 +7,13 @@ from lib import save
 from lib import player
 from lib import item
 from lib.crops.Crops import Crops
-from lib.crops.crops_item import CropsItem
+from lib.crops.crops_item import CropsItems
+import os
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 pygame.init()
+
 logger.info("파이게임 초기화.")
 
 ground_images: dict[farm.Tiles, pygame.Surface] = {
@@ -27,8 +31,8 @@ if not save.import_save():
     playerc.inventory = [item.Items.NONE for _ in range(0,8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = j
-    playerc.inventory[len(item.Items)+1] = CropsItem.RICE
-
+    playerc.inventory[2] = CropsItems.RICE
+    
 while is_running:
     dt: float = clock.tick(100) / 1000
     
@@ -68,6 +72,8 @@ while is_running:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
                     playerc.farm_tile(playerc.tile_pos())
+                case pygame.K_SLASH:
+                    print(playerc.hendle_item)
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_LEFT:
@@ -123,7 +129,11 @@ while is_running:
     screen.blit(pygame.transform.scale(pygame.image.load("assets/img/ui/item_bar.png"), (256, 32)), [28 * 32 - (256 - 64), 20 * 32 - 32])
     screen.blit(pygame.image.load("assets/img/ui/select_item_bar.png"), [28 * 32 - (256 - 64) + (select_inventory * 32), 20 * 32 - 32])
     for index, i in enumerate(playerc.inventory):
-        screen.blit(pygame.image.load(f"assets/img/items/{i.name.lower()}.png"), [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32])
+        if isinstance(i, item.Items):
+            screen.blit(pygame.image.load(f"assets/img/items/{i.name.lower()}.png"), [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32])
+        elif isinstance(i, CropsItems):
+            screen.blit(pygame.image.load(f"assets/img/plants/{i.name}/item.png"), [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32])
+        
     try:
         for i in range(1,9):
             keys = pygame.key.get_pressed()
