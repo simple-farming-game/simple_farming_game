@@ -73,7 +73,11 @@ while is_running:
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
-                    playerc.farm_tile(playerc.tile_pos())
+                    if playerc.hendle_item == item.Items.HOE:
+                        playerc.farm_tile(playerc.tile_pos())
+                    elif isinstance(playerc.hendle_item, CropsItems) and farm.tile_map[int(playerc.tile_pos().x)][int(playerc.tile_pos().y)] == farm.Tiles.FARMLAND:
+                        playerc.plant_crops()
+                        
                 case pygame.K_SLASH:
                     print(playerc.hendle_item)
         if event.type == pygame.KEYUP:
@@ -118,6 +122,7 @@ while is_running:
             if isinstance(tile, farm.Tiles):
                 screen.blit(ground_images[tile], tilePos)
             elif isinstance(tile, Crops):
+                screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
                 tile.draw()
                 tile.grow(dt)
                 

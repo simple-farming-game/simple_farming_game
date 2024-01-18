@@ -2,6 +2,7 @@ from lib import farm
 from lib.runtime_values import *
 from lib.item import Items
 from lib.item import item_name_list
+from lib.crops.Crops import Crops
 from lib.crops.crops_item import CropsItems
 from lib.crops.crops_item import crops_item_name_list
 import json
@@ -33,7 +34,10 @@ def write_save():
         for i in farm.tile_map:
             row = []  # Create a new row list for each iteration
             for j in i:
-                row.append(j.name)  # Append the name of the Enum member
+                if isinstance(j, farm.Tiles):
+                    row.append(j.name)  # Append the name of the Enum member
+                if isinstance(j, Crops):
+                    row.append(j.name)  # Append the name of the Enum member
             data["tile"].append(row)  # Append the row to the "tile" list
         save.write(json.dumps(data))
 
@@ -46,8 +50,14 @@ def import_save():
             for i in data["tile"]:
                 row = []  # Create a new row list for each iteration
                 for j in i:
-                    row.append(getattr(farm.Tiles, j))  # Append the name of the Enum member
-                    logger.debug(f"타일 불러옴: {j}")
+                    try:
+                        if j in farm.tile_name_list:
+                            row.append(getattr(farm.Tiles, j))
+                        elif j in crops_item_name_list:
+                            row.append(getattr(CropsItems, j).value)
+                        logger.debug(f"타일 불러옴: {j}")
+                    except Exception as e:
+                        logger.error(f"오류 발생!: {e}")
                 farm.tile_map.append(row)  # Append the row to the "tile" list   
             playerc.gold = data["player"]["gold"]
             row = []
@@ -61,7 +71,7 @@ def import_save():
                         if member.name == item:
                             row.append(member)
                 else:
-                    logger.error(f"[인벤토리 불러오기] 알수 없는 아이템 감지됨.: {item} 주의: 이 에러는 믿을수 없음.")
+                    logger.error(f"[인벤토리 불러오기] 알수 없는 아이템 감지됨.: {item}     주의: 이 에러는 믿을수 없음.")
                 
             playerc.inventory = row
             playerc.pos = pygame.Vector2(data["player"]["pos"])    

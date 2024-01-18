@@ -6,6 +6,8 @@ from lib import item
 from lib import farm
 from math import trunc
 from lib.crops.crops_item import CropsItems
+from lib import runtime_values
+import os
 
 class Direction(Enum):
     UP = auto()
@@ -71,4 +73,4 @@ class Player:
         #telnetover9000
         x, y = map(int, self.tile_pos())
         if isinstance(self.hendle_item, CropsItems):
-            farm.tile_map[x][y] = self.hendle_item.value()
+            farm.tile_map[x][y] = self.hendle_item.value(self.tile_pos(), runtime_values.screen, None)
