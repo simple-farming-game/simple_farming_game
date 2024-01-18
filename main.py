@@ -1,18 +1,20 @@
 import sys
 import pygame
+
+pygame.init()
+
 from lib.runtime_values import *
 from lib.runtime_values import playerc
 from lib import farm
 from lib import save
 from lib import player
 from lib import item
+from lib import ui
 from lib.crops.Crops import Crops
 from lib.crops.crops_item import CropsItems
 import os
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
-pygame.init()
 
 logger.info("파이게임 초기화.")
 
@@ -122,7 +124,17 @@ while is_running:
             tilePos.y += 32
         tilePos.x += 32
         tilePos.y = 0
-        
+    
+    ui.draw_text_with_border(
+                             screen,
+                             font,
+                             f"SFG {ver_text}",
+                             WHITE,
+                             BLACK,
+                             2,
+                             pygame.math.Vector2(10, 10)
+    )
+    
     playerc.draw()
     playerc.move(player_dir, dt)
     
@@ -141,6 +153,16 @@ while is_running:
                 select_inventory = i-1
         playerc.hendle_item = playerc.inventory[select_inventory]
     except:pass
+    
+    ui.draw_text_with_border(
+                             screen,
+                             font,
+                             str(playerc.hendle_item),
+                             WHITE,
+                             BLACK,
+                             2,
+                             pygame.math.Vector2(10, 35)
+    )
     
     pygame.display.update()
 
