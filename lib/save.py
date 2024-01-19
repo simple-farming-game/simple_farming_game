@@ -4,7 +4,7 @@ from lib.item import Items
 from lib.item import item_name_list
 from lib.crops.Crops import Crops
 from lib.crops.crops_item import CropsItems
-from lib.crops.crops_item import crops_item_name_list
+from lib.crops.crops_item import crops_item_name_list_lower
 import json
 
 def write_save():
@@ -39,6 +39,7 @@ def write_save():
                 if isinstance(j, Crops):
                     row.append(j.name)  # Append the name of the Enum member
             data["tile"].append(row)  # Append the row to the "tile" list
+            print(row)
         save.write(json.dumps(data))
 
 def import_save():
@@ -53,8 +54,8 @@ def import_save():
                     try:
                         if j in farm.tile_name_list:
                             row.append(getattr(farm.Tiles, j))
-                        elif j in crops_item_name_list:
-                            row.append(getattr(CropsItems, j).value)
+                        elif j in crops_item_name_list_lower:
+                            row.append(getattr(CropsItems, j.upper()).value)
                         logger.debug(f"타일 불러옴: {j}")
                     except Exception as e:
                         logger.error(f"오류 발생!: {e}")
@@ -66,7 +67,7 @@ def import_save():
                     for member in Items:
                         if member.name == item:
                             row.append(member)
-                if item in crops_item_name_list:
+                if item in crops_item_name_list_lower:
                     for member in CropsItems:
                         if member.name == item:
                             row.append(member)

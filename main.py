@@ -130,16 +130,6 @@ while is_running:
         tilePos.x += 32
         tilePos.y = 0
     
-    ui.draw_text_with_border(
-                             screen,
-                             font,
-                             f"SFG {ver_text}",
-                             WHITE,
-                             BLACK,
-                             2,
-                             pygame.math.Vector2(10, 10)
-    )
-    
     playerc.draw()
     playerc.move(player_dir, dt)
     
@@ -167,6 +157,16 @@ while is_running:
                              BLACK,
                              2,
                              pygame.math.Vector2(10, 35)
+    )
+    
+    ui.draw_text_with_border(
+                             screen,
+                             font,
+                             f"SFG {ver_text}",
+                             WHITE,
+                             BLACK,
+                             2,
+                             pygame.math.Vector2(10, 10)
     )
     
     pygame.display.update()
