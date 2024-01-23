@@ -3,7 +3,6 @@ import pygame
 from typing import Union
 
 class Rice(Crops):
-    tile_pos: pygame.Vector2
     name: str = "rice"
     image: pygame.Surface
     age: int

@@ -1,8 +1,7 @@
 import pygame
-from typing import Union
+from typing import Union, Final
 
 class Crops:
-    tile_pos: pygame.Vector2
     name: str
     image: pygame.Surface
     age: int
@@ -18,7 +17,7 @@ class Crops:
                 f"./assets/img/plants/{self.name}/farm_0.png"
             )
         self.screen = screen
-        self.tile_pos = tile_pos
+        self.tile_pos: Final = tile_pos
         self.age = 0
     
     def draw(self):
@@ -27,6 +26,7 @@ class Crops:
     def grow(self, dt):
         if self.age_count >= 20:
             self.age += 1
+            self.age_count = 0
         else:
             self.age_count += 1*dt
         

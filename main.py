@@ -115,20 +115,21 @@ while is_running:
     
     screen.fill(SKYBLUE)
     
-    tilePos = pygame.math.Vector2(0, 0)
+    tile_pos = pygame.math.Vector2(0, 0)
     for line in farm.tile_map:
         for tile in line:
-            screen.blit(ground_images[farm.Tiles.DIRT], tilePos)
+            screen.blit(ground_images[farm.Tiles.DIRT], tile_pos)
             if isinstance(tile, farm.Tiles):
-                screen.blit(ground_images[tile], tilePos)
+                screen.blit(ground_images[tile], tile_pos)
             elif isinstance(tile, Crops):
-                screen.blit(ground_images[farm.Tiles.FARMLAND], tilePos)
+                screen.blit(ground_images[farm.Tiles.FARMLAND], tile_pos)
+                print(tile.tile_pos)
                 tile.draw()
                 tile.grow(dt)
                 
-            tilePos.y += 32
-        tilePos.x += 32
-        tilePos.y = 0
+            tile_pos.y += 32
+        tile_pos.x += 32
+        tile_pos.y = 0
     
     playerc.draw()
     playerc.move(player_dir, dt)

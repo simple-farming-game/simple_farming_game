@@ -1,11 +1,12 @@
 from lib import farm
-from lib.runtime_values import *
+from lib.crops.crops_item import crops_item_name_list_lower
+from lib.crops.crops_item import crops_item_name_list
+from lib.crops.crops_item import CropsItems
+from lib.runtime_values import * 
 from lib.item import Items
 from lib.item import item_name_list
-from lib.crops.Crops import Crops
-from lib.crops.crops_item import CropsItems
-from lib.crops.crops_item import crops_item_name_list_lower
 import json
+from pygame import Vector2
 
 def write_save():
     with open("save.sfgsave", "w") as save:
@@ -18,76 +19,65 @@ def write_save():
                 "hendle_item":Items.NONE
                 }
         }
-        data["player"]["gold"] = playerc.gold
-        row = []
+
+        for line in farm.tile_map:
+            row = []
+            for tile in line:
+                row.append(tile.name)
+            data["tile"].append(row)
+        
         for item in playerc.inventory:
-            if isinstance(item, Items):
-                row.append(item.name)
-            elif isinstance(item, CropsItems):
-                row.append(item.name)
-            else:
-                logger.error("[인벤토리 저장하기] 알수 없는 아이템 감지됨.")
-        data["player"]["inventory"] = row
+            data["player"]["inventory"].append(item.name)
+        
         data["player"]["hendle_item"] = playerc.hendle_item.name
         data["player"]["pos"] = list(playerc.pos)
+        data["player"]["gold"] = playerc.gold
         
-        for i in farm.tile_map:
-            row = []  # Create a new row list for each iteration
-            for j in i:
-                if isinstance(j, farm.Tiles):
-                    row.append(j.name)  # Append the name of the Enum member
-                if isinstance(j, Crops):
-                    row.append(j.name)  # Append the name of the Enum member
-            data["tile"].append(row)  # Append the row to the "tile" list
-            print(row)
         save.write(json.dumps(data))
 
 def import_save():
+    # tile
+    # player(gold, inventory, pos, handle_item)
     try:
         with open("save.sfgsave", "r") as save:
             logger.info("불러오기")
             data = json.loads(save.read())
-            farm.tile_map = []
-            for i in data["tile"]:
-                row = []  # Create a new row list for each iteration
-                for j in i:
-                    try:
-                        if j in farm.tile_name_list:
-                            row.append(getattr(farm.Tiles, j))
-                        elif j in crops_item_name_list_lower:
-                            row.append(getattr(CropsItems, j.upper()).value)
-                        logger.debug(f"타일 불러옴: {j}")
-                    except Exception as e:
-                        logger.error(f"오류 발생!: {e}")
-                farm.tile_map.append(row)  # Append the row to the "tile" list   
-            playerc.gold = data["player"]["gold"]
+        farm.tile_map = []
+        tile_pos = Vector2(0, 0)
+        for line in data["tile"]:
             row = []
-            for item in data["player"]["inventory"]:
-                if item in item_name_list:
-                    for member in Items:
-                        if member.name == item:
-                            row.append(member)
-                if item in crops_item_name_list_lower:
-                    for member in CropsItems:
-                        if member.name == item:
-                            row.append(member)
+            for tile in line:
+                if tile in farm.tile_name_list:
+                    row.append(getattr(farm.Tiles, tile))
+                elif tile in crops_item_name_list_lower:
+                    row.append(getattr(CropsItems, tile.upper()).value(tile_pos, screen, None))
                 else:
-                    logger.error(f"[인벤토리 불러오기] 알수 없는 아이템 감지됨.: {item}     주의: 이 에러는 믿을수 없음.")
-                
-            playerc.inventory = row
-            playerc.pos = pygame.Vector2(data["player"]["pos"])    
-            if data["player"]["hendle_item"] in item_name_list:
-                for member in Items:
-                    if member.name == data["player"]["hendle_item"]:
-                        playerc.hendle_item = member
-            else:
-                logger.error(f"[핸들 아이템 불러오기] 알수 없는 아이템 감지됨.: {data['player']['hendle_item']}")
-                
-        return True
-
-    except (json.JSONDecodeError, ValueError) as e:
-        # Handle the case when there's an issue decoding JSON, the file is not found, or the data is invalid
-        logger.error(f"세이브를 불러오는 과정에서 오류가 발생했습니다!: {e}")
-    except FileNotFoundError:return False
+                    logger.error(f"[타일맵] 알수없는 아이템 감지됨.: {tile}")
+                tile_pos.y += 1
+            farm.tile_map.append(row)
+            tile_pos.x += 1
+            tile_pos.y = 0
+            
+        playerc.gold = data["player"]["gold"]
+        playerc.pos = pygame.Vector2(data["player"]["pos"])
         
-
+        for item in data["player"]["inventory"]:
+            if item in crops_item_name_list:
+                playerc.hendle_item = getattr(CropsItems, item)
+            elif item in item_name_list:
+                playerc.hendle_item = getattr(Items, item)
+            else:
+                logger.error(f"[인벤토리 불러오기] 알수없는 아이템 감지됨.: {item}")
+        
+        if data["player"]["hendle_item"] in crops_item_name_list:
+            playerc.hendle_item = getattr(CropsItems, data["player"]["hendle_item"])
+        elif data["player"]["hendle_item"] in item_name_list:
+            playerc.hendle_item = getattr(Items, data["player"]["hendle_item"])
+        else:
+            logger.error(f"[핸들아이템 불러오기] 알수없는 아이템 감지됨.: {data['player']['hendle_item']}")
+                
+    except (json.JSONDecodeError, ValueError) as e:
+        logger.error(f"세이브를 불러오는 과정에서 오류가 발생하였습니다.: {e}")
+    except FileNotFoundError:return False
+    
+    
