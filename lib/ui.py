@@ -1,4 +1,6 @@
 import pygame
+from lib.runtime_values import *
+
 
 def draw_text_with_border(
     screen: pygame.Surface,
@@ -19,7 +21,7 @@ def draw_text_with_border(
     #
     #         smile_pos = positon.x + no_smile_one.get_width()
     #
-    #         if smile_msg_pos != -1:
+    #         if smile_msg_pos != -1
     #             screen.blit(imgs.emojis[f"{i}"], [smile_pos, positon.y])
 
     inside = font.render(text, True, inside_color)
@@ -32,3 +34,52 @@ def draw_text_with_border(
     screen.blit(inside, positon)
 
     return inside
+
+
+class Btn:
+    def __init__(self, text: str, _def, pos: pygame.Vector2):
+
+        self.btn_var = draw_text_with_border(
+            screen,
+            font,
+            text,
+            pygame.Color(255, 255, 255),
+            pygame.Color(0, 0, 0),
+            2,
+            pos,
+        )
+        self.btn_rect = self.btn_var.get_rect()
+        self._def = _def
+        self.text = text
+        self.pos = pos
+        self.pos_tuple = (int(pos.x), int(pos.y))
+        self.btn_rect.center = self.pos_tuple
+        self.btn_rect.width = self.btn_rect.width * 2
+        self.btn_rect.height = self.btn_rect.height * 2
+
+    def draw(self):
+        self.btn_var = draw_text_with_border(
+            screen,
+            font,
+            self.text,
+            pygame.Color(255, 255, 255),
+            pygame.Color(0, 0, 0),
+            2,
+            self.pos,
+        )
+        event = pygame.event.poll()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                self.mus_pos: tuple = pygame.mouse.get_pos()
+                if self.btn_rect.collidepoint(self.mus_pos):
+                    if pygame.mouse.get_pressed()[0] == 1:
+
+                        self.btn_var = draw_text_with_border(
+                            screen,
+                            font,
+                            self.text,
+                            pygame.Color(255, 255, 255),
+                            pygame.Color(0, 0, 0),
+                            2,
+                            self.pos,
+                        )
