@@ -13,7 +13,7 @@ font = pygame.font.Font("assets/font/Galmuri.ttf", 20)
 
 # player var
 player_img: pygame.Surface = pygame.image.load("assets/img/player.png")
-playerc = player.Player(player_img, pygame.Vector2(0,0), 3)
+playerc = player.Player(player_img, pygame.Vector2(0, 0), 3)
 player_dir: Direction = Direction.STOP
 
 # Color
