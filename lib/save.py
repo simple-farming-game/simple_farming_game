@@ -53,7 +53,7 @@ def import_save():
                     row.append(getattr(farm.Tiles, tile))
                 elif tile in crops_item_name_list_lower:
                     row.append(
-                        getattr(CropsItems, tile.upper()).value(tile_pos, screen, None)
+                        getattr(CropsItems, tile.upper()).value(tile_pos, screen)
                     )
                 else:
                     logger.error(f"[타일맵] 알수없는 아이템 감지됨.: {tile}")

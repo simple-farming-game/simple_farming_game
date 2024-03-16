@@ -35,7 +35,7 @@ if not save.import_save():
     playerc.inventory = [item.Items.NONE for _ in range(0, 8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = j
-    playerc.inventory[2] = CropsItems.RICE
+    playerc.inventory[1] = CropsItems.RICE
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -43,6 +43,12 @@ while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
+
+        for line in farm.tile_map:
+            for tile in line:
+                if isinstance(tile, Crops):
+                    if event.type == tile.GROW_EVENT:
+                        tile.grow()
 
         if event.type == pygame.KEYDOWN:
             match event.key:
@@ -130,7 +136,6 @@ while is_running:
             elif isinstance(tile, Crops):
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tile_pos)
                 tile.draw()
-                tile.grow(dt)
 
             tile_pos.y += 32
         tile_pos.x += 32
