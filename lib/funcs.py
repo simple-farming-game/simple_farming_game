@@ -1,5 +1,6 @@
 import json
+import pygame
 
 
-def toJSON(obj):
-    return json.dumps(obj, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+def to_json(obj):
+    return str(obj)

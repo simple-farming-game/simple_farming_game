@@ -8,5 +8,11 @@ class Rice(Crops):
     image: pygame.Surface
     age: int
 
-    def __init__(self, tile_pos: pygame.Vector2, screen: pygame.Surface) -> None:
-        super().__init__(tile_pos, screen)
+    def __init__(
+        self,
+        tile_pos: pygame.Vector2,
+        screen: pygame.Surface,
+        age: int = 0,
+        age_count: int = 0,
+    ) -> None:
+        super().__init__(tile_pos, screen, age, age_count)

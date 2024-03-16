@@ -26,7 +26,7 @@ class Player:
     gold: int = 0
     inventory: list[Union[item.Items, CropsItems]] = []
     pos: pygame.Vector2 = pygame.Vector2(0, 0)
-    hendle_item = item.Items.NONE
+    handle_item = item.Items.NONE
     # 방향 구하기 (x2−x1,y2−y1)
     # (1,0) <
     # (-1,0) >
@@ -68,13 +68,13 @@ class Player:
 
     def farm_tile(self, pos):
         x, y = map(int, pos)
-        if self.hendle_item == item.Items.HOE:
+        if self.handle_item == item.Items.HOE:
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
 
     def plant_crops(self):
         # telnetover9000
         x, y = map(int, self.tile_pos())
-        if isinstance(self.hendle_item, CropsItems):
-            farm.tile_map[x][y] = self.hendle_item.value(
+        if isinstance(self.handle_item, CropsItems):
+            farm.tile_map[x][y] = self.handle_item.value(
                 self.tile_pos(), runtime_values.screen
             )
