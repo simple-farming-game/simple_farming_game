@@ -6,6 +6,7 @@ from lib import item
 from lib import farm
 from math import trunc
 from lib.crops.crops_item import CropsItems
+from lib.crops.Crops import Crops
 from lib import runtime_values
 import os
 
@@ -68,8 +69,29 @@ class Player:
 
     def farm_tile(self, pos):
         x, y = map(int, pos)
-        if self.handle_item == item.Items.HOE:
+        if (
+            self.handle_item == item.Items.HOE
+            and not farm.tile_map[x][y] == farm.Tiles.FARMLAND
+        ):
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
+
+    def harvest_crops(self, pos):
+        x, y = map(int, pos)
+        if (
+            self.handle_item == item.Items.SICKLE
+            and isinstance(farm.tile_map[x][y], Crops)
+            and farm.tile_map[x][y].age == 2
+        ):
+            try:
+                inventory_copy = self.inventory[:]
+                while item.Items.NONE in inventory_copy:
+                    inventory_copy.remove(item.Items.NONE)
+                for i in CropsItems:
+                    if farm.tile_map[x][y].name.upper() == i.name:
+                        self.inventory[len(inventory_copy)] = i
+                farm.tile_map[x][y] = farm.Tiles.FARMLAND
+            except IndexError:
+                pass
 
     def plant_crops(self):
         # telnetover9000

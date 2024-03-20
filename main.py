@@ -35,7 +35,7 @@ if not save.import_save():
     playerc.inventory = [item.Items.NONE for _ in range(0, 8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = j
-    playerc.inventory[1] = CropsItems.RICE
+    playerc.inventory[len(item.Items) - 1] = CropsItems.RICE
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -83,6 +83,8 @@ while is_running:
                 case pygame.K_d:
                     if playerc.handle_item == item.Items.HOE:
                         playerc.farm_tile(playerc.tile_pos())
+                    elif playerc.handle_item == item.Items.SICKLE:
+                        playerc.harvest_crops(playerc.tile_pos())
                     elif (
                         isinstance(playerc.handle_item, CropsItems)
                         and farm.tile_map[int(playerc.tile_pos().x)][
