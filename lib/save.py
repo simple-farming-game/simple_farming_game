@@ -33,7 +33,7 @@ def write_save():
             data["tile"].append(row)
 
         for item in playerc.inventory:
-            data["player"]["inventory"].append(item.name)
+            data["player"]["inventory"].append(str(item))
 
         data["player"]["handle_item"] = playerc.handle_item.name
         data["player"]["pos"] = list(playerc.pos)
