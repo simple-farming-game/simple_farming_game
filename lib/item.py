@@ -15,7 +15,7 @@ class Item:
         self.count = count
 
     def __str__(self) -> str:
-        return json.dumps({"name": self.item, "count": self.count})
+        return json.dumps({"name": self.item.name, "count": self.count})
 
 
 item_name_list = [item.name for item in Items]
