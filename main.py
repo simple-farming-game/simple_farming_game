@@ -81,12 +81,12 @@ while is_running:
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
-                    if playerc.handle_item == item.Items.HOE:
+                    if playerc.handle_item.item == item.Items.HOE:
                         playerc.farm_tile(playerc.tile_pos())
-                    elif playerc.handle_item == item.Items.SICKLE:
+                    elif playerc.handle_item.item == item.Items.SICKLE:
                         playerc.harvest_crops(playerc.tile_pos())
                     elif (
-                        isinstance(playerc.handle_item, CropsItems)
+                        isinstance(playerc.handle_item.item, CropsItems)
                         and farm.tile_map[int(playerc.tile_pos().x)][
                             int(playerc.tile_pos().y)
                         ]
