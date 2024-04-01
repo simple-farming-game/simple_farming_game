@@ -32,10 +32,10 @@ pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
 select_inventory = 0
 
 if not save.import_save():
-    playerc.inventory = [item.Items.NONE for _ in range(0, 8)]
+    playerc.inventory = [item.Item(item.Items.NONE, 1) for _ in range(0, 8)]
     for i, j in enumerate(item.Items):
-        playerc.inventory[i] = j
-    playerc.inventory[2] = CropsItems.RICE
+        playerc.inventory[i] = item.Item(j, 1)
+    playerc.inventory[len(item.Items) - 1] = item.Item(CropsItems.RICE, 1)
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -43,6 +43,12 @@ while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
+
+        for line in farm.tile_map:
+            for tile in line:
+                if isinstance(tile, Crops):
+                    if event.type == tile.GROW_EVENT:
+                        tile.grow()
 
         if event.type == pygame.KEYDOWN:
             match event.key:
@@ -75,10 +81,12 @@ while is_running:
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
-                    if playerc.hendle_item == item.Items.HOE:
+                    if playerc.handle_item.item == item.Items.HOE:
                         playerc.farm_tile(playerc.tile_pos())
+                    elif playerc.handle_item.item == item.Items.SICKLE:
+                        playerc.harvest_crops(playerc.tile_pos())
                     elif (
-                        isinstance(playerc.hendle_item, CropsItems)
+                        isinstance(playerc.handle_item.item, CropsItems)
                         and farm.tile_map[int(playerc.tile_pos().x)][
                             int(playerc.tile_pos().y)
                         ]
@@ -87,7 +95,7 @@ while is_running:
                         playerc.plant_crops()
 
                 case pygame.K_SLASH:
-                    print(playerc.hendle_item)
+                    print(playerc.handle_item)
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_LEFT:
@@ -130,15 +138,16 @@ while is_running:
             elif isinstance(tile, Crops):
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tile_pos)
                 tile.draw()
-                tile.grow(dt)
 
             tile_pos.y += 32
         tile_pos.x += 32
         tile_pos.y = 0
 
+    # 플레이어
     playerc.draw()
     playerc.move(player_dir, dt)
 
+    # 아이템바
     screen.blit(
         pygame.transform.scale(
             pygame.image.load("assets/img/ui/item_bar.png"), (256, 32)
@@ -150,14 +159,14 @@ while is_running:
         [28 * 32 - (256 - 64) + (select_inventory * 32), 20 * 32 - 32],
     )
     for index, i in enumerate(playerc.inventory):
-        if isinstance(i, item.Items):
+        if isinstance(i.item, item.Items):
             screen.blit(
-                pygame.image.load(f"assets/img/items/{i.name.lower()}.png"),
+                pygame.image.load(f"assets/img/items/{i.item.name.lower()}.png"),
                 [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
             )
-        elif isinstance(i, CropsItems):
+        elif isinstance(i.item, CropsItems):
             screen.blit(
-                pygame.image.load(f"assets/img/plants/{i.name.lower()}/item.png"),
+                pygame.image.load(f"assets/img/plants/{i.item.name.lower()}/item.png"),
                 [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
             )
 
@@ -166,14 +175,15 @@ while is_running:
             keys = pygame.key.get_pressed()
             if keys[getattr(pygame, f"K_{i}")]:
                 select_inventory = i - 1
-        playerc.hendle_item = playerc.inventory[select_inventory]
+        playerc.handle_item = playerc.inventory[select_inventory]
     except:
         pass
 
+    # 기타 ui
     ui.draw_text_with_border(
         screen,
         font,
-        str(playerc.hendle_item),
+        str(playerc.handle_item.item.name),
         WHITE,
         BLACK,
         2,
