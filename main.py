@@ -32,10 +32,10 @@ pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
 select_inventory = 0
 
 if not save.import_save():
-    playerc.inventory = [item.Items.NONE for _ in range(0, 8)]
+    playerc.inventory = [item.Item(item.Items.NONE, 1) for _ in range(0, 8)]
     for i, j in enumerate(item.Items):
-        playerc.inventory[i] = j
-    playerc.inventory[len(item.Items) - 1] = CropsItems.RICE
+        playerc.inventory[i] = item.Item(j, 1)
+    playerc.inventory[len(item.Items) - 1] = item.Item(CropsItems.RICE, 1)
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -143,9 +143,11 @@ while is_running:
         tile_pos.x += 32
         tile_pos.y = 0
 
+    # 플레이어
     playerc.draw()
     playerc.move(player_dir, dt)
 
+    # 아이템바
     screen.blit(
         pygame.transform.scale(
             pygame.image.load("assets/img/ui/item_bar.png"), (256, 32)
@@ -157,14 +159,14 @@ while is_running:
         [28 * 32 - (256 - 64) + (select_inventory * 32), 20 * 32 - 32],
     )
     for index, i in enumerate(playerc.inventory):
-        if isinstance(i, item.Items):
+        if isinstance(i.item, item.Items):
             screen.blit(
-                pygame.image.load(f"assets/img/items/{i.name.lower()}.png"),
+                pygame.image.load(f"assets/img/items/{i.item.name.lower()}.png"),
                 [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
             )
-        elif isinstance(i, CropsItems):
+        elif isinstance(i.item, CropsItems):
             screen.blit(
-                pygame.image.load(f"assets/img/plants/{i.name.lower()}/item.png"),
+                pygame.image.load(f"assets/img/plants/{i.item.name.lower()}/item.png"),
                 [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
             )
 
@@ -177,10 +179,11 @@ while is_running:
     except:
         pass
 
+    # 기타 ui
     ui.draw_text_with_border(
         screen,
         font,
-        str(playerc.handle_item),
+        str(playerc.handle_item.item.name),
         WHITE,
         BLACK,
         2,
