@@ -69,7 +69,7 @@ class Player:
     def farm_tile(self, pos):
         x, y = map(int, pos)
         if (
-            self.handle_item == item.Items.HOE
+            self.handle_item.item == item.Items.HOE
             and not farm.tile_map[x][y] == farm.Tiles.FARMLAND
         ):
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
@@ -77,7 +77,7 @@ class Player:
     def harvest_crops(self, pos):
         x, y = map(int, pos)
         if (
-            self.handle_item == item.Items.SICKLE
+            self.handle_item.item == item.Items.SICKLE
             and isinstance(farm.tile_map[x][y], Crops)
             and farm.tile_map[x][y].age == 2
         ):
@@ -95,7 +95,7 @@ class Player:
     def plant_crops(self):
         # telnetover9000
         x, y = map(int, self.tile_pos())
-        if isinstance(self.handle_item, CropsItems):
+        if isinstance(self.handle_item.item, CropsItems):
             farm.tile_map[x][y] = self.handle_item.value(
                 self.tile_pos(), runtime_values.screen
             )
