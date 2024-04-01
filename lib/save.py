@@ -35,7 +35,7 @@ def write_save():
         for item in playerc.inventory:
             data["player"]["inventory"].append(str(item))
 
-        data["player"]["handle_item"] = playerc.handle_item.name
+        data["player"]["handle_item"] = playerc.handle_item.item.name
         data["player"]["pos"] = list(playerc.pos)
         data["player"]["gold"] = playerc.gold
 
@@ -76,11 +76,12 @@ def import_save():
         playerc.gold = data["player"]["gold"]
         playerc.pos = pygame.Vector2(data["player"]["pos"])
 
-        for item in data["player"]["inventory"]:
-            if item in crops_item_name_list:
-                playerc.handle_item = getattr(CropsItems, item)
-            elif item in item_name_list:
-                playerc.handle_item = getattr(Items, item)
+        for i in data["player"]["inventory"]:
+            item = json.loads(i)
+            if item["name"] in crops_item_name_list:
+                playerc.handle_item = getattr(CropsItems, item["name"])
+            elif item["name"] in item_name_list:
+                playerc.handle_item = getattr(Items, item["name"])
             else:
                 logger.error(f"[인벤토리 불러오기] 알수없는 아이템 감지됨.: {item}")
 
