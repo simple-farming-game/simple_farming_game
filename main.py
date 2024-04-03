@@ -81,12 +81,12 @@ while is_running:
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
-                    if playerc.handle_item.item == item.Items.HOE:
+                    if playerc.handle_item == item.Items.HOE:
                         playerc.farm_tile(playerc.tile_pos())
-                    elif playerc.handle_item.item == item.Items.SICKLE:
+                    elif playerc.handle_item == item.Items.SICKLE:
                         playerc.harvest_crops(playerc.tile_pos())
                     elif (
-                        isinstance(playerc.handle_item.item, CropsItems)
+                        isinstance(playerc.handle_item, CropsItems)
                         and farm.tile_map[int(playerc.tile_pos().x)][
                             int(playerc.tile_pos().y)
                         ]
@@ -175,7 +175,7 @@ while is_running:
             keys = pygame.key.get_pressed()
             if keys[getattr(pygame, f"K_{i}")]:
                 select_inventory = i - 1
-        playerc.handle_item = playerc.inventory[select_inventory]
+        playerc.handle_item = playerc.inventory[select_inventory].item
     except:
         pass
 
@@ -183,7 +183,7 @@ while is_running:
     ui.draw_text_with_border(
         screen,
         font,
-        str(playerc.handle_item.item.name),
+        str(playerc.handle_item.name),
         WHITE,
         BLACK,
         2,
