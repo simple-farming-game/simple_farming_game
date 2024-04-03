@@ -82,12 +82,18 @@ class Player:
             and farm.tile_map[x][y].age == 2
         ):
             try:
-                inventory_copy = self.inventory[:]
+                inventory_copy = [i.item for i in self.inventory[:]]
                 while item.Items.NONE in inventory_copy:
                     inventory_copy.remove(item.Items.NONE)
                 for i in CropsItems:
                     if farm.tile_map[x][y].name.upper() == i.name:
-                        self.inventory[len(inventory_copy)] = i
+                        if isinstance(
+                            self.inventory[len(inventory_copy) - 1], item.Item
+                        ):
+                            self.inventory[len(inventory_copy) - 1].count += 1
+                        else:
+                            self.inventory[len(inventory_copy) - 1] = item.Item(i, 1)
+
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
             except IndexError:
                 pass
