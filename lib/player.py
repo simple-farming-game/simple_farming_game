@@ -70,7 +70,7 @@ class Player:
         x, y = map(int, pos)
         if (
             self.handle_item.item == item.Items.HOE
-            and not farm.tile_map[x][y] == farm.Tiles.FARMLAND
+            and farm.tile_map[x][y] == farm.Tiles.DIRT
         ):
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
 
@@ -81,21 +81,29 @@ class Player:
             and isinstance(farm.tile_map[x][y], Crops)
             and farm.tile_map[x][y].age == 2
         ):
-            try:
-                inventory_copy = self.inventory[:]
-                while item.Items.NONE in inventory_copy:
-                    inventory_copy.remove(item.Items.NONE)
-                for i in CropsItems:
-                    if farm.tile_map[x][y].name.upper() == i.name:
-                        self.inventory[len(inventory_copy)] = i
-                farm.tile_map[x][y] = farm.Tiles.FARMLAND
-            except IndexError:
-                pass
+            inventory_copy = [i.item for i in self.inventory[:]]  # 복제
+            print(item.Items.NONE in inventory_copy)
+            while item.Items.NONE in inventory_copy:
+                inventory_copy.remove(item.Items.NONE)  # 복제된것에서 none 제외하기
+                print(inventory_copy)
+            for i in CropsItems:
+                if inventory_copy:
+                    if isinstance(self.inventory[len(inventory_copy) - 1], item.Item):
+                        self.inventory[
+                            len(inventory_copy) - 1
+                        ].count += 1  # 카운트 업데이트
+                    else:
+                        self.inventory.append(
+                            item.Item(i, 1)
+                        )  # 새 항목을 인벤토리에 추가
+                    print([i.count for i in self.inventory[:]])
+
+            farm.tile_map[x][y] = farm.Tiles.FARMLAND
 
     def plant_crops(self):
         # telnetover9000
         x, y = map(int, self.tile_pos())
         if isinstance(self.handle_item.item, CropsItems):
-            farm.tile_map[x][y] = self.handle_item.value(
+            farm.tile_map[x][y] = self.handle_item.item.value(
                 self.tile_pos(), runtime_values.screen
             )
