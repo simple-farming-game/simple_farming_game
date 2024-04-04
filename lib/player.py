@@ -94,7 +94,6 @@ class Player:
                             == farm.tile_map[x][y].name.upper()
                         ):
                             inventory_item.count += 1
-                            print(inventory_item.count)
                             found_crop_item = True
                             break  # Stop searching once the item is found and count is updated
 
@@ -106,11 +105,10 @@ class Player:
                     self.inventory[last_index + 1] = item.Item(
                         getattr(CropsItems, farm.tile_map[x][y].name.upper()), 1
                     )
-                    print(getattr(CropsItems, farm.tile_map[x][y].name.upper()))
 
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
             except IndexError:
-                print("ㅇㅇㅇ")
+                pass
 
     def plant_crops(self):
         # telnetover9000
