@@ -26,7 +26,7 @@ class Player:
     gold: int = 0
     inventory: list[item.Item] = []
     pos: pygame.Vector2 = pygame.Vector2(0, 0)
-    handle_item = item.Items.NONE
+    handle_item: item.Items | CropsItems = item.Items.NONE
     # 방향 구하기 (x2−x1,y2−y1)
     # (1,0) <
     # (-1,0) >
@@ -69,7 +69,7 @@ class Player:
     def farm_tile(self, pos):
         x, y = map(int, pos)
         if (
-            self.handle_item.item == item.Items.HOE
+            self.handle_item == item.Items.HOE
             and farm.tile_map[x][y] == farm.Tiles.DIRT
         ):
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
@@ -77,7 +77,7 @@ class Player:
     def harvest_crops(self, pos):
         x, y = map(int, pos)
         if (
-            self.handle_item.item == item.Items.SICKLE
+            self.handle_item == item.Items.SICKLE
             and isinstance(farm.tile_map[x][y], Crops)
             and farm.tile_map[x][y].age == 2
         ):
@@ -103,7 +103,13 @@ class Player:
     def plant_crops(self):
         # telnetover9000
         x, y = map(int, self.tile_pos())
-        if isinstance(self.handle_item.item, CropsItems):
-            farm.tile_map[x][y] = self.handle_item.item.value(
+        print(runtime_values.select_inventory)
+        if (
+            isinstance(self.handle_item, CropsItems)
+            and not self.inventory[runtime_values.select_inventory].count <= 0
+        ):
+            farm.tile_map[x][y] = self.handle_item.value(
                 self.tile_pos(), runtime_values.screen
             )
+            self.inventory[runtime_values.select_inventory].count -= 1
+            print(self.inventory[runtime_values.select_inventory].count)

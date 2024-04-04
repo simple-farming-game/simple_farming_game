@@ -4,6 +4,7 @@ import pygame
 pygame.init()
 
 from lib.runtime_values import *
+from lib import runtime_values
 from lib.runtime_values import playerc
 from lib import farm
 from lib import save
@@ -28,8 +29,6 @@ ground_images: dict[farm.Tiles, pygame.Surface] = {
 
 pygame.display.set_caption(f"sfg {ver_text} by newkini")
 pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
-
-select_inventory = 0
 
 if not save.import_save():
     playerc.inventory = [item.Item(item.Items.NONE, 1) for _ in range(0, 8)]
@@ -81,12 +80,12 @@ while is_running:
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
-                    if playerc.handle_item.item == item.Items.HOE:
+                    if playerc.handle_item == item.Items.HOE:
                         playerc.farm_tile(playerc.tile_pos())
-                    elif playerc.handle_item.item == item.Items.SICKLE:
+                    elif playerc.handle_item == item.Items.SICKLE:
                         playerc.harvest_crops(playerc.tile_pos())
                     elif (
-                        isinstance(playerc.handle_item.item, CropsItems)
+                        isinstance(playerc.handle_item, CropsItems)
                         and farm.tile_map[int(playerc.tile_pos().x)][
                             int(playerc.tile_pos().y)
                         ]
@@ -95,7 +94,8 @@ while is_running:
                         playerc.plant_crops()
 
                 case pygame.K_SLASH:
-                    print(playerc.handle_item)
+                    print(playerc.inventory[runtime_values.select_inventory])
+                    print(runtime_values.select_inventory)
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_LEFT:
@@ -156,7 +156,7 @@ while is_running:
     )
     screen.blit(
         pygame.image.load("assets/img/ui/select_item_bar.png"),
-        [28 * 32 - (256 - 64) + (select_inventory * 32), 20 * 32 - 32],
+        [28 * 32 - (256 - 64) + (runtime_values.select_inventory * 32), 20 * 32 - 32],
     )
     for index, i in enumerate(playerc.inventory):
         if isinstance(i.item, item.Items):
@@ -174,8 +174,8 @@ while is_running:
         for i in range(1, 9):
             keys = pygame.key.get_pressed()
             if keys[getattr(pygame, f"K_{i}")]:
-                select_inventory = i - 1
-        playerc.handle_item = playerc.inventory[select_inventory]
+                runtime_values.select_inventory = i - 1
+        playerc.handle_item = playerc.inventory[runtime_values.select_inventory].item
     except:
         pass
 
@@ -183,7 +183,7 @@ while is_running:
     ui.draw_text_with_border(
         screen,
         font,
-        str(playerc.handle_item.item.name),
+        str(playerc.handle_item.name),
         WHITE,
         BLACK,
         2,
