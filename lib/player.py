@@ -70,7 +70,7 @@ class Player:
         x, y = map(int, pos)
         if (
             self.handle_item == item.Items.HOE
-            and not farm.tile_map[x][y] == farm.Tiles.FARMLAND
+            and farm.tile_map[x][y] == farm.Tiles.DIRT
         ):
             farm.tile_map[x][y] = farm.Tiles.FARMLAND
 
@@ -90,7 +90,14 @@ class Player:
                         if isinstance(
                             self.inventory[len(inventory_copy) - 1], item.Item
                         ):
-                            self.inventory[len(inventory_copy) - 1].count += 1
+                            self.inventory[
+                                [i.item for i in self.inventory[:]].count(i)
+                            ].count += 1
+                            print(
+                                self.inventory[
+                                    [i.item for i in self.inventory[:]].count(i)
+                                ].count
+                            )
                         else:
                             self.inventory[len(inventory_copy) - 1] = item.Item(i, 1)
 
@@ -101,7 +108,13 @@ class Player:
     def plant_crops(self):
         # telnetover9000
         x, y = map(int, self.tile_pos())
-        if isinstance(self.handle_item, CropsItems):
+        print(runtime_values.select_inventory)
+        if (
+            isinstance(self.handle_item, CropsItems)
+            and not self.inventory[runtime_values.select_inventory].count <= 0
+        ):
             farm.tile_map[x][y] = self.handle_item.value(
                 self.tile_pos(), runtime_values.screen
             )
+            self.inventory[runtime_values.select_inventory].count -= 1
+            print(self.inventory[runtime_values.select_inventory].count)
