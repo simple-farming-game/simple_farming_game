@@ -6,6 +6,7 @@ from lib.crops.Crops import Crops
 from lib.runtime_values import *
 from lib.funcs import *
 from lib.item import Items
+from lib.item import Item
 from lib.item import item_name_list
 import json
 from pygame import Vector2
@@ -79,9 +80,14 @@ def import_save():
         for i in data["player"]["inventory"]:
             item = json.loads(i)
             if item["name"] in crops_item_name_list:
-                playerc.handle_item = getattr(CropsItems, item["name"])
+                playerc.inventory.append(
+                    Item(getattr(CropsItems, item["name"]), item["count"])
+                )
             elif item["name"] in item_name_list:
-                playerc.handle_item = getattr(Items, item["name"])
+                print(item)
+                playerc.inventory.append(
+                    Item(getattr(Items, item["name"]), item["count"])
+                )
             else:
                 logger.error(f"[인벤토리 불러오기] 알수없는 아이템 감지됨.: {item}")
 
