@@ -34,6 +34,7 @@ if not save.import_save():
     playerc.inventory = [item.Item(item.Items.NONE, 1) for _ in range(0, 8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = item.Item(j, 1)
+    playerc.inventory[len(item.Items) - 1] = item.Item(CropsItems.RICE, 1)
 
 while is_running:
     dt: float = clock.tick(100) / 1000

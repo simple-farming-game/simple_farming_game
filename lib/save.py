@@ -93,7 +93,7 @@ def import_save():
             logger.error(
                 f"[핸들아이템 불러오기] 알수없는 아이템 감지됨.: {data['player']['handle_item']}"
             )
-
+        return True
     except (json.JSONDecodeError, ValueError) as e:
         logger.error(f"세이브를 불러오는 과정에서 오류가 발생하였습니다.: {e}")
     except FileNotFoundError:
