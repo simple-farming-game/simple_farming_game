@@ -15,6 +15,7 @@ font = pygame.font.Font("assets/font/Galmuri.ttf", 20)
 player_img: pygame.Surface = pygame.image.load("assets/img/player.png")
 playerc = player.Player(player_img, pygame.Vector2(0, 0), 3)
 player_dir: Direction = Direction.STOP
+select_inventory = 0
 
 # Color
 SKYBLUE: pygame.Color = pygame.Color(113, 199, 245)
