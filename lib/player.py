@@ -9,6 +9,7 @@ from lib.crops.Crops import Crops
 from lib import runtime_values
 from lib import funcs
 import os
+import random
 
 
 class Direction(Enum):
@@ -93,7 +94,7 @@ class Player:
                             inventory_item.item.name.upper()
                             == farm.tile_map[x][y].name.upper()
                         ):
-                            inventory_item.count += 1
+                            inventory_item.count += random.randint(1, 3)
                             found_crop_item = True
                             break  # Stop searching once the item is found and count is updated
 
@@ -103,7 +104,8 @@ class Player:
                         [i.item for i in self.inventory], item.Items.NONE
                     )
                     self.inventory[last_index + 1] = item.Item(
-                        getattr(CropsItems, farm.tile_map[x][y].name.upper()), 1
+                        getattr(CropsItems, farm.tile_map[x][y].name.upper()),
+                        random.randint(1, 3),
                     )
 
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
@@ -113,7 +115,6 @@ class Player:
     def plant_crops(self):
         # telnetover9000
         x, y = map(int, self.tile_pos())
-        print(runtime_values.select_inventory)
         if (
             isinstance(self.handle_item, CropsItems)
             and not self.inventory[runtime_values.select_inventory].count <= 0
@@ -122,4 +123,3 @@ class Player:
                 self.tile_pos(), runtime_values.screen
             )
             self.inventory[runtime_values.select_inventory].count -= 1
-            print(self.inventory[runtime_values.select_inventory].count)
