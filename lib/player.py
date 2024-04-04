@@ -7,6 +7,7 @@ from math import trunc
 from lib.crops.crops_item import CropsItems
 from lib.crops.Crops import Crops
 from lib import runtime_values
+from lib import funcs
 import os
 
 
@@ -82,28 +83,34 @@ class Player:
             and farm.tile_map[x][y].age == 2
         ):
             try:
-                inventory_copy = [i.item for i in self.inventory[:]]
-                while item.Items.NONE in inventory_copy:
-                    inventory_copy.remove(item.Items.NONE)
-                for i in CropsItems:
-                    if farm.tile_map[x][y].name.upper() == i.name:
-                        if isinstance(
-                            self.inventory[len(inventory_copy) - 1], item.Item
+                found_crop_item = False
+                for inventory_item in self.inventory:
+                    if isinstance(inventory_item, item.Item) and isinstance(
+                        inventory_item.item, CropsItems
+                    ):
+                        # Check if the inventory item is a crop and matches the harvested crop
+                        if (
+                            inventory_item.item.name.upper()
+                            == farm.tile_map[x][y].name.upper()
                         ):
-                            self.inventory[
-                                [i.item for i in self.inventory[:]].count(i)
-                            ].count += 1
-                            print(
-                                self.inventory[
-                                    [i.item for i in self.inventory[:]].count(i)
-                                ].count
-                            )
-                        else:
-                            self.inventory[len(inventory_copy) - 1] = item.Item(i, 1)
+                            inventory_item.count += 1
+                            print(inventory_item.count)
+                            found_crop_item = True
+                            break  # Stop searching once the item is found and count is updated
+
+                # If no matching crop item found in inventory, add one
+                if not found_crop_item:
+                    last_index = funcs.last_index_except(
+                        [i.item for i in self.inventory], item.Items.NONE
+                    )
+                    self.inventory[last_index + 1] = item.Item(
+                        getattr(CropsItems, farm.tile_map[x][y].name.upper()), 1
+                    )
+                    print(getattr(CropsItems, farm.tile_map[x][y].name.upper()))
 
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
             except IndexError:
-                pass
+                print("ㅇㅇㅇ")
 
     def plant_crops(self):
         # telnetover9000
