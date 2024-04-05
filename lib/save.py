@@ -84,7 +84,6 @@ def import_save():
                     Item(getattr(CropsItems, item["name"]), item["count"])
                 )
             elif item["name"] in item_name_list:
-                print(item)
                 playerc.inventory.append(
                     Item(getattr(Items, item["name"]), item["count"])
                 )

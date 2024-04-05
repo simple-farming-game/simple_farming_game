@@ -1,6 +1,7 @@
 import pygame
 import json
 from typing import Final
+import random
 
 
 class Crops:
@@ -31,7 +32,7 @@ class Crops:
 
     def grow(self):
         if not self.age >= 2 and not self.age_count >= 100:
-            self.age_count += 1
+            self.age_count += random.randint(0, 5)
         elif self.age_count >= 100:
             self.age += 1
             self.age_count = 0
