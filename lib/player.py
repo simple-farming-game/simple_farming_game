@@ -41,6 +41,9 @@ class Player:
 
     def draw(self):
         runtime_values.screen.blit(self.img, self.pos)
+        for index, item_count in enumerate([i.count for i in self.inventory]):
+            if item_count <= 0:
+                self.inventory[index] = item.Item(item.Items.NONE, 1)  # type: ignore
 
     def move(self, direction: Direction, frame):
         match direction:
