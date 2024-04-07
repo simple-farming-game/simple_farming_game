@@ -1,5 +1,6 @@
 from enum import Enum, auto
 from lib.crops.crops_item import CropsItems
+from lib.blocks.blocks_item import BlocksItems
 import json
 
 
@@ -10,7 +11,7 @@ class Items(Enum):
 
 
 class Item:
-    def __init__(self, item: Items | CropsItems, count: int) -> None:
+    def __init__(self, item: Items | CropsItems | BlocksItems, count: int) -> None:
         self.item = item
         self.count = count
 

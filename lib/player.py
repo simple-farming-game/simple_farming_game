@@ -6,6 +6,8 @@ from lib import farm
 from math import trunc
 from lib.crops.crops_item import CropsItems
 from lib.crops.Crops import Crops
+from lib.blocks.blocks_item import BlocksItems
+from lib.blocks.Blocks import Blocks
 from lib import runtime_values
 from lib import funcs
 import os
@@ -120,6 +122,18 @@ class Player:
         x, y = map(int, self.tile_pos())
         if (
             isinstance(self.handle_item, CropsItems)
+            and not self.inventory[runtime_values.select_inventory].count <= 0
+        ):
+            farm.tile_map[x][y] = self.handle_item.value(
+                self.tile_pos(), runtime_values.screen
+            )
+            self.inventory[runtime_values.select_inventory].count -= 1
+
+    def put_block(self):
+        # telnetover9000
+        x, y = map(int, self.tile_pos())
+        if (
+            isinstance(self.handle_item, BlocksItems)
             and not self.inventory[runtime_values.select_inventory].count <= 0
         ):
             farm.tile_map[x][y] = self.handle_item.value(

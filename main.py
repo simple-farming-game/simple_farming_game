@@ -13,6 +13,8 @@ from lib import item
 from lib import ui
 from lib.crops.Crops import Crops
 from lib.crops.crops_item import CropsItems
+from lib.blocks.blocks_item import BlocksItems
+from lib.blocks.Blocks import Blocks
 import os
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -35,6 +37,7 @@ if not save.import_save():
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = item.Item(j, 1)
     playerc.inventory[len(item.Items) - 1] = item.Item(CropsItems.RICE, 1)
+    playerc.inventory[len(item.Items) - 1] = item.Item(BlocksItems.SHOP, 1)
 
 while is_running:
     dt: float = clock.tick(100) / 1000
@@ -167,6 +170,11 @@ while is_running:
         elif isinstance(i.item, CropsItems):
             screen.blit(
                 pygame.image.load(f"assets/img/plants/{i.item.name.lower()}/item.png"),
+                [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
+            )
+        elif isinstance(i.item, BlocksItems):
+            screen.blit(
+                pygame.image.load(f"assets/img/block/{i.item.name.lower()}.png"),
                 [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
             )
 
