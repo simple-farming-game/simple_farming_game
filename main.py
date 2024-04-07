@@ -95,6 +95,14 @@ while is_running:
                         == farm.Tiles.FARMLAND
                     ):
                         playerc.plant_crops()
+                    elif (
+                        isinstance(playerc.handle_item, BlocksItems)
+                        and farm.tile_map[int(playerc.tile_pos().x)][
+                            int(playerc.tile_pos().y)
+                        ]
+                        == farm.Tiles.DIRT
+                    ):
+                        playerc.put_block()
 
                 case pygame.K_SLASH:
                     print(playerc.inventory[runtime_values.select_inventory])
