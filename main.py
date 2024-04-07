@@ -157,10 +157,6 @@ while is_running:
         ),
         [28 * 32 - (256 - 64), 20 * 32 - 32],
     )
-    screen.blit(
-        pygame.image.load("assets/img/ui/select_item_bar.png"),
-        [28 * 32 - (256 - 64) + (runtime_values.select_inventory * 32), 20 * 32 - 32],
-    )
     for index, i in enumerate(playerc.inventory):
         if isinstance(i.item, item.Items):
             screen.blit(
@@ -177,6 +173,10 @@ while is_running:
                 pygame.image.load(f"assets/img/block/{i.item.name.lower()}.png"),
                 [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
             )
+    screen.blit(
+        pygame.image.load("assets/img/ui/select_item_bar.png"),
+        [28 * 32 - (256 - 64) + (runtime_values.select_inventory * 32), 20 * 32 - 32],
+    )
 
     try:
         for i in range(1, 9):
