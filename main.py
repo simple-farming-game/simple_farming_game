@@ -141,6 +141,8 @@ while is_running:
             elif isinstance(tile, Crops):
                 screen.blit(ground_images[farm.Tiles.FARMLAND], tile_pos)
                 tile.draw()
+            elif isinstance(tile, Blocks):
+                tile.draw()
 
             tile_pos.y += 32
         tile_pos.x += 32
