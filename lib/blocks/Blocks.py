@@ -20,5 +20,13 @@ class Blocks:
         self.image = pygame.image.load(f"./assets/img/block/{self.name}.png")
         self.screen.blit(self.image, self.tile_pos * 32)
 
-    def update(self):
-        pass
+    def update(self): ...
+
+    def use(self): ...
+
+    def __str__(self) -> str:
+        return json.dumps(
+            {
+                "name": self.name,
+            }
+        )
