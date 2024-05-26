@@ -5,6 +5,7 @@ from typing import Union
 
 class Rice(Crops):
     name: str = "rice"
+    price: int = 10
     image: pygame.Surface
     age: int
 

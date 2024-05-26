@@ -6,6 +6,7 @@ import random
 
 class Blocks:
     name: str
+    price: int
     image: pygame.Surface
 
     def __init__(

@@ -5,6 +5,7 @@ from typing import Union
 
 class Shop(Blocks):
     name: str = "shop"
+    price: int = 100
     image: pygame.Surface
     age: int
 

@@ -6,6 +6,7 @@ import random
 
 class Crops:
     name: str
+    price: int
     image: pygame.Surface
     age: int
     age_count: int
