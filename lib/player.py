@@ -71,7 +71,9 @@ class Player:
                 self.pos.x += self.speed + frame
                 self.pos.y += self.speed + frame
 
-    def add_item(self, add_item: item.Items | Crops | Blocks):
+    def add_item(
+        self, add_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
+    ):
         item_inventory = funcs.list_filter(
             [i.item for i in self.inventory], item.Items.NONE
         )
