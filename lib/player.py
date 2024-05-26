@@ -5,6 +5,7 @@ from lib import item
 from lib import farm
 from math import trunc
 from lib.crops.crops_item import CropsItems
+from lib.crops.crops_item import crops_item_name_list
 from lib.crops.Crops import Crops
 from lib.blocks.blocks_item import BlocksItems
 from lib.blocks.Blocks import Blocks
@@ -70,6 +71,19 @@ class Player:
                 self.pos.x += self.speed + frame
                 self.pos.y += self.speed + frame
 
+    def add_item(self, add_item: item.Items | Crops | Blocks):
+        item_inventory = funcs.list_filter(
+            [i.item for i in self.inventory], item.Items.NONE
+        )
+        if isinstance(add_item, Crops):
+            add_item = getattr(CropsItems, add_item.name.upper())
+        elif isinstance(add_item, Blocks):
+            add_item = getattr(BlocksItems, add_item.name.upper())
+        if item_inventory[-1] == add_item:
+            self.inventory[len(item_inventory) - 1].count += 1
+        else:
+            self.inventory[len(item_inventory)] = item.Item(add_item, 1)
+
     def tile_pos(self):
         return self.pos // 32
 
@@ -89,29 +103,7 @@ class Player:
             and farm.tile_map[x][y].age == 2
         ):
             try:
-                found_crop_item = False
-                for inventory_item in self.inventory:
-                    if isinstance(inventory_item, item.Item) and isinstance(
-                        inventory_item.item, CropsItems
-                    ):
-                        # Check if the inventory item is a crop and matches the harvested crop
-                        if (
-                            inventory_item.item.name.upper()
-                            == farm.tile_map[x][y].name.upper()
-                        ):
-                            inventory_item.count += random.randint(1, 3)
-                            found_crop_item = True
-                            break  # Stop searching once the item is found and count is updated
-
-                # If no matching crop item found in inventory, add one
-                if not found_crop_item:
-                    last_index = funcs.last_index_except(
-                        [i.item for i in self.inventory], item.Items.NONE
-                    )
-                    self.inventory[last_index + 1] = item.Item(
-                        getattr(CropsItems, farm.tile_map[x][y].name.upper()),
-                        random.randint(1, 3),
-                    )
+                self.add_item(farm.tile_map[x][y])
 
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
             except IndexError:
