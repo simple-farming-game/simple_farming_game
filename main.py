@@ -37,7 +37,7 @@ if not save.import_save():
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = item.Item(j, 1)
     playerc.inventory[len(item.Items) - 1] = item.Item(CropsItems.RICE, 1)
-    playerc.inventory[len(item.Items) - 1] = item.Item(BlocksItems.SHOP, 1)
+    playerc.inventory[len(item.Items)] = item.Item(BlocksItems.SHOP, 1)
 
 while is_running:
     dt: float = clock.tick(100) / 1000
