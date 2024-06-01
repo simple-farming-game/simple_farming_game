@@ -15,11 +15,14 @@ from lib.crops.Crops import Crops
 from lib.crops.crops_item import CropsItems
 from lib.blocks.blocks_item import BlocksItems
 from lib.blocks.Blocks import Blocks
+from lib.blocks.shop.shop import Shop
 import os
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 logger.info("파이게임 초기화.")
+
+is_shop_used = False
 
 ground_images: dict[farm.Tiles, pygame.Surface] = {
     farm.Tiles.DIRT: pygame.image.load("assets/img/ground/dirt.png"),
@@ -33,6 +36,7 @@ pygame.display.set_caption(f"sfg {ver_text} by newkini")
 pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
 
 if not save.import_save():
+    playerc.gold = 100
     playerc.inventory = [item.Item(item.Items.NONE, 1) for _ in range(0, 8)]
     for i, j in enumerate(item.Items):
         playerc.inventory[i] = item.Item(j, 1)
@@ -83,9 +87,36 @@ while is_running:
                     if player_dir == player.Direction.RIGHT:
                         player_dir = player.Direction.DOWN_RIGHT
                 case pygame.K_d:
-                    if playerc.handle_item == item.Items.HOE:
+                    if isinstance(
+                        farm.tile_map[int(playerc.tile_pos().x)][
+                            int(playerc.tile_pos().y)
+                        ],
+                        Shop,
+                    ):
+                        farm.tile_map[int(playerc.tile_pos().x)][
+                            int(playerc.tile_pos().y)
+                        ].use()
+                    elif (
+                        playerc.handle_item == item.Items.HOE
+                        and farm.tile_map[int(playerc.tile_pos().x)][
+                            int(playerc.tile_pos().y)
+                        ]
+                        == farm.Tiles.DIRT
+                    ):
                         playerc.farm_tile(playerc.tile_pos())
-                    elif playerc.handle_item == item.Items.SICKLE:
+                    elif (
+                        playerc.handle_item == item.Items.SICKLE
+                        and isinstance(
+                            farm.tile_map[int(playerc.tile_pos().x)][
+                                int(playerc.tile_pos().y)
+                            ],
+                            Crops,
+                        )
+                        and farm.tile_map[int(playerc.tile_pos().x)][
+                            int(playerc.tile_pos().y)
+                        ].age
+                        == 2
+                    ):
                         playerc.harvest_crops(playerc.tile_pos())
                     elif (
                         isinstance(playerc.handle_item, CropsItems)
@@ -140,25 +171,40 @@ while is_running:
 
     screen.fill(SKYBLUE)
 
+    # 프로세스
     tile_pos = pygame.math.Vector2(0, 0)
     for line in farm.tile_map:
         for tile in line:
-            screen.blit(ground_images[farm.Tiles.DIRT], tile_pos)
-            if isinstance(tile, farm.Tiles):
-                screen.blit(ground_images[tile], tile_pos)
-            elif isinstance(tile, Crops):
-                screen.blit(ground_images[farm.Tiles.FARMLAND], tile_pos)
-                tile.draw()
-            elif isinstance(tile, Blocks):
-                tile.draw()
+            if isinstance(tile, Blocks):
+                tile.update()
+                if isinstance(tile, Shop):
+                    is_shop_used = tile.is_active
 
             tile_pos.y += 32
         tile_pos.x += 32
         tile_pos.y = 0
 
+    if not is_shop_used:
+        tile_pos = pygame.math.Vector2(0, 0)
+        for line in farm.tile_map:
+            for tile in line:
+                screen.blit(ground_images[farm.Tiles.DIRT], tile_pos)
+                if isinstance(tile, farm.Tiles):
+                    screen.blit(ground_images[farm.Tiles.DIRT], tile_pos)
+                    screen.blit(ground_images[tile], tile_pos)
+                elif isinstance(tile, Blocks):
+                    tile.draw()
+                elif isinstance(tile, Crops):
+                    tile.draw()
+
+                tile_pos.y += 32
+            tile_pos.x += 32
+            tile_pos.y = 0
+
     # 플레이어
-    playerc.draw()
-    playerc.move(player_dir, dt)
+    if not is_shop_used:
+        playerc.draw()
+        playerc.move(player_dir, dt)
 
     # 아이템바
     screen.blit(
@@ -198,19 +244,36 @@ while is_running:
         pass
 
     # 기타 ui
-    ui.draw_text_with_border(
-        screen,
-        font,
-        str(playerc.handle_item.name),
-        WHITE,
-        BLACK,
-        2,
-        pygame.math.Vector2(10, 35),
-    )
+    if not is_shop_used:
+        ui.draw_text_with_border(
+            screen,
+            font,
+            str(playerc.handle_item.name),
+            WHITE,
+            BLACK,
+            2,
+            pygame.math.Vector2(10, 35),
+        )
 
-    ui.draw_text_with_border(
-        screen, font, f"SFG {ver_text}", WHITE, BLACK, 2, pygame.math.Vector2(10, 10)
-    )
+        ui.draw_text_with_border(
+            screen,
+            font,
+            "gold: " + str(playerc.gold),
+            WHITE,
+            BLACK,
+            2,
+            pygame.math.Vector2(10, 60),
+        )
+
+        ui.draw_text_with_border(
+            screen,
+            font,
+            f"SFG {ver_text}",
+            WHITE,
+            BLACK,
+            2,
+            pygame.math.Vector2(10, 10),
+        )
 
     pygame.display.update()
 

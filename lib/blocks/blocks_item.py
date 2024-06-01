@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from lib.blocks.shop import Shop
+from lib.blocks.shop.shop import Shop
 
 
 class BlocksItems(Enum):

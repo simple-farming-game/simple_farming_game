@@ -77,6 +77,7 @@ class Player:
         item_inventory = funcs.list_filter(
             [i.item for i in self.inventory], item.Items.NONE
         )
+        print(funcs.list_filter([i.item for i in self.inventory], item.Items.NONE))
         if isinstance(add_item, Crops):
             add_item = getattr(CropsItems, add_item.name.upper())
         elif isinstance(add_item, Blocks):
