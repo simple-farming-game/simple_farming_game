@@ -207,32 +207,38 @@ while is_running:
         playerc.move(player_dir, dt)
 
     # 아이템바
-    screen.blit(
-        pygame.transform.scale(
-            pygame.image.load("assets/img/ui/item_bar.png"), (256, 32)
-        ),
-        [28 * 32 - (256 - 64), 20 * 32 - 32],
-    )
-    for index, i in enumerate(playerc.inventory):
-        if isinstance(i.item, item.Items):
-            screen.blit(
-                pygame.image.load(f"assets/img/items/{i.item.name.lower()}.png"),
-                [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
-            )
-        elif isinstance(i.item, CropsItems):
-            screen.blit(
-                pygame.image.load(f"assets/img/plants/{i.item.name.lower()}/item.png"),
-                [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
-            )
-        elif isinstance(i.item, BlocksItems):
-            screen.blit(
-                pygame.image.load(f"assets/img/block/{i.item.name.lower()}.png"),
-                [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
-            )
-    screen.blit(
-        pygame.image.load("assets/img/ui/select_item_bar.png"),
-        [28 * 32 - (256 - 64) + (runtime_values.select_inventory * 32), 20 * 32 - 32],
-    )
+    if not is_shop_used:
+        screen.blit(
+            pygame.transform.scale(
+                pygame.image.load("assets/img/ui/item_bar.png"), (256, 32)
+            ),
+            [28 * 32 - (256 - 64), 20 * 32 - 32],
+        )
+        for index, i in enumerate(playerc.inventory):
+            if isinstance(i.item, item.Items):
+                screen.blit(
+                    pygame.image.load(f"assets/img/items/{i.item.name.lower()}.png"),
+                    [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
+                )
+            elif isinstance(i.item, CropsItems):
+                screen.blit(
+                    pygame.image.load(
+                        f"assets/img/plants/{i.item.name.lower()}/item.png"
+                    ),
+                    [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
+                )
+            elif isinstance(i.item, BlocksItems):
+                screen.blit(
+                    pygame.image.load(f"assets/img/block/{i.item.name.lower()}.png"),
+                    [28 * 32 - (256 - 64) + (index * 32), 20 * 32 - 32],
+                )
+        screen.blit(
+            pygame.image.load("assets/img/ui/select_item_bar.png"),
+            [
+                28 * 32 - (256 - 64) + (runtime_values.select_inventory * 32),
+                20 * 32 - 32,
+            ],
+        )
 
     try:
         for i in range(1, 9):
