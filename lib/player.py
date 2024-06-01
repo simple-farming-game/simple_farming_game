@@ -76,14 +76,16 @@ class Player:
         item_inventory = funcs.list_filter(
             [i.item for i in self.inventory], item.Items.NONE
         )
-        print(funcs.list_filter([i.item for i in self.inventory], item.Items.NONE))
         if isinstance(add_item, Crops):
             add_item = getattr(CropsItems, add_item.name.upper())
         elif isinstance(add_item, Blocks):
             add_item = getattr(BlocksItems, add_item.name.upper())
-        item_index = item_inventory.index(add_item)
+        try:
+            item_index = item_inventory.index(add_item)
+        except:
+            item_index = -1
         if item_inventory[item_index] == add_item:
-            self.inventory[len(item_inventory) - 1].count += 1
+            self.inventory[item_index].count += 1
         else:
             self.inventory[len(item_inventory)] = item.Item(add_item, 1)
 
@@ -93,14 +95,17 @@ class Player:
         item_inventory = funcs.list_filter(
             [i.item for i in self.inventory], item.Items.NONE
         )
-        print(funcs.list_filter([i.item for i in self.inventory], item.Items.NONE))
         if isinstance(del_item, Crops):
             del_item = getattr(CropsItems, del_item.name.upper())
         elif isinstance(del_item, Blocks):
             del_item = getattr(BlocksItems, del_item.name.upper())
-        item_index = item_inventory.index(del_item)
+        try:
+            item_index = item_inventory.index(del_item)
+        except:
+            runtime_values.logger.error("아이템이 인벤토리에 없습니다.")
+            return False
         if item_inventory[item_index] == del_item:
-            self.inventory[len(item_inventory) - 1].count -= 1
+            self.inventory[item_index].count -= 1
             return True
         else:
             runtime_values.logger.error("아이템이 인벤토리에 없습니다.")
