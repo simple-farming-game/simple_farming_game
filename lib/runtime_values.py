@@ -7,7 +7,7 @@ from lib.player import Direction
 screen_size: tuple = (960, 640)
 is_running: bool = True
 logger: Logger = Logger()
-version: tuple[int, int, int, str] = (0, 3, 0, "alpha")
+version: tuple[int, int, int, str] = (0, 4, 0, "alpha")
 ver_text = f"{version[0]}.{version[1]}.{version[2]} {version[3]}"
 font = pygame.font.Font("assets/font/Galmuri.ttf", 20)
 

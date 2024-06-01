@@ -3,6 +3,10 @@ from lib.crops.crops_item import crops_item_name_list_lower
 from lib.crops.crops_item import crops_item_name_list
 from lib.crops.crops_item import CropsItems
 from lib.crops.Crops import Crops
+from lib.blocks.Blocks import Blocks
+from lib.blocks.blocks_item import blocks_item_name_list_lower
+from lib.blocks.blocks_item import blocks_item_name_list
+from lib.blocks.blocks_item import BlocksItems
 from lib.runtime_values import *
 from lib.funcs import *
 from lib.item import Items
@@ -28,6 +32,8 @@ def write_save():
             row = []
             for tile in line:
                 if isinstance(tile, Crops):
+                    row.append(to_json(tile))
+                if isinstance(tile, Blocks):
                     row.append(to_json(tile))
                 else:
                     row.append(tile.name)
@@ -66,7 +72,13 @@ def import_save():
                             json.loads(tile)["age_count"],
                         )
                     )
-
+                elif json.loads(tile)["name"] in blocks_item_name_list_lower:
+                    row.append(
+                        getattr(BlocksItems, json.loads(tile)["name"].upper()).value(
+                            tile_pos,
+                            screen,
+                        )
+                    )
                 else:
                     logger.error(f"[타일맵] 알수없는 아이템 감지됨.: {tile}")
                 tile_pos.y += 1
@@ -82,6 +94,10 @@ def import_save():
             if item["name"] in crops_item_name_list:
                 playerc.inventory.append(
                     Item(getattr(CropsItems, item["name"]), item["count"])
+                )
+            elif item["name"] in blocks_item_name_list:
+                playerc.inventory.append(
+                    Item(getattr(BlocksItems, item["name"]), item["count"])
                 )
             elif item["name"] in item_name_list:
                 playerc.inventory.append(

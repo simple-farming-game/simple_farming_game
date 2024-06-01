@@ -5,8 +5,10 @@ from lib import item
 from lib import farm
 from math import trunc
 from lib.crops.crops_item import CropsItems
+from lib.crops.crops_item import crops_item_name_list
 from lib.crops.Crops import Crops
-from lib import runtime_values
+from lib.blocks.blocks_item import BlocksItems
+from lib.blocks.Blocks import Blocks
 from lib import funcs
 import os
 import random
@@ -68,6 +70,47 @@ class Player:
                 self.pos.x += self.speed + frame
                 self.pos.y += self.speed + frame
 
+    def add_item(
+        self, add_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
+    ):
+        item_inventory = funcs.list_filter(
+            [i.item for i in self.inventory], item.Items.NONE
+        )
+        if isinstance(add_item, Crops):
+            add_item = getattr(CropsItems, add_item.name.upper())
+        elif isinstance(add_item, Blocks):
+            add_item = getattr(BlocksItems, add_item.name.upper())
+        try:
+            item_index = item_inventory.index(add_item)
+        except:
+            item_index = -1
+        if item_inventory[item_index] == add_item:
+            self.inventory[item_index].count += 1
+        else:
+            self.inventory[len(item_inventory) + 1] = item.Item(add_item, 1)
+
+    def del_item(
+        self, del_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
+    ):
+        item_inventory = funcs.list_filter(
+            [i.item for i in self.inventory], item.Items.NONE
+        )
+        if isinstance(del_item, Crops):
+            del_item = getattr(CropsItems, del_item.name.upper())
+        elif isinstance(del_item, Blocks):
+            del_item = getattr(BlocksItems, del_item.name.upper())
+        try:
+            item_index = item_inventory.index(del_item)
+        except:
+            runtime_values.logger.error("아이템이 인벤토리에 없습니다.")
+            return False
+        if item_inventory[item_index] == del_item:
+            self.inventory[item_index].count -= 1
+            return True
+        else:
+            runtime_values.logger.error("아이템이 인벤토리에 없습니다.")
+            return False
+
     def tile_pos(self):
         return self.pos // 32
 
@@ -87,29 +130,7 @@ class Player:
             and farm.tile_map[x][y].age == 2
         ):
             try:
-                found_crop_item = False
-                for inventory_item in self.inventory:
-                    if isinstance(inventory_item, item.Item) and isinstance(
-                        inventory_item.item, CropsItems
-                    ):
-                        # Check if the inventory item is a crop and matches the harvested crop
-                        if (
-                            inventory_item.item.name.upper()
-                            == farm.tile_map[x][y].name.upper()
-                        ):
-                            inventory_item.count += random.randint(1, 3)
-                            found_crop_item = True
-                            break  # Stop searching once the item is found and count is updated
-
-                # If no matching crop item found in inventory, add one
-                if not found_crop_item:
-                    last_index = funcs.last_index_except(
-                        [i.item for i in self.inventory], item.Items.NONE
-                    )
-                    self.inventory[last_index + 1] = item.Item(
-                        getattr(CropsItems, farm.tile_map[x][y].name.upper()),
-                        random.randint(1, 3),
-                    )
+                self.add_item(farm.tile_map[x][y])
 
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
             except IndexError:
@@ -120,6 +141,18 @@ class Player:
         x, y = map(int, self.tile_pos())
         if (
             isinstance(self.handle_item, CropsItems)
+            and not self.inventory[runtime_values.select_inventory].count <= 0
+        ):
+            farm.tile_map[x][y] = self.handle_item.value(
+                self.tile_pos(), runtime_values.screen
+            )
+            self.inventory[runtime_values.select_inventory].count -= 1
+
+    def put_block(self):
+        # telnetover9000
+        x, y = map(int, self.tile_pos())
+        if (
+            isinstance(self.handle_item, BlocksItems)
             and not self.inventory[runtime_values.select_inventory].count <= 0
         ):
             farm.tile_map[x][y] = self.handle_item.value(
