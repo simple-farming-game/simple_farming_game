@@ -190,11 +190,11 @@ while is_running:
             for tile in line:
                 screen.blit(ground_images[farm.Tiles.DIRT], tile_pos)
                 if isinstance(tile, farm.Tiles):
-                    screen.blit(ground_images[farm.Tiles.DIRT], tile_pos)
                     screen.blit(ground_images[tile], tile_pos)
                 elif isinstance(tile, Blocks):
                     tile.draw()
                 elif isinstance(tile, Crops):
+                    screen.blit(ground_images[farm.Tiles.FARMLAND], tile_pos)
                     tile.draw()
 
                 tile_pos.y += 32
