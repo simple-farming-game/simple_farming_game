@@ -87,7 +87,7 @@ class Player:
         if item_inventory[item_index] == add_item:
             self.inventory[item_index].count += 1
         else:
-            self.inventory[len(item_inventory)] = item.Item(add_item, 1)
+            self.inventory[len(item_inventory) + 1] = item.Item(add_item, 1)
 
     def del_item(
         self, del_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
