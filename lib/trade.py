@@ -4,7 +4,7 @@ def buy(item):
 
     if playerc.gold >= item.value.price:
         playerc.gold -= item.value.price
-        playerc.add_item(item)
+        playerc.add_item(item, 1)
     else:
         logger.info("돈이 부족합니다.")
 

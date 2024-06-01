@@ -71,7 +71,7 @@ class Player:
                 self.pos.y += self.speed + frame
 
     def add_item(
-        self, add_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
+        self, add_item: item.Items | Crops | Blocks | CropsItems | BlocksItems, count
     ):
         item_inventory = funcs.list_filter(
             [i.item for i in self.inventory], item.Items.NONE
@@ -85,9 +85,9 @@ class Player:
         except:
             item_index = -1
         if item_inventory[item_index] == add_item:
-            self.inventory[item_index].count += 1
+            self.inventory[item_index].count += count
         else:
-            self.inventory[len(item_inventory) + 1] = item.Item(add_item, 1)
+            self.inventory[len(item_inventory) + 1] = item.Item(add_item, count)
 
     def del_item(
         self, del_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
@@ -130,7 +130,7 @@ class Player:
             and farm.tile_map[x][y].age == 2
         ):
             try:
-                self.add_item(farm.tile_map[x][y])
+                self.add_item(farm.tile_map[x][y], random.randint(1, 4))
 
                 farm.tile_map[x][y] = farm.Tiles.FARMLAND
             except IndexError:
