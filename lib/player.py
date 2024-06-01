@@ -9,7 +9,6 @@ from lib.crops.crops_item import crops_item_name_list
 from lib.crops.Crops import Crops
 from lib.blocks.blocks_item import BlocksItems
 from lib.blocks.Blocks import Blocks
-from lib import runtime_values
 from lib import funcs
 import os
 import random
@@ -82,10 +81,30 @@ class Player:
             add_item = getattr(CropsItems, add_item.name.upper())
         elif isinstance(add_item, Blocks):
             add_item = getattr(BlocksItems, add_item.name.upper())
-        if item_inventory[-1] == add_item:
+        item_index = item_inventory.index(add_item)
+        if item_inventory[item_index] == add_item:
             self.inventory[len(item_inventory) - 1].count += 1
         else:
             self.inventory[len(item_inventory)] = item.Item(add_item, 1)
+
+    def del_item(
+        self, del_item: item.Items | Crops | Blocks | CropsItems | BlocksItems
+    ):
+        item_inventory = funcs.list_filter(
+            [i.item for i in self.inventory], item.Items.NONE
+        )
+        print(funcs.list_filter([i.item for i in self.inventory], item.Items.NONE))
+        if isinstance(del_item, Crops):
+            del_item = getattr(CropsItems, del_item.name.upper())
+        elif isinstance(del_item, Blocks):
+            del_item = getattr(BlocksItems, del_item.name.upper())
+        item_index = item_inventory.index(del_item)
+        if item_inventory[item_index] == del_item:
+            self.inventory[len(item_inventory) - 1].count -= 1
+            return True
+        else:
+            runtime_values.logger.error("아이템이 인벤토리에 없습니다.")
+            return False
 
     def tile_pos(self):
         return self.pos // 32
