@@ -85,6 +85,7 @@ class Player:
         except:
             item_index = -1
         if item_inventory[item_index] == add_item:
+            print("dsafsd")
             self.inventory[item_index].count += count
         else:
             self.inventory[len(item_inventory) + 1] = item.Item(add_item, count)
