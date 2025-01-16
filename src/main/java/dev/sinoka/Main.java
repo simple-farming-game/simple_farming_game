@@ -1,22 +1,20 @@
 package dev.sinoka;
 
-import dev.sinoka.utility.Camera;
-import dev.sinoka.utility.Shader;
-import dev.sinoka.utility.JsonFileReader;
+import dev.sinoka.utility.*;
+
+import org.lwjgl.opengl.*;
 
 import org.joml.Math;
 import org.json.JSONArray;
-import org.lwjgl.opengl.*;
+import org.json.JSONObject;
+import org.lwjgl.BufferUtils;
 
-import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.*;
 
 import org.joml.*;
 import org.lwjgl.stb.STBImage;
-import org.lwjgl.system.MemoryStack;
 
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -26,8 +24,9 @@ public class Main {
 
     // Window settings
     private long window;
-    private final int SCR_WIDTH = 800;
-    private final int SCR_HEIGHT = 600;
+    private int SCR_WIDTH = 800;
+    private int SCR_HEIGHT = 600;
+
 
     // Camera settings
     private Camera camera = new Camera(new Vector3f(0.0f, 0.0f, 3.0f));
@@ -42,11 +41,9 @@ public class Main {
     // Lighting
     private Vector3f lightPos = new Vector3f(1.2f, 1.0f, 2.0f);
 
+    private boolean isPause = true;
 
-// OpenGL resource handles
-    private int cubeVAO;
-    private int lightCubeVAO;
-    private int diffuseMap;
+    private float blockSize = 0.5f;
 
 
     public static void main(String[] args) {
@@ -75,8 +72,6 @@ public class Main {
         glfwSetCursorPosCallback(window, this::mouseCallback);
         glfwSetScrollCallback(window, this::scrollCallback);
 
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
         // Load OpenGL
         GL.createCapabilities();
 
@@ -84,38 +79,42 @@ public class Main {
         glEnable(GL_DEPTH_TEST);
 
         // Configure STB
-        // STBImage.stbi_set_flip_vertically_on_load(true);
+        STBImage.stbi_set_flip_vertically_on_load(true);
+
 
         // Load shaders
-        Shader lightingShader = new Shader("assets/shader/vertex.glsl", "assets/shader/fragment.glsl");
-        Shader lightCubeShader = new Shader("assets/shader/lightv.glsl", "assets/shader/lightf.glsl");
+        Shader lightingShader = new Shader(ResourceUtil.getAbsolutePath("shader/vertex.glsl"), ResourceUtil.getAbsolutePath("shader/fragment.glsl"));
+        Shader lightCubeShader = new Shader(ResourceUtil.getAbsolutePath("shader/lightv.glsl"), ResourceUtil.getAbsolutePath("shader/lightf.glsl"));
+        JsonFileReader BlockJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("model/json/block.json"));
 
-        JsonFileReader BlockJFR = new JsonFileReader("assets/model/json/block.json");
 
-        JSONArray verticesArray = BlockJFR.readJson().getJSONArray("vertices");
-        float[] vertices = new float[verticesArray.length()];
-        for (int i = 0; i < verticesArray.length(); i++) {
-            vertices[i] = verticesArray.getFloat(i);
+        JSONObject blockData = BlockJFR.readJson();
+        JSONArray cubeVerticesArray = blockData.getJSONArray("vertices");
+        JSONArray cubeIndicesArray = blockData.getJSONArray("indices");
+
+        // cube
+        float[] cubeVertices = new float[cubeVerticesArray.length()];
+        for (int i = 0; i < cubeVerticesArray.length(); i++) {
+            cubeVertices[i] = cubeVerticesArray.getFloat(i);
         }
 
-        // indices 배열 읽기
-        JSONArray indicesArray = BlockJFR.readJson().getJSONArray("indices");
-        int[] indices = new int[indicesArray.length()]; // int[]로 선언
-        for (int i = 0; i < indicesArray.length(); i++) {
-            indices[i] = indicesArray.getInt(i); // getInt()로 정수값 읽기
+        // cubeIndices 배열 읽기
+        int[] cubeIndices = new int[cubeIndicesArray.length()]; // int[]로 선언
+        for (int i = 0; i < cubeIndicesArray.length(); i++) {
+            cubeIndices[i] = cubeIndicesArray.getInt(i); // getInt()로 정수값 읽기
         }
 
-        cubeVAO = glGenVertexArrays();
-        int VBO = glGenBuffers();
-        int EBO = glGenBuffers();
+        int cubeVAO = glGenVertexArrays();
+        int cubeVBO = glGenBuffers();
+        int cubeEBO = glGenBuffers();
 
         glBindVertexArray(cubeVAO);
 
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+        glBufferData(GL_ARRAY_BUFFER, cubeVertices, GL_STATIC_DRAW);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, cubeIndices, GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
@@ -127,26 +126,63 @@ public class Main {
         glEnableVertexAttribArray(2);
 
         // Prepare light VAO
-        lightCubeVAO = glGenVertexArrays();
+        int lightCubeVAO = glGenVertexArrays();
         glBindVertexArray(lightCubeVAO);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
 
         // Load textures
-        diffuseMap = loadTexture("assets/image/grass.png");
+        int grassTexture = TextureManager.getInstance().loadTexture(ResourceUtil.getAbsolutePath("image/grass.png"));
 
         // shader configuration
         lightingShader.use();
         lightingShader.setInt("material.diffuse", 0);
-        lightingShader.setInt("material.specular", 1);
+
+        // Text
+        JsonFileReader fontJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("font/galmuri.json"));
+        Shader textShader = new Shader(ResourceUtil.getAbsolutePath("shader/textVertex.glsl"), ResourceUtil.getAbsolutePath("shader/textFragment.glsl"));
+
+        float[] textVertices = createRectangle(1, 100);
+
+        int[] textIndices = {
+                1, 2, 0, // 첫 번째 삼각형 (왼쪽 아래, 오른쪽 아래, 왼쪽 위)
+                0, 3, 2  // 두 번째 삼각형 (왼쪽 위, 오른쪽 위, 오른쪽 아래)
+        };
+        String fontPath = fontJFR.readJson().getString("fontPath");
+        System.out.println(fontPath);
+        int textTexture = TextureManager.getInstance().loadTexture(ResourceUtil.getAbsolutePath(fontPath));
+
+        int[] textMesh = createVAO(textVertices, textIndices, 2);
+
+        BitmapFont font = new BitmapFont(textMesh[0], textTexture, textShader, fontJFR, SCR_WIDTH, SCR_HEIGHT);
+
+        glBindVertexArray(0);
+
 
         while (!glfwWindowShouldClose(window)) {
             float currentFrame = (float) glfwGetTime();
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
 
+            IntBuffer w = BufferUtils.createIntBuffer(1);
+            IntBuffer h = BufferUtils.createIntBuffer(1);
+            glfwGetWindowSize(window, w, h);
+            int width = w.get(0);
+            int height = h.get(0);
+
             processInput(window);
+            if (isPause) {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            } else {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            }
+
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, grassTexture);
 
             glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -172,52 +208,120 @@ public class Main {
             lightingShader.setVec3("dirLight.diffuse", new Vector3f(1.4f, 1.4f, 1.4f));
             lightingShader.setVec3("dirLight.specular", new Vector3f(0.5f, 0.5f, 0.5f));
 
+
             // View/projection transformations
-            Matrix4f projection = new Matrix4f().perspective((float) Math.toRadians(camera.getZoom()), (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
             Matrix4f view = camera.getViewMatrix();
+            Matrix4f projection = new Matrix4f().perspective(
+                    (float) Math.toRadians(camera.getZoom()),  // 카메라 줌 (FOV)
+                    (float) width / (float) height,   // 화면의 종횡비
+                    0.01f, 1000.0f // near와 far 클리핑 평면
+            );
             lightingShader.setMat4("projection", projection);
+
             lightingShader.setMat4("view", view);
 
             // World transformation
             Matrix4f model = new Matrix4f();
             lightingShader.setMat4("model", model);
 
-            // Bind diffuse map
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, diffuseMap);
-
             // Render containers
             glBindVertexArray(cubeVAO);
 
             // First cube
-            model.identity().translate(0.0f, 0.0f, 0.0f);
+            model.identity().translate(0.0f, 0.0f, 0.0f).scale(blockSize);
             lightingShader.setMat4("model", model);
-            glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, cubeIndices.length, GL_UNSIGNED_INT, 0);
 
             // Second cube
-            model.identity().translate(2.0f, 0.0f, 2.0f).scale(1.0f);
+            model.identity().translate(2.0f, 0.0f, 2.0f).scale(blockSize);
             lightingShader.setMat4("model", model);
-            glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, cubeIndices.length, GL_UNSIGNED_INT, 0);
+
+            // 텍스트 렌더링
+
+            // 셰이더 프로그램 활성화 및 유니폼 설정
+            textShader.use();
+
+            // 프로젝션 행렬 설정
+            projection = new Matrix4f().setOrtho2D(0.0f, width, 0.0f, height);
+            textShader.setMat4("projection", projection);
+
+
+            // 뷰 행렬 설정
+            view = new Matrix4f().identity();
+            textShader.setMat4("view", view);
+
+            font.renderString("SFG by sinoka", new Vector2f(180, height-40), 0.3f);
+
+            if (isPause) {
+                font.renderString("Pause", new Vector2f(40, height-40), 0.5f);
+            }
+
+            font.setScreenSize(new Vector2f(width, height));
 
             // Swap buffers and poll events
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
 
-        // Free resources
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
+        // Unbind VAO and VBO
+        // Bind to default VAO (unbind any active VAO)
+        glBindVertexArray(0);
 
+        // Delete cube VAO and associated VBO/EBO
+        glDeleteBuffers(cubeEBO); // Delete EBO first
+        glDeleteBuffers(cubeVBO); // Then delete VBO
+        glDeleteVertexArrays(cubeVAO); // Finally delete VAO
+
+        // Delete text VAO and VBO
+        glDeleteBuffers(textMesh[2]); // Delete EBO first
+        glDeleteBuffers(textMesh[1]); // Delete VBO
+        glDeleteVertexArrays(textMesh[0]); // Then delete VAO
+
+        // Unbind and delete textures
+        glBindTexture(GL_TEXTURE_2D, 0); // Unbind textures
+        glDeleteTextures(textTexture);
+        glDeleteTextures(grassTexture);
+
+// Reset OpenGL state
+        glDisable(GL_BLEND);
+        glUseProgram(0);
+
+// Terminate GLFW
         glfwTerminate();
+
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
     }
 
 
+    private boolean escPressed = false; // ESC 키 상태를 관리
+
     private void processInput(long window) {
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-            glfwSetWindowShouldClose(window, true);
+        // ESC 키로 정지 상태를 토글
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && !escPressed) {
+            escPressed = true; // ESC 키가 눌렸음을 표시
+
+            if (isPause) {
+                isPause = false; // 정지 해제
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // 마우스 커서 비활성화
+                firstMouse = true; // 마우스 위치를 초기화하도록 설정
+            } else {
+                isPause = true; // 정지 상태로 전환
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // 마우스 커서 활성화
+            }
         }
 
+        // ESC 키가 떼어질 때 상태 초기화
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE) {
+            escPressed = false;
+        }
+
+        // 정지 상태에서는 입력 처리하지 않음
+        if (isPause) {
+            return;
+        }
+
+        // 플레이 상태에서만 키보드 입력 처리
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             camera.processKeyboard(Camera.Movement.FORWARD, deltaTime);
         }
@@ -232,47 +336,52 @@ public class Main {
         }
     }
 
-    public int loadTexture(String path) {
-        int textureID = glGenTextures();
 
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            IntBuffer width = stack.mallocInt(1);
-            IntBuffer height = stack.mallocInt(1);
-            IntBuffer nrComponents = stack.mallocInt(1);
+    private float[] createRectangle(float ratio, float baseWidth) {
+        // 기본 너비를 사용하여 높이 계산
+        float width = baseWidth;
+        float height = baseWidth / ratio;
 
-            // Load image using STBImage
-            ByteBuffer data = STBImage.stbi_load(path, width, height, nrComponents, 0);
-            if (data != null) {
-                int format;
-                if (nrComponents.get(0) == 1) {
-                    format = GL_RED;
-                } else if (nrComponents.get(0) == 3) {
-                    format = GL_RGB;
-                } else if (nrComponents.get(0) == 4) {
-                    format = GL_RGBA;
-                } else {
-                    throw new RuntimeException("Unsupported number of components: " + nrComponents.get(0));
-                }
-
-                glBindTexture(GL_TEXTURE_2D, textureID);
-                glTexImage2D(GL_TEXTURE_2D, 0, format, width.get(0), height.get(0), 0, format, GL_UNSIGNED_BYTE, data);
-                glGenerateMipmap(GL_TEXTURE_2D);
-
-                // Set texture wrapping and filtering
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-                STBImage.stbi_image_free(data);
-            } else {
-                System.err.println("Failed to load texture: " + path);
-                STBImage.stbi_image_free(data);
-            }
-        }
-
-        return textureID;
+        // 반환되는 배열은 꼭짓점 좌표 (X, Y)로만 구성
+        return new float[] {
+                // X, Y
+                -width / 2,  height / 2, // Top-left
+                -width / 2, -height / 2, // Bottom-left
+                 width / 2, -height / 2, // Bottom-right
+                 width / 2,  height / 2  // Top-right
+        };
     }
+
+
+
+    public int[] createVAO(float[] vertices, int[] indices, int attributeSize) {
+        int VAO = glGenVertexArrays();
+        int VBO = glGenBuffers();
+        int EBO = glGenBuffers();
+
+        glBindVertexArray(VAO);
+
+        // VBO 설정
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+
+        // EBO 설정
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+
+        // 정점 속성 지정
+        int stride = attributeSize * Float.BYTES;
+        glVertexAttribPointer(0, attributeSize, GL_FLOAT, false, stride, 0);
+        glEnableVertexAttribArray(0);
+
+        glBindVertexArray(0); // Unbind VAO
+
+        return new int[]{VAO, VBO, EBO};
+    }
+
+
+
+
 
 
     private void framebufferSizeCallback(long window, int width, int height) {
@@ -280,6 +389,12 @@ public class Main {
     }
 
     private void mouseCallback(long window, double xpos, double ypos) {
+        if (isPause) {
+            lastX = (float) xpos; // 정지 해제 시 마우스 위치를 초기화
+            lastY = (float) ypos;
+            return; // 정지 상태에서는 마우스 입력 무시
+        }
+
         float x = (float) xpos;
         float y = (float) ypos;
 
@@ -290,12 +405,13 @@ public class Main {
         }
 
         float xoffset = x - lastX;
-        float yoffset = lastY - y;
+        float yoffset = lastY - y; // y축은 반대 방향
         lastX = x;
         lastY = y;
 
         camera.processMouseMovement(xoffset, yoffset, true);
     }
+
 
     private void scrollCallback(long window, double xoffset, double yoffset) {
         camera.processMouseScroll((float) yoffset);

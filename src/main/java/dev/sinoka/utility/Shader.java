@@ -1,7 +1,9 @@
 package dev.sinoka.utility;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.system.MemoryStack;
 
@@ -53,8 +55,18 @@ public class Shader {
         glUniform1f(glGetUniformLocation(programId, name), value);
     }
 
+    public void setVec2(String name, Vector2f velue) {
+        int location = glGetUniformLocation(programId, name);
+        glUniform2f(location, velue.x, velue.y);
+    }
+
     public void setVec3(String name, Vector3f value) {
         glUniform3f(glGetUniformLocation(programId, name), value.x, value.y, value.z);
+    }
+
+    public void setVec4(String name, Vector4f velue) {
+        int location = glGetUniformLocation(programId, name);
+        glUniform4f(location, velue.x, velue.y, velue.z, velue.w);
     }
 
     public void setMat4(String name, Matrix4f matrix) {

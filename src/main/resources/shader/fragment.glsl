@@ -91,7 +91,16 @@ void main()
         result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
     }
 
-    FragColor = vec4(result, 1.0);
+    // 알파 값 가져오기
+    float alpha = texture(material.diffuse, TexCoords).a;
+
+    // 알파 테스트: 알파 값이 낮으면 픽셀을 버림
+    if (alpha < 0.1) {
+        discard; // 완전히 투명한 부분은 렌더링하지 않음
+    }
+
+    // 최종 색상 출력 (알파 블렌딩 지원)
+    FragColor = vec4(result, alpha);
 }
 
 // calculates the color when using a directional light.
