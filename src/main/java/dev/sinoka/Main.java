@@ -24,8 +24,11 @@ public class Main {
 
     // Window settings
     private long window;
-    private int SCR_WIDTH = 800;
-    private int SCR_HEIGHT = 600;
+    private final int SCR_WIDTH = 800;
+    private final int SCR_HEIGHT = 600;
+
+    private int currentScreenWidth = SCR_WIDTH;
+    private int currentScreenHeight = SCR_HEIGHT;
 
 
     // Camera settings
@@ -159,17 +162,22 @@ public class Main {
 
         glBindVertexArray(0);
 
+        // 창 크기 변경시 변수 업데이트
+        glfwSetWindowSizeCallback(window, (window, w, h) -> {
+            this.currentScreenWidth = w;
+            this.currentScreenHeight = h;
+        });
 
         while (!glfwWindowShouldClose(window)) {
             float currentFrame = (float) glfwGetTime();
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
 
-            IntBuffer w = BufferUtils.createIntBuffer(1);
+            /*IntBuffer w = BufferUtils.createIntBuffer(1);
             IntBuffer h = BufferUtils.createIntBuffer(1);
             glfwGetWindowSize(window, w, h);
             int width = w.get(0);
-            int height = h.get(0);
+            int height = h.get(0);*/
 
             processInput(window);
             if (isPause) {
@@ -213,7 +221,7 @@ public class Main {
             Matrix4f view = camera.getViewMatrix();
             Matrix4f projection = new Matrix4f().perspective(
                     (float) Math.toRadians(camera.getZoom()),  // 카메라 줌 (FOV)
-                    (float) width / (float) height,   // 화면의 종횡비
+                    (float) currentScreenWidth / (float) currentScreenHeight,   // 화면의 종횡비
                     0.01f, 1000.0f // near와 far 클리핑 평면
             );
             lightingShader.setMat4("projection", projection);
@@ -243,7 +251,7 @@ public class Main {
             textShader.use();
 
             // 프로젝션 행렬 설정
-            projection = new Matrix4f().setOrtho2D(0.0f, width, 0.0f, height);
+            projection = new Matrix4f().setOrtho2D(0.0f, currentScreenWidth, 0.0f, currentScreenHeight);
             textShader.setMat4("projection", projection);
 
 
@@ -251,13 +259,13 @@ public class Main {
             view = new Matrix4f().identity();
             textShader.setMat4("view", view);
 
-            font.renderString("SFG by sinoka", new Vector2f(180, height-40), 0.3f);
+            font.renderString("SFG by sinoka", new Vector2f(180, currentScreenHeight-40), 0.3f);
 
             if (isPause) {
-                font.renderString("Pause", new Vector2f(40, height-40), 0.5f);
+                font.renderString("Pause", new Vector2f(40, currentScreenHeight-40), 0.5f);
             }
 
-            font.setScreenSize(new Vector2f(width, height));
+            font.setScreenSize(new Vector2f(currentScreenWidth, currentScreenHeight));
 
             // Swap buffers and poll events
             glfwSwapBuffers(window);
