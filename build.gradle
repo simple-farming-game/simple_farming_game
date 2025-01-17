@@ -75,7 +75,8 @@ application {
     applicationDefaultJvmArgs = ["-XX:+CrashOnOutOfMemoryError", "-XX:ErrorFile=C:/CrashDumps/hs_err_pid%p.log"]
 }
 run {
-    jvmArgs = ['-Xms512m', '-Xmx2048m', '-Dorg.lwjgl.util.Debug=true']
+    jvmArgs = ['-Xms512m', '-Xmx2048m', '-Dorg.lwjgl.util.Debug=true', '-XstartOnFirstThread']
+
 }
 jar {
     manifest {
