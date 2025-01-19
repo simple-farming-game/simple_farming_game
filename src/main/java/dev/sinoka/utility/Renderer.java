@@ -6,13 +6,16 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class Renderer {
-    public static void drawTexture(int textureID, Vector2f texRegion, Vector2f texSize, int VAO, Shader shaderProgram, Vector2f pos, float scale) {
+    public static void drawTexture(Texture texture, Vector2f texRegion, Vector2f texSize, int VAO, Shader shaderProgram, Vector2f pos, float scale) {
         glEnable(GL_BLEND); // 블렌딩 활성화
         glBlendFunc(GL_ONE, GL_ONE);
         glDisable(GL_DEPTH_TEST);
 
+        glActiveTexture(GL_TEXTURE1);
+        texture.bind();
+
         shaderProgram.use();
-        shaderProgram.setInt("texture1", textureID);
+        shaderProgram.setInt("texture1", 1);
         shaderProgram.setVec2("uTexRegion", texRegion);
         shaderProgram.setVec2("uTexSize", texSize);
 

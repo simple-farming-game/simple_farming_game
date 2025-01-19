@@ -17,7 +17,7 @@ public class BitmapFont {
     private static final int GLYPH_ROWS = 10;
 
     private final int VAO;
-    private final int textureID;
+    private final Texture texture;
     private final Shader shaderProgram;
     private int screenWidth;
     private int screenHeight;
@@ -26,14 +26,14 @@ public class BitmapFont {
     private Map<Character, Glyph> glyphs = new HashMap<>();
 
     static class Glyph {
-        int textSetID;
+        Texture textSet;
         int width, height;
         float xOffset, yOffset;
         float xAdvance;
         float spacingFactor;
 
-        public Glyph(int textTextureID, Vector2f glyphSize, float xOffset, float yOffset, float xAdvance, float spacingFactor) {
-            this.textSetID = textTextureID;
+        public Glyph(Texture textTexture, Vector2f glyphSize, float xOffset, float yOffset, float xAdvance, float spacingFactor) {
+            this.textSet = textTexture;
             this.width = (int) glyphSize.x;
             this.height = (int) glyphSize.y;
             this.xOffset = xOffset;
@@ -43,9 +43,9 @@ public class BitmapFont {
         }
     }
 
-    public BitmapFont(int VAO, int textureID, Shader shaderProgram, JsonFileReader JFR, int screenWidth, int screenHeight) {
+    public BitmapFont(int VAO, Texture texture, Shader shaderProgram, JsonFileReader JFR, int screenWidth, int screenHeight) {
         this.VAO = VAO;
-        this.textureID = textureID;
+        this.texture = texture;
         this.shaderProgram = shaderProgram;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -74,7 +74,7 @@ public class BitmapFont {
                     float yOffset = 1f - ((1f / GLYPH_ROWS) * (glyphY + 1));
                     float xAdvance = GLYPH_SIZE;
 
-                    glyphs.put(character, new Glyph(textureID, glyphSize, xOffset, yOffset, xAdvance, spacingFactor));
+                    glyphs.put(character, new Glyph(texture, glyphSize, xOffset, yOffset, xAdvance, spacingFactor));
                 }
             }
         }
@@ -88,13 +88,13 @@ public class BitmapFont {
             if (!glyphs.containsKey(c)) continue;
 
             Glyph glyph = glyphs.get(c);
-            renderGlyph(glyph, new Vector2f(cursorX, cursorY), scale);
+            renderGlyph(glyph, new Vector2f(cursorX, cursorY), scale, texture);
 
             cursorX += glyph.xAdvance * scale * glyph.spacingFactor;
         }
     }
 
-    private void renderGlyph(Glyph glyph, Vector2f position, float scale) {
+    private void renderGlyph(Glyph glyph, Vector2f position, float scale, Texture texture) {
         Vector2f texRegion = new Vector2f(
                 glyph.xOffset,
                 glyph.yOffset
@@ -105,11 +105,8 @@ public class BitmapFont {
                 glyph.height / (float) TEXTURE_SIZE
         );
 
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, glyph.textSetID);
-
         Renderer.drawTexture(
-                1,
+                texture,
                 texRegion,
                 texSize,
                 VAO,

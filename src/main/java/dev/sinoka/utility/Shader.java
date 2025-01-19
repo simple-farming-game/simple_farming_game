@@ -64,9 +64,9 @@ public class Shader {
         glUniform3f(glGetUniformLocation(programId, name), value.x, value.y, value.z);
     }
 
-    public void setVec4(String name, Vector4f velue) {
+    public void setVec4(String name, Vector4f value) {
         int location = glGetUniformLocation(programId, name);
-        glUniform4f(location, velue.x, velue.y, velue.z, velue.w);
+        glUniform4f(location, value.x, value.y, value.z, value.w);
     }
 
     public void setMat4(String name, Matrix4f matrix) {
@@ -93,5 +93,9 @@ public class Shader {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read file: " + path, e);
         }
+    }
+
+    public void delete() {
+        glDeleteProgram(programId);
     }
 }

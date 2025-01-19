@@ -1,5 +1,8 @@
 package dev.sinoka;
 
+import dev.sinoka.block.Block;
+import dev.sinoka.block.BlockBuilder;
+import dev.sinoka.registry.BlockRegister;
 import dev.sinoka.utility.*;
 
 import org.lwjgl.opengl.*;
@@ -43,9 +46,6 @@ public class Main {
 
     private boolean isPause = true;
 
-    private float blockSize = 0.5f;
-
-
     public static void main(String[] args) {
         new Main().run();
     }
@@ -83,47 +83,8 @@ public class Main {
 
 
         // Load shaders
-        Shader lightingShader = new Shader(ResourceUtil.getAbsolutePath("shader/vertex.glsl"), ResourceUtil.getAbsolutePath("shader/fragment.glsl"));
+        ShaderManager shaderManager = ShaderManager.getInstance();
         Shader lightCubeShader = new Shader(ResourceUtil.getAbsolutePath("shader/lightv.glsl"), ResourceUtil.getAbsolutePath("shader/lightf.glsl"));
-        JsonFileReader BlockJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("model/json/block.json"));
-
-
-        JSONObject blockData = BlockJFR.readJson();
-        JSONArray cubeVerticesArray = blockData.getJSONArray("vertices");
-        JSONArray cubeIndicesArray = blockData.getJSONArray("indices");
-
-        // cube
-        float[] cubeVertices = new float[cubeVerticesArray.length()];
-        for (int i = 0; i < cubeVerticesArray.length(); i++) {
-            cubeVertices[i] = cubeVerticesArray.getFloat(i);
-        }
-
-        // cubeIndices 배열 읽기
-        int[] cubeIndices = new int[cubeIndicesArray.length()]; // int[]로 선언
-        for (int i = 0; i < cubeIndicesArray.length(); i++) {
-            cubeIndices[i] = cubeIndicesArray.getInt(i); // getInt()로 정수값 읽기
-        }
-
-        int cubeVAO = glGenVertexArrays();
-        int cubeVBO = glGenBuffers();
-        int cubeEBO = glGenBuffers();
-
-        glBindVertexArray(cubeVAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-        glBufferData(GL_ARRAY_BUFFER, cubeVertices, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, cubeIndices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * Float.BYTES, 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * Float.BYTES, 3 * Float.BYTES);
-        glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * Float.BYTES, 6 * Float.BYTES);
-        glEnableVertexAttribArray(2);
 
         // Prepare light VAO
         int lightCubeVAO = glGenVertexArrays();
@@ -133,11 +94,14 @@ public class Main {
         glEnableVertexAttribArray(0);
 
         // Load textures
-        int grassTexture = TextureManager.getInstance().loadTexture(ResourceUtil.getAbsolutePath("image/grass.png"));
+        Texture grassTexture = new Texture(ResourceUtil.getAbsolutePath("image/grass.png"));
+
+        // block
+        Block grassBlock = new BlockBuilder().setBlockID("grass").setBreakable(true).setTextureID(grassTexture).setStrength(0.5f).build();
 
         // shader configuration
-        lightingShader.use();
-        lightingShader.setInt("material.diffuse", 0);
+        shaderManager.useDefaultShader();
+        shaderManager.getDefaultShader().setInt("material.diffuse", 0);
 
         // Text
         JsonFileReader fontJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("font/galmuri.json"));
@@ -151,7 +115,7 @@ public class Main {
         };
         String fontPath = fontJFR.readJson().getString("fontPath");
         System.out.println(fontPath);
-        int textTexture = TextureManager.getInstance().loadTexture(ResourceUtil.getAbsolutePath(fontPath));
+        Texture textTexture = new Texture(ResourceUtil.getAbsolutePath(fontPath));
 
         int[] textMesh = createVAO(textVertices, textIndices, 2);
 
@@ -182,31 +146,31 @@ public class Main {
             glEnable(GL_BLEND);
 
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, grassTexture);
+            grassTexture.bind();
 
             glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // be sure to activate shader when setting uniforms/drawing objects
-            lightingShader.use();
-            lightingShader.setVec3("viewPos", camera.getPosition());
-            lightingShader.setFloat("material.shininess", 32.0f);
+            shaderManager.getDefaultShader().use();
+            shaderManager.getDefaultShader().setVec3("viewPos", camera.getPosition());
+            shaderManager.getDefaultShader().setFloat("material.shininess", 32.0f);
 
             // use light
-            lightingShader.setBool("useDirLight", false);
-            lightingShader.setBool("usePointLights", false);
-            lightingShader.setBool("useSpotLight", false);
-            lightingShader.setBool("useAmbientLight", true);
+            shaderManager.getDefaultShader().setBool("useDirLight", false);
+            shaderManager.getDefaultShader().setBool("usePointLights", false);
+            shaderManager.getDefaultShader().setBool("useSpotLight", false);
+            shaderManager.getDefaultShader().setBool("useAmbientLight", true);
 
             // ambient light
-            lightingShader.setVec3("ambientLightColor", new Vector3f(0.2f, 0.2f, 0.2f));
-            lightingShader.setFloat("ambientIntensity", 5.0f);
+            shaderManager.getDefaultShader().setVec3("ambientLightColor", new Vector3f(0.2f, 0.2f, 0.2f));
+            shaderManager.getDefaultShader().setFloat("ambientIntensity", 5.0f);
 
             // dir light
-            lightingShader.setVec3("dirLight.direction", new Vector3f(-0.2f, -1.0f, -0.5f));
-            lightingShader.setVec3("dirLight.ambient", new Vector3f(0.05f, 0.05f, 0.05f));
-            lightingShader.setVec3("dirLight.diffuse", new Vector3f(1.4f, 1.4f, 1.4f));
-            lightingShader.setVec3("dirLight.specular", new Vector3f(0.5f, 0.5f, 0.5f));
+            shaderManager.getDefaultShader().setVec3("dirLight.direction", new Vector3f(-0.2f, -1.0f, -0.5f));
+            shaderManager.getDefaultShader().setVec3("dirLight.ambient", new Vector3f(0.05f, 0.05f, 0.05f));
+            shaderManager.getDefaultShader().setVec3("dirLight.diffuse", new Vector3f(1.4f, 1.4f, 1.4f));
+            shaderManager.getDefaultShader().setVec3("dirLight.specular", new Vector3f(0.5f, 0.5f, 0.5f));
 
 
             // View/projection transformations
@@ -216,29 +180,21 @@ public class Main {
                     (float) width / (float) height,   // 화면의 종횡비
                     0.01f, 1000.0f // near와 far 클리핑 평면
             );
-            lightingShader.setMat4("projection", projection);
+            shaderManager.getDefaultShader().setMat4("projection", projection);
 
-            lightingShader.setMat4("view", view);
+            shaderManager.getDefaultShader().setMat4("view", view);
 
             // World transformation
             Matrix4f model = new Matrix4f();
-            lightingShader.setMat4("model", model);
+            shaderManager.getDefaultShader().setMat4("model", model);
 
-            // Render containers
-            glBindVertexArray(cubeVAO);
-
-            // First cube
-            model.identity().translate(0.0f, 0.0f, 0.0f).scale(blockSize);
-            lightingShader.setMat4("model", model);
-            glDrawElements(GL_TRIANGLES, cubeIndices.length, GL_UNSIGNED_INT, 0);
-
-            // Second cube
-            model.identity().translate(2.0f, 0.0f, 2.0f).scale(blockSize);
-            lightingShader.setMat4("model", model);
-            glDrawElements(GL_TRIANGLES, cubeIndices.length, GL_UNSIGNED_INT, 0);
+            for (int i = 0; i < 50; i++) {
+                for (int j = 0; j < 50; j++) {
+                    grassBlock.render(new Vector3f(i*0.5f,0,j*0.5f));
+                }
+            }
 
             // 텍스트 렌더링
-
             // 셰이더 프로그램 활성화 및 유니폼 설정
             textShader.use();
 
@@ -268,20 +224,17 @@ public class Main {
         // Bind to default VAO (unbind any active VAO)
         glBindVertexArray(0);
 
-        // Delete cube VAO and associated VBO/EBO
-        glDeleteBuffers(cubeEBO); // Delete EBO first
-        glDeleteBuffers(cubeVBO); // Then delete VBO
-        glDeleteVertexArrays(cubeVAO); // Finally delete VAO
-
         // Delete text VAO and VBO
         glDeleteBuffers(textMesh[2]); // Delete EBO first
         glDeleteBuffers(textMesh[1]); // Delete VBO
         glDeleteVertexArrays(textMesh[0]); // Then delete VAO
 
+        grassBlock.delete();
+
         // Unbind and delete textures
         glBindTexture(GL_TEXTURE_2D, 0); // Unbind textures
-        glDeleteTextures(textTexture);
-        glDeleteTextures(grassTexture);
+        textTexture.delete();
+        grassTexture.delete();
 
 // Reset OpenGL state
         glDisable(GL_BLEND);
