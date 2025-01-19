@@ -5,10 +5,12 @@ import org.joml.Math;
 
 public class Camera {
     public enum Movement {
-        FORWARD, BACKWARD, LEFT, RIGHT
+        FORWARD, BACKWARD, LEFT, RIGHT,
+        LEFT_FORWARD, LEFT_BACKWARD, RIGHT_FORWARD, RIGHT_BACKWARD // 대각선 이동 추가
     }
 
     private Vector3f position;
+    private Vector3f defaultPos;
     private Vector3f front;
     private Vector3f up;
     private Vector3f right;
@@ -23,6 +25,7 @@ public class Camera {
 
     public Camera(Vector3f position) {
         this.position = position;
+        this.defaultPos = new Vector3f(position); // 기본 위치 복사
         this.front = new Vector3f(0.0f, 0.0f, -1.0f);
         this.worldUp = new Vector3f(0.0f, 1.0f, 0.0f);
         this.yaw = -90.0f;
@@ -37,18 +40,84 @@ public class Camera {
         return new Matrix4f().lookAt(position, new Vector3f(position).add(front), up);
     }
 
+    private float time = 0.0f; // 누적 시간 (프레임마다 증가)
+    private float frequency = 20.0f; // 흔들림 주기
+    private float amplitude = 0.007f; // 흔들림 강도
+
     public void processKeyboard(Movement direction, float deltaTime) {
         float velocity = movementSpeed * deltaTime;
-        if (direction == Movement.FORWARD) {
-            position.add(new Vector3f(front).mul(velocity));
-        } else if (direction == Movement.BACKWARD) {
-            position.sub(new Vector3f(front).mul(velocity));
-        } else if (direction == Movement.LEFT) {
-            position.sub(new Vector3f(right).mul(velocity));
-        } else if (direction == Movement.RIGHT) {
-            position.add(new Vector3f(right).mul(velocity));
+        Vector3f moveVector = new Vector3f();
+
+        // 방향별 벡터 추가 (대각선 포함)
+        switch (direction) {
+            case FORWARD:
+                moveVector.add(new Vector3f(front.x, 0, front.z));
+                break;
+            case BACKWARD:
+                moveVector.sub(new Vector3f(front.x, 0, front.z));
+                break;
+            case LEFT:
+                moveVector.sub(new Vector3f(right.x, 0, right.z));
+                break;
+            case RIGHT:
+                moveVector.add(new Vector3f(right.x, 0, right.z));
+                break;
+            case LEFT_FORWARD:
+                moveVector.add(new Vector3f(front.x, 0, front.z));
+                moveVector.sub(new Vector3f(right.x, 0, right.z));
+                break;
+            case LEFT_BACKWARD:
+                moveVector.sub(new Vector3f(front.x, 0, front.z));
+                moveVector.sub(new Vector3f(right.x, 0, right.z));
+                break;
+            case RIGHT_FORWARD:
+                moveVector.add(new Vector3f(front.x, 0, front.z));
+                moveVector.add(new Vector3f(right.x, 0, right.z));
+                break;
+            case RIGHT_BACKWARD:
+                moveVector.sub(new Vector3f(front.x, 0, front.z));
+                moveVector.add(new Vector3f(right.x, 0, right.z));
+                break;
         }
+
+        // 대각선 이동 시 속도 일정하게 유지 (정규화)
+        if (moveVector.lengthSquared() != 0) {
+            moveVector.normalize().mul(velocity);
+            position.add(moveVector);
+        }
+
+        // 시간 증가
+        time += deltaTime;
+
+        // 흔들림 효과 추가 (사인 함수 적용)
+        float yOffset = (float) Math.sin(time * frequency) * amplitude;
+
+        // 사용자 위치를 ground level(xz 평면)에 고정하면서 흔들림 적용
+        position.y = defaultPos.y + yOffset;
     }
+
+    private Vector3f previousPlayerPos = new Vector3f(); // 이전 프레임 플레이어 위치
+
+    public void setPlayerPos(Vector3f playerPos, float dt) {
+        // 플레이어 위치 복사 (참조가 아닌 값 복사)
+        position.set(playerPos);
+
+        // 카메라를 플레이어 머리 위로 이동 (1.3f 높이 추가)
+        position.y += 1f;
+
+        // 플레이어가 이동한 경우에만 흔들림 적용
+        if (!previousPlayerPos.equals(playerPos)) {
+            time += dt; // 시간 증가 (움직일 때만)
+        }
+
+        // 흔들림 효과 추가 (움직일 때만)
+        float yOffset = (float) Math.sin(time * frequency) * amplitude;
+        position.y += yOffset;
+
+        // 이전 프레임 위치 업데이트
+        previousPlayerPos.set(playerPos);
+    }
+
 
     public void processMouseMovement(float xoffset, float yoffset, boolean constrainPitch) {
         xoffset *= mouseSensitivity;
@@ -97,4 +166,17 @@ public class Camera {
         right = new Vector3f(front).cross(worldUp).normalize();
         up = new Vector3f(right).cross(front).normalize();
     }
+
+    public Vector3f getFront() {
+        return new Vector3f(front); // 원본 front 벡터의 복사본 반환
+    }
+
+    public Vector3f getRight() {
+        return new Vector3f(right); // 원본 right 벡터의 복사본 반환
+    }
+
+    public Vector3f getUp() {
+        return new Vector3f(up); // 원본 up 벡터의 복사본 반환
+    }
+
 }

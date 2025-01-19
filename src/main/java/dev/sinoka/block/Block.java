@@ -93,7 +93,6 @@ public class Block {
         texture.unbind();
     }
 
-    // ✅ OpenGL 리소스 정리 기능 추가
     public void delete() {
         glDeleteBuffers(cubeVBO);
         glDeleteBuffers(cubeEBO);

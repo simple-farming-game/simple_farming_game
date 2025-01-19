@@ -30,9 +30,18 @@ public class Main {
     private int SCR_WIDTH = 800;
     private int SCR_HEIGHT = 600;
 
+    // Player
+    private Vector3f playerPos = new Vector3f(0, 5.0f, 0); // 시작 위치 높게 설정 (낙하 확인)
+    private float playerSpeed = 3.5f;
+    private float gravity = -9.81f; // 중력 값
+    private float verticalVelocity = 0.0f; // 현재 수직 속도
+    private float groundLevel = 0.5f; // 플레이어가 착지할 수 있는 바닥 높이
+    private boolean isJumping = false; // 점프 여부 확인
+    private float jumpForce = 5.0f; // 점프 힘
+
 
     // Camera settings
-    private Camera camera = new Camera(new Vector3f(0.0f, 0.0f, 3.0f));
+    private Camera camera = new Camera(new Vector3f(playerPos.x, playerPos.y + 1f, playerPos.z));
     private float lastX = SCR_WIDTH / 2.0f;
     private float lastY = SCR_HEIGHT / 2.0f;
     private boolean firstMouse = true;
@@ -45,6 +54,8 @@ public class Main {
     private Vector3f lightPos = new Vector3f(1.2f, 1.0f, 2.0f);
 
     private boolean isPause = true;
+
+    List<Vector3f> map = new ArrayList<Vector3f>();
 
     public static void main(String[] args) {
         new Main().run();
@@ -77,6 +88,7 @@ public class Main {
 
         // Configure OpenGL
         glEnable(GL_DEPTH_TEST);
+
 
         // Configure STB
         STBImage.stbi_set_flip_vertically_on_load(true);
@@ -123,6 +135,11 @@ public class Main {
 
         glBindVertexArray(0);
 
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50; j++) {
+                map.add(new Vector3f(i*0.5f,0,j*0.5f));
+            }
+        }
 
         while (!glfwWindowShouldClose(window)) {
             float currentFrame = (float) glfwGetTime();
@@ -188,10 +205,8 @@ public class Main {
             Matrix4f model = new Matrix4f();
             shaderManager.getDefaultShader().setMat4("model", model);
 
-            for (int i = 0; i < 50; i++) {
-                for (int j = 0; j < 50; j++) {
-                    grassBlock.render(new Vector3f(i*0.5f,0,j*0.5f));
-                }
+            for (Vector3f blockPos : map.toArray(map.toArray(new Vector3f[map.size()]))) {
+                grassBlock.render(blockPos);
             }
 
             // 텍스트 렌더링
@@ -249,6 +264,99 @@ public class Main {
 
     private boolean escPressed = false; // ESC 키 상태를 관리
 
+    private boolean isOnGround(Vector3f playerPos) {
+        float blockSize = 0.5f; // 블록 크기
+        float closestGround = -Float.MAX_VALUE; // 가장 낮은 값으로 초기화
+        boolean foundGround = false;
+
+        for (Vector3f blockPos : map) {
+            // 플레이어의 x, z 좌표가 블록의 x, z 중심에서 ±0.5f 이내인지 확인
+            if (Math.abs(playerPos.x - blockPos.x) < blockSize && Math.abs(playerPos.z - blockPos.z) < blockSize) {
+                // 플레이어보다 높은 블록은 무시 (아래에 있는 블록만 고려)
+                if (blockPos.y + blockSize <= playerPos.y && blockPos.y + blockSize > closestGround) {
+                    closestGround = blockPos.y + blockSize;
+                    foundGround = true;
+                }
+            }
+        }
+
+        if (foundGround) {
+            groundLevel = closestGround;
+            return true;
+        } else {
+            // 허공이면 기본 groundLevel 설정 (플레이어가 떨어지도록)
+            groundLevel = -Float.MAX_VALUE;
+            return false;
+        }
+    }
+
+    private void plyerMove(long window) {
+        // 플레이 상태에서만 키보드 입력 처리
+        boolean forward = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+        boolean backward = glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
+        boolean left = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
+        boolean right = glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
+        boolean jump = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+
+        // 이동 속도 계산
+        float velocity = playerSpeed * deltaTime; // `playerSpeed`는 플레이어 이동 속도 변수
+
+        // 이동 벡터 초기화
+        Vector3f moveVector = new Vector3f();
+
+        // 방향별 이동 벡터 추가
+        if (forward && left) {
+            moveVector.add(new Vector3f(camera.getFront().x, 0, camera.getFront().z));
+            moveVector.sub(new Vector3f(camera.getRight().x, 0, camera.getRight().z));
+        } else if (forward && right) {
+            moveVector.add(new Vector3f(camera.getFront().x, 0, camera.getFront().z));
+            moveVector.add(new Vector3f(camera.getRight().x, 0, camera.getRight().z));
+        } else if (backward && left) {
+            moveVector.sub(new Vector3f(camera.getFront().x, 0, camera.getFront().z));
+            moveVector.sub(new Vector3f(camera.getRight().x, 0, camera.getRight().z));
+        } else if (backward && right) {
+            moveVector.sub(new Vector3f(camera.getFront().x, 0, camera.getFront().z));
+            moveVector.add(new Vector3f(camera.getRight().x, 0, camera.getRight().z));
+        } else if (forward) {
+            moveVector.add(new Vector3f(camera.getFront().x, 0, camera.getFront().z));
+        } else if (backward) {
+            moveVector.sub(new Vector3f(camera.getFront().x, 0, camera.getFront().z));
+        } else if (left) {
+            moveVector.sub(new Vector3f(camera.getRight().x, 0, camera.getRight().z));
+        } else if (right) {
+            moveVector.add(new Vector3f(camera.getRight().x, 0, camera.getRight().z));
+        }
+
+        // 이동 벡터 정규화 및 적용
+        if (moveVector.lengthSquared() != 0) {
+            moveVector.normalize().mul(velocity);
+            playerPos.add(moveVector);
+        }
+
+        // 점프 기능
+        if (jump && playerPos.y <= groundLevel + 0.01f) { // 바닥에 있을 때만 점프 가능
+            verticalVelocity = jumpForce; // 점프 시 위로 상승
+            isJumping = true;
+        }
+
+        // 중력 적용 (항상 중력 가속도 적용)
+        verticalVelocity += gravity * deltaTime;
+
+        // y축 업데이트
+        playerPos.y += verticalVelocity * deltaTime;
+
+        // 바닥 충돌 감지
+        if (playerPos.y < groundLevel) {
+            playerPos.y = groundLevel;
+            verticalVelocity = 0; // 착지 후 중력 중지
+            isJumping = false;
+        }
+
+        // 카메라 위치 업데이트 (플레이어 머리 높이 설정)
+        camera.setPlayerPos(playerPos, deltaTime);
+        System.out.println(isOnGround(playerPos));
+    }
+
     private void processInput(long window) {
         // ESC 키로 정지 상태를 토글
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && !escPressed) {
@@ -274,19 +382,7 @@ public class Main {
             return;
         }
 
-        // 플레이 상태에서만 키보드 입력 처리
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            camera.processKeyboard(Camera.Movement.FORWARD, deltaTime);
-        }
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            camera.processKeyboard(Camera.Movement.BACKWARD, deltaTime);
-        }
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            camera.processKeyboard(Camera.Movement.LEFT, deltaTime);
-        }
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            camera.processKeyboard(Camera.Movement.RIGHT, deltaTime);
-        }
+        plyerMove(window);
     }
 
 
@@ -331,11 +427,6 @@ public class Main {
 
         return new int[]{VAO, VBO, EBO};
     }
-
-
-
-
-
 
     private void framebufferSizeCallback(long window, int width, int height) {
         glViewport(0, 0, width, height);
