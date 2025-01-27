@@ -1,14 +1,11 @@
 package dev.sinoka.utility;
 
+import dev.sinoka.renderer.Renderer;
 import org.joml.Vector2f;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL13.*;
 
 public class BitmapFont {
     private static final int TEXTURE_SIZE = 100;

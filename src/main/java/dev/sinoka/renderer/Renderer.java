@@ -1,5 +1,7 @@
-package dev.sinoka.utility;
+package dev.sinoka.renderer;
 
+import dev.sinoka.utility.Shader;
+import dev.sinoka.utility.Texture;
 import org.joml.*;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -11,7 +13,6 @@ public class Renderer {
         glBlendFunc(GL_ONE, GL_ONE);
         glDisable(GL_DEPTH_TEST);
 
-        glActiveTexture(GL_TEXTURE1);
         texture.bind();
 
         shaderProgram.use();

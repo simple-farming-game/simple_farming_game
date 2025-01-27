@@ -41,7 +41,7 @@ public class Camera {
     }
 
     private float time = 0.0f; // 누적 시간 (프레임마다 증가)
-    private float frequency = 20.0f; // 흔들림 주기
+    private float frequency = 50.0f; // 흔들림 주기
     private float amplitude = 0.007f; // 흔들림 강도
 
     public void processKeyboard(Movement direction, float deltaTime) {
@@ -99,24 +99,19 @@ public class Camera {
     private Vector3f previousPlayerPos = new Vector3f(); // 이전 프레임 플레이어 위치
 
     public void setPlayerPos(Vector3f playerPos, float dt) {
-        // 플레이어 위치 복사 (참조가 아닌 값 복사)
         position.set(playerPos);
+        position.y += 1.8f; // 머리 높이로 조정
 
-        // 카메라를 플레이어 머리 위로 이동 (1.3f 높이 추가)
-        position.y += 1f;
-
-        // 플레이어가 이동한 경우에만 흔들림 적용
         if (!previousPlayerPos.equals(playerPos)) {
-            time += dt; // 시간 증가 (움직일 때만)
+            time += dt;
         }
 
-        // 흔들림 효과 추가 (움직일 때만)
         float yOffset = (float) Math.sin(time * frequency) * amplitude;
         position.y += yOffset;
 
-        // 이전 프레임 위치 업데이트
         previousPlayerPos.set(playerPos);
     }
+
 
 
     public void processMouseMovement(float xoffset, float yoffset, boolean constrainPitch) {
@@ -179,4 +174,7 @@ public class Camera {
         return new Vector3f(up); // 원본 up 벡터의 복사본 반환
     }
 
+    public void setPosition(Vector3f position) {
+        this.position = position;
+    }
 }
