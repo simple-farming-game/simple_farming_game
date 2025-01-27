@@ -16,7 +16,7 @@ import org.gradle.internal.os.OperatingSystem
 project.ext {
     lwjglVersion = "3.3.6"
     jomlVersion = "1.10.7"
-    jsonVersion = "20230227" // org.json 버전 변수 추가
+    jsonVersion = "20250107" // org.json 버전 변수 추가
 }
 
 switch (OperatingSystem.current()) {
