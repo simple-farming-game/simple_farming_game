@@ -12,6 +12,7 @@ public class BlockBuilder {
     private float strength = 1;
     private boolean isBreakable = true;
     private Model model = ModelFactory.loadModelFromJson(ResourceUtil.getAbsolutePath("model/json/block.json"));
+    private boolean isSolid = true;
 
     public BlockBuilder setBlockID(String id) {
         this.blockID = id;
@@ -33,7 +34,12 @@ public class BlockBuilder {
         return this;
     }
 
+    public BlockBuilder setSolid(boolean isSolid) {
+        this.isSolid = isSolid;
+        return this;
+    }
+
     public Block build() {
-        return new Block(blockID, texture, strength, isBreakable, model);
+        return new Block(blockID, texture, strength, isBreakable, model, isSolid);
     }
 }

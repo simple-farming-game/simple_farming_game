@@ -1,5 +1,8 @@
 package dev.sinoka.utility;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import static org.lwjgl.opengl.GL20.*;
@@ -8,6 +11,7 @@ public class ShaderManager {
     private static ShaderManager instance;
     private Shader defaultShader;
     private final Map<String, Shader> shaderMap = new HashMap<>();
+    private static final Logger logger = LogManager.getLogger(ShaderManager.class);
 
     private ShaderManager() {
         // 생성자에서 `loadDefaultShader()` 호출 제거 → 명시적으로 호출 필요
@@ -22,13 +26,13 @@ public class ShaderManager {
 
     public void loadDefaultShader() {
         if (defaultShader == null) {
-            System.out.println("🚀 Loading Default Shader...");
+            logger.debug("🚀 Loading Default Shader...");
             defaultShader = new Shader(
                     ResourceUtil.getAbsolutePath("shader/vertex.glsl"),
                     ResourceUtil.getAbsolutePath("shader/fragment.glsl")
             );
             shaderMap.put("default", defaultShader);
-            System.out.println("✅ Default Shader Loaded Successfully!");
+            logger.debug("✅ Default Shader Loaded Successfully!");
         }
     }
 
@@ -47,7 +51,7 @@ public class ShaderManager {
         if (!shaderMap.containsKey(name)) {
             Shader shader = new Shader(ResourceUtil.getAbsolutePath(vertexPath), ResourceUtil.getAbsolutePath(fragmentPath));
             shaderMap.put(name, shader);
-            System.out.println("✅ Loaded Shader: " + name);
+            logger.debug("✅ Loaded Shader: " + name);
         } else {
             System.err.println("⚠️ Shader '" + name + "' is already loaded!");
         }
@@ -74,6 +78,6 @@ public class ShaderManager {
             shader.delete();
         }
         shaderMap.clear();
-        System.out.println("✅ All shaders deleted.");
+        logger.debug("✅ All shaders deleted.");
     }
 }

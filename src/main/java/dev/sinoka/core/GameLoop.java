@@ -1,13 +1,14 @@
 package dev.sinoka.core;
 
-import dev.sinoka.block.Block;
+import dev.sinoka.entity.CompoundCollision;
 import dev.sinoka.entity.Player;
 import dev.sinoka.input.InputManager;
-import dev.sinoka.physics.PhysicsEngine;
 import dev.sinoka.utility.Camera;
 import dev.sinoka.utility.Shader;
 import dev.sinoka.utility.ShaderManager;
 import dev.sinoka.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
@@ -23,7 +24,6 @@ class GameLoop {
     private final Player player;
     private final World world;
     private final InputManager inputManager;
-    private final PhysicsEngine physicsEngine;
 
     private float deltaTime = 0.0f;
     private float lastFrame = 0.0f;
@@ -35,13 +35,14 @@ class GameLoop {
     private final float jumpForce = 5.0f;
     private static final float GRAVITY = -9.8f;
 
+    private static final Logger logger = LogManager.getLogger(GameLoop.class);
+
     public GameLoop(WindowManager windowManager, Camera camera, Player player, World world) {
         this.windowManager = windowManager;
         this.camera = camera;
         this.player = player;
         this.world = world;
         this.inputManager = new InputManager(windowManager.getWindow());
-        this.physicsEngine = new PhysicsEngine(world);
     }
 
     private static final float FIXED_TIMESTEP = 1.0f / 60.0f; // 60FPS 기준
@@ -74,8 +75,6 @@ class GameLoop {
             // 🏞️ 장면 렌더링
             renderScene();
 
-            // 📢 FPS 디버깅
-            System.out.printf("⏳ DeltaTime: %.6f | FPS: %.2f\n", deltaTime, 1.0f / deltaTime);
 
             // 🎮 이벤트 처리
             glfwSwapBuffers(window);
@@ -168,14 +167,14 @@ class GameLoop {
         }
 
         // ✅ 중력 적용 (이제 피직스 엔진이 없으므로 직접 적용)
-        if (!isOnGround(playerPos)) {
+        if (!isOnGround(player)) {
             velocity.y += GRAVITY * deltaTime;
         } else {
             velocity.y = 0; // 바닥에 있을 경우 중력 초기화
         }
 
         // ✅ 점프 처리
-        if (jump && isOnGround(playerPos)) {
+        if (jump && isOnGround(player)) {
             velocity.y = jumpForce; // 직접 점프 적용
         }
 
@@ -188,16 +187,22 @@ class GameLoop {
         camera.setPlayerPos(player.getPos(), deltaTime);
 
         // ✅ 디버깅 로그 출력
-        System.out.printf("🎮 Input: W:%b S:%b A:%b D:%b JUMP:%b | 🚀 OnGround: %b\n",
-                forward, backward, left, rightMove, jump, isOnGround(playerPos));
-        System.out.printf("📍 Position: (%.3f, %.3f, %.3f) | ➡ MoveVector: (%.3f, %.3f, %.3f) | PlayerSpeed: %.2f\n",
+        logger.debug("🎮 Input: W:{} S:{} A:{} D:{} JUMP:{} | 🚀 OnGround: {}", forward, backward, left, rightMove, jump, isOnGround(player));
+        logger.debug("📍 Position: ({}, {}, {}) | ➡ MoveVector: ({}, {}, {}) | PlayerSpeed: {}",
                 playerPos.x, playerPos.y, playerPos.z, moveVector.x, moveVector.y, moveVector.z, playerSpeed);
+
     }
 
-    public boolean isOnGround(Vector3f position) {
-        Vector3f feetPos = new Vector3f(position.x, position.y - 0.1f, position.z);
-        return world.getBlockAt(feetPos) != null;
+    public boolean isOnGround(Player aPlayer) {
+        CompoundCollision compoundCollision = world.getCompoundCollision("testing");
+        if (compoundCollision == null) {
+            System.err.println("❌ CompoundCollision for map 'testing' is null!");
+            return false; // 기본값 false 반환 (또는 원하는 동작 수행)
+        }
+
+        return compoundCollision.intersects(aPlayer.getCollision());
     }
+
 
     private void resetPlayer() {
         Vector3f resetPosition = new Vector3f(0, 5f, 0);
@@ -206,11 +211,11 @@ class GameLoop {
     }
 
     private void cleanup() {
-        System.out.println("🚀 Cleaning up resources...");
+        logger.debug("🚀 Cleaning up resources...");
         ShaderManager.getInstance().cleanup();
         world.cleanup();
         glfwDestroyWindow(windowManager.getWindow());
         glfwTerminate();
-        System.out.println("✅ Cleanup completed!");
+        logger.debug("✅ Cleanup completed!");
     }
 }

@@ -1,5 +1,7 @@
 package dev.sinoka.core;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
@@ -20,6 +22,7 @@ class WindowManager {
     private boolean firstMouse = true;
 
     private Camera camera;
+    private static final Logger logger = LogManager.getLogger(WindowManager.class);
 
     public WindowManager(Camera camera) {
         this.camera = camera;

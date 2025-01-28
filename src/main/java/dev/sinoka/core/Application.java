@@ -10,6 +10,8 @@ import dev.sinoka.utility.Texture;
 import dev.sinoka.world.MapData;
 import dev.sinoka.world.World;
 import org.joml.Vector3f;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL;
 
 public class Application {
@@ -19,9 +21,10 @@ public class Application {
     private Player player;
     private ShaderManager shaderManager;
     private World world;
+    private static final Logger logger = LogManager.getLogger(Application.class);
 
     public Application() {
-        System.out.println("🚀 Initializing Application...");
+        logger.debug("🚀 Initializing Application...");
 
         // 🚀 1️⃣ 초기화 순서 변경: OpenGL 컨텍스트가 생성되기 전에는 리소스 로딩 금지
         this.player = new Player(new Vector3f(0, 5.0f, 0));
@@ -30,13 +33,13 @@ public class Application {
     }
 
     public void run() {
-        System.out.println("🚀 Initializing game resources...");
+        logger.debug("🚀 Initializing game resources...");
 
         // 🚀 2️⃣ OpenGL 컨텍스트 생성 후 리소스 로드
         windowManager = new WindowManager(camera);
         windowManager.init(); // OpenGL 컨텍스트 생성
 
-        System.out.println("✅ OpenGL context initialized!");
+        logger.debug("✅ OpenGL context initialized!");
 
         // 🚀 3️⃣ OpenGL 컨텍스트 생성 후 ShaderManager 및 리소스 로드
         this.shaderManager = ShaderManager.getInstance();
@@ -45,20 +48,16 @@ public class Application {
         registerBlocks();
         createTestMap();
 
-        System.out.println("✅ Resource loading complete!");
+        logger.debug("✅ Resource loading complete!");
 
         // 🚀 4️⃣ 게임 루프 시작
         this.gameLoop = new GameLoop(windowManager, camera, player, world);
-        world.printMapContents("testing");
-        System.out.println("📌 Registered Blocks:");
-        world.getBlockRegister().listAllBlocks();
-
 
         gameLoop.start();
     }
 
     private void registerBlocks() {
-        System.out.println("🔹 Registering blocks...");
+        logger.debug("🔹 Registering blocks...");
 
         // 🚀 5️⃣ OpenGL 컨텍스트가 생성된 후 텍스처 로드 (필수)
         Texture grassTexture = new Texture(ResourceUtil.getAbsolutePath("image/grass.png"));
@@ -70,11 +69,11 @@ public class Application {
                 .build();
 
         world.getBlockRegister().register(grassBlock);
-        System.out.println("✅ Blocks registered.");
+        logger.debug("✅ Blocks registered.");
     }
 
     private void createTestMap() {
-        System.out.println("🔹 Creating test map...");
+        logger.debug("🔹 Creating test map...");
 
         MapData mapData = new MapData("testing");
         int width = 100, height = 1, depth = 100;
@@ -88,6 +87,6 @@ public class Application {
         }
 
         world.addMap(mapData);
-        System.out.println("✅ Test map created.");
+        logger.debug("✅ Test map created.");
     }
 }

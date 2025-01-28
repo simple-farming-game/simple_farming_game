@@ -1,10 +1,16 @@
 package dev.sinoka.world;
 
 import dev.sinoka.block.Block;
+import dev.sinoka.entity.BoxCollision;
+import dev.sinoka.entity.CompoundCollision;
 import dev.sinoka.model.Model;
 import dev.sinoka.registry.BlockRegister;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
+
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,20 +18,32 @@ import java.util.Map;
 public class World {
     private final BlockRegister blockRegister;
     private final List<MapData> maps;
+    private List<CompoundCollision> compoundCollisions; // 각 맵에 대한 컴파운드 콜리전 캐싱
+    private List<Boolean> mapChangedFlags = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(World.class);
 
     public World() {
         this.blockRegister = new BlockRegister();
         this.maps = new ArrayList<>();
+        this.compoundCollisions = new ArrayList<>();
+        this.mapChangedFlags = new ArrayList<>();
     }
 
     public void addMap(MapData map) {
         maps.add(map);
+        logger.debug("Added map: " + map.getMapName());  // 디버깅용 출력
+        compoundCollisions.add(null); // 빈 값 추가
+        mapChangedFlags.add(true);   // 기본값은 false
     }
 
     public void addBlockToMap(String mapName, int x, int y, int z, String blockID) {
         MapData map = getMap(mapName);
         if (map != null) {
             map.setBlockAt(x, y, z, blockID);
+            int mapIndex = maps.indexOf(map);
+            if (mapIndex != -1) {
+                setMapChanged(mapIndex);  // 블록을 추가한 후 맵 상태 변경
+            }
         } else {
             System.err.println("❌ Map '" + mapName + "' not found!");
         }
@@ -104,13 +122,8 @@ public class World {
         return null;
     }
 
-
-
-
-
-
     public void cleanup() {
-        System.out.println("🧹 Cleaning up world...");
+        logger.debug("🧹 Cleaning up world...");
 
         for (MapData map : maps) {
             for (String blockID : map.getTileMap().values()) {
@@ -121,7 +134,7 @@ public class World {
             }
         }
 
-        System.out.println("✅ Cleanup complete.");
+        logger.debug("✅ Cleanup complete.");
     }
 
     public List<MapData> getMaps() {
@@ -142,10 +155,78 @@ public class World {
             return;
         }
 
-        System.out.println("🗺️ Map Contents - " + mapName + " 🗺️");
+        logger.debug("🗺️ Map Contents - " + mapName + " 🗺️");
         map.getTileMap().forEach((position, blockID) ->
-                System.out.println("📌 Block at " + position + " → " + blockID)
+                logger.debug("📌 Block at " + position + " → " + blockID)
         );
-        System.out.println("✅ End of map contents.");
+        logger.debug("✅ End of map contents.");
+    }
+
+    public CompoundCollision getCompoundCollision(String mapName) {
+        MapData map = getMap(mapName);
+        if (map == null) {
+            System.err.println("❌ Map '" + mapName + "' not found!");
+            return null;
+        }
+
+        int mapIndex = maps.indexOf(map);
+        if (mapIndex == -1) {
+            System.err.println("❌ Map '" + mapName + "' not found in list!");
+            return null;
+        }
+
+        // 맵이 변경되었으면 콜리전 객체를 새로 생성
+        if (mapChangedFlags.get(mapIndex)) {
+            List<BoxCollision> boxCollisions = new ArrayList<>();
+
+            for (Map.Entry<Vector3i, String> entry : map.getTileMap().entrySet()) {
+                Block block = blockRegister.getBlock(entry.getValue());
+                if (block != null && block.isSolid()) {
+                    Vector3i position = entry.getKey();
+                    float blockSize = block.getBlockSize();
+                    Vector3f worldPos = new Vector3f(position).mul(blockSize);
+                    Vector3f size = new Vector3f(blockSize, blockSize, blockSize); // AABB 크기 설정
+
+                    // 박스를 콜리전 목록에 추가
+                    BoxCollision box = new BoxCollision(worldPos, size);
+                    boxCollisions.add(box);
+                }
+            }
+
+            // 새로운 CompoundCollision 객체를 생성하여 저장
+            CompoundCollision newCompoundCollision = new CompoundCollision(boxCollisions);
+            compoundCollisions.set(mapIndex, newCompoundCollision); // 기존 콜리전 업데이트
+            mapChangedFlags.set(mapIndex, false); // 콜리전 객체가 생성된 후 상태를 false로 변경
+            return newCompoundCollision;
+        } else {
+            // 변경되지 않았으면 기존 콜리전 객체 반환
+            return compoundCollisions.get(mapIndex);
+        }
+    }
+
+
+    // 맵 변경 상태에 맞게 compoundCollisions와 mapChangedFlags 크기를 맞추는 메서드
+    private void ensureCompoundCollisionSize(int mapIndex) {
+        // compoundCollisions 크기 맞추기
+        while (compoundCollisions.size() <= mapIndex) {
+            compoundCollisions.add(null); // 부족한 크기만큼 null 추가
+        }
+
+        // mapChangedFlags 크기 맞추기
+        while (mapChangedFlags.size() <= mapIndex) {
+            mapChangedFlags.add(false); // 부족한 크기만큼 false 추가
+        }
+    }
+
+    /**
+     * 📌 **맵 변경 시 콜리전 객체를 새로 생성하도록 설정**
+     * - 맵에 블록을 추가하거나 삭제할 때 호출
+     */
+    public void setMapChanged(int mapIndex) {
+        if (mapIndex >= 0 && mapIndex < mapChangedFlags.size()) {
+            mapChangedFlags.set(mapIndex, true);  // 맵이 변경되었음을 표시
+        } else {
+            System.err.println("❌ Invalid map index: " + mapIndex);
+        }
     }
 }

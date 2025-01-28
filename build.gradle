@@ -17,6 +17,7 @@ project.ext {
     lwjglVersion = "3.3.6"
     jomlVersion = "1.10.7"
     jsonVersion = "20250107" // org.json 버전 변수 추가
+    log4jVersion = "2.19.0"
 }
 
 switch (OperatingSystem.current()) {
@@ -64,6 +65,9 @@ dependencies {
     implementation "org.joml:joml:${jomlVersion}"
     // JSON 라이브러리 추가 (버전 변수 사용)
     implementation "org.json:json:${jsonVersion}"
+
+    implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
 }
 
 test {

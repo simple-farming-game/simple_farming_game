@@ -1,11 +1,15 @@
 package dev.sinoka.utility;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 
 public class Texture {
     private int textureID;
     private final String texturePath;
+    private static final Logger logger = LogManager.getLogger(Texture.class);
 
     public Texture(String texturePath) {
         this.texturePath = texturePath;
@@ -14,7 +18,7 @@ public class Texture {
         if (textureID == 0) {
             System.err.println("⚠️ Failed to load texture: " + texturePath);
         } else {
-            System.out.println("✅ Texture loaded successfully: " + texturePath + " (ID: " + textureID + ")");
+            logger.debug("✅ Texture loaded successfully: " + texturePath + " (ID: " + textureID + ")");
         }
     }
 
@@ -34,7 +38,7 @@ public class Texture {
     public void delete() {
         if (textureID != 0) {
             glDeleteTextures(textureID);
-            System.out.println("❌ Deleted texture: " + texturePath + " (ID: " + textureID + ")");
+            logger.debug("❌ Deleted texture: " + texturePath + " (ID: " + textureID + ")");
             textureID = 0;
         }
     }

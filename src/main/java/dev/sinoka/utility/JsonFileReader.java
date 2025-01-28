@@ -1,5 +1,7 @@
 package dev.sinoka.utility;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -7,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class JsonFileReader {
+
+    private static final Logger logger = LogManager.getLogger(JsonFileReader.class);
 
     private String filePath; // JSON 파일 경로
 
@@ -57,9 +61,9 @@ public class JsonFileReader {
     public void printJson() {
         JSONObject jsonObject = readJson();
         if (jsonObject != null) {
-            System.out.println(jsonObject.toString(4)); // 들여쓰기 4칸으로 출력
+            logger.debug(jsonObject.toString(4)); // 들여쓰기 4칸으로 출력
         } else {
-            System.out.println("JSON 데이터를 출력할 수 없습니다.");
+            logger.debug("JSON 데이터를 출력할 수 없습니다.");
         }
     }
 

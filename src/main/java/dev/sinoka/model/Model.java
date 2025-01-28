@@ -1,5 +1,7 @@
 package dev.sinoka.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 import static org.lwjgl.opengl.GL11.*;
@@ -18,6 +20,8 @@ public class Model {
     private String name;
     private float offsetX, offsetY, offsetZ;
 
+    private static final Logger logger = LogManager.getLogger(Model.class);
+
     public Model(float[] vertices, int[] indices, String name) {
         this.name = name;
         this.vertexCount = indices.length;
@@ -30,8 +34,8 @@ public class Model {
         vboID = glGenBuffers();
         eboID = glGenBuffers();
 
-        System.out.println("🛠️ Generating Model: " + name);
-        System.out.println("🟢 VAO ID: " + vaoID + ", VBO ID: " + vboID + ", EBO ID: " + eboID);
+        logger.debug("🛠️ Generating Model: " + name);
+        logger.debug("🟢 VAO ID: " + vaoID + ", VBO ID: " + vboID + ", EBO ID: " + eboID);
 
         if (vaoID == 0 || vboID == 0 || eboID == 0) {
             throw new RuntimeException("❌ Model creation failed! OpenGL didn't assign valid buffer IDs.");
@@ -39,8 +43,8 @@ public class Model {
 
         glBindVertexArray(vaoID);
 
-        System.out.println(Arrays.toString(vertices));
-        System.out.println(Arrays.toString(indices));
+        logger.debug(Arrays.toString(vertices));
+        logger.debug(Arrays.toString(indices));
 
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);

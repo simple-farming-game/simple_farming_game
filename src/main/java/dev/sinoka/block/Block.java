@@ -4,6 +4,8 @@ import dev.sinoka.utility.JsonFileReader;
 import dev.sinoka.utility.Texture;
 import dev.sinoka.renderer.ModelRenderer;
 import dev.sinoka.model.Model;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,14 +15,17 @@ public class Block {
     private final Texture texture;
     private final float strength;
     private final boolean isBreakable;
+    private final boolean isSolid;
     private final Model model;
     private final float blockSize = 1f;
+    private static final Logger logger = LogManager.getLogger(Block.class);
 
-    public Block(String blockID, Texture texture, float strength, boolean isBreakable, Model model) {
+    public Block(String blockID, Texture texture, float strength, boolean isBreakable, Model model, boolean isSolid) {
         this.blockID = blockID;
         this.texture = texture;
         this.strength = strength;
         this.isBreakable = isBreakable;
+        this.isSolid = isSolid;
         this.model = model;
     }
 
@@ -45,6 +50,10 @@ public class Block {
         return isBreakable;
     }
 
+    public boolean isSolid() {
+        return isSolid;
+    }
+
     public float getBlockSize() {
         return blockSize;
     }
@@ -54,7 +63,7 @@ public class Block {
     }
 
     public void onBreak() {
-        System.out.println(blockID + " has been broken.");
+        logger.debug(blockID + " has been broken.");
     }
 
     public void delete() {

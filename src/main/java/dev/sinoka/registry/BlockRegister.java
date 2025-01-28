@@ -1,11 +1,15 @@
 package dev.sinoka.registry;
 
 import dev.sinoka.block.Block;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
 public class BlockRegister {
     private final Map<String, Block> blockRegistry = new ConcurrentHashMap<>();
+    private static final Logger logger = LogManager.getLogger(BlockRegister.class);
 
     public void register(Block block) {
         if (blockRegistry.containsKey(block.getBlockID())) {
@@ -13,7 +17,7 @@ public class BlockRegister {
             return;
         }
         blockRegistry.put(block.getBlockID(), block);
-        System.out.println("✅ Registered block: " + block.getBlockID());
+        logger.debug("✅ Registered block: " + block.getBlockID());
     }
 
     public Block getBlock(String blockID) {
@@ -30,19 +34,19 @@ public class BlockRegister {
 
     public void unregisterBlock(String blockID) {
         if (blockRegistry.remove(blockID) != null) {
-            System.out.println("❎ Unregistered block: " + blockID);
+            logger.debug("❎ Unregistered block: " + blockID);
         } else {
             System.err.println("❌ Block ID '" + blockID + "' was not found!");
         }
     }
 
     public void listAllBlocks() {
-        System.out.println("📜 Registered Blocks:");
+        logger.debug("📜 Registered Blocks:");
         if (blockRegistry.isEmpty()) {
-            System.out.println("(No blocks registered)");
+            logger.debug("(No blocks registered)");
         } else {
             for (String blockID : blockRegistry.keySet()) {
-                System.out.println("- " + blockID);
+                logger.debug("- " + blockID);
             }
         }
     }
