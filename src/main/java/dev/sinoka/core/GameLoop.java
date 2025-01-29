@@ -206,12 +206,6 @@ class GameLoop {
 
         // ✅ 카메라 위치 업데이트 (플레이어 머리 위치로)
         camera.setPlayerPos(player.getPos(), deltaTime);
-
-        // ✅ 디버깅 로그 출력
-        logger.debug("🎮 Input: W:{} S:{} A:{} D:{} JUMP:{} | 🚀 OnGround: {}", forward, backward, left, rightMove, jump, isOnGround(player));
-        logger.debug("📍 Position: ({}, {}, {}) | ➡ MoveVector: ({}, {}, {}) | PlayerSpeed: {}",
-                playerPos.x, playerPos.y, playerPos.z, moveVector.x, moveVector.y, moveVector.z, playerSpeed);
-
     }
 
     public boolean isOnGround(Player aPlayer) {

@@ -125,10 +125,6 @@ public class BitmapFont {
             }
             koText = koTextList; // 한글 텍스트를 리스트로 저장
 
-            // 결과 출력 (디버깅용)
-            logger.debug("English Text: " + enText);
-            logger.debug("Korean Text: " + koText);
-
         } catch (java.io.IOException e) {
             logger.error(e);
         }
@@ -190,8 +186,6 @@ public class BitmapFont {
                         spacingFactor = (float) glyphInfo.getDouble("spacingFactor");
                     }
 
-                    logger.debug("x: {}, y: {}, ad: {}", xOffset, yOffset, xAdvance);
-
                     // 텍스처 인덱스를 textures 배열에 맞춰서 사용
                     Texture texture = textures.get(j);
 
@@ -223,8 +217,6 @@ public class BitmapFont {
                     if (glyphInfo != null) {
                         spacingFactor = (float) glyphInfo.getDouble("spacingFactor");
                     }
-
-                    logger.debug("x: {}, y: {}, ad: {}, text: {}", xOffset, yOffset, xAdvance, c);
 
                     // 텍스처 인덱스를 textures 배열에 맞춰서 사용
                     Texture texture = textures.get(j);
@@ -289,8 +281,6 @@ public class BitmapFont {
             };  // 해당 문자가 글리프에 없다면 무시
 
             boolean isKo = isKorean(c);
-
-            logger.info(glyph.textSet.getTexturePath());
 
             // 언어에 맞는 텍스처 및 글리프 적용
             renderGlyph(glyph, new Vector2f(cursorX, cursorY), scale, glyph.textSet, isKo ? VAO_KO : VAO_EN, isKo);
