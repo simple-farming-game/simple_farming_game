@@ -44,6 +44,7 @@ public class Application {
         // 🚀 3️⃣ OpenGL 컨텍스트 생성 후 ShaderManager 및 리소스 로드
         this.shaderManager = ShaderManager.getInstance();
         shaderManager.loadDefaultShader(); // ✅ 기본 쉐이더 로드
+        shaderManager.loadShader("text", "shader/textVertex.glsl", "shader/textFragment.glsl");
 
         registerBlocks();
         createTestMap();

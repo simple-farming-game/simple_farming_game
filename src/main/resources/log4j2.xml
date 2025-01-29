@@ -1,158 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
-    <!-- 콘솔 출력 설정 -->
     <Appenders>
+        <!-- 콘솔 로그 출력 -->
         <Console name="Console" target="SYSTEM_OUT">
-            <!-- 로그 출력 포맷 설정 -->
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level: %msg%n"/>
         </Console>
+        <!-- 롤링 파일 로그 출력 -->
+        <RollingFile name="RollingFileAppender" fileName="logs/last.log"
+                     filePattern="logs/%d{yyyy-MM-dd HH-mm-ss}.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+            </Policies>
+        </RollingFile>
     </Appenders>
 
-    <!-- 로거 설정 -->
     <Loggers>
-        <!-- Main 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.Main" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Application 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.core.Application" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- GameLoop 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.core.GameLoop" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- WindowManager 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.core.WindowManager" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- BoxCollision 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.entity.BoxCollision" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- CompoundCollision 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.entity.CompoundCollision" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Entity 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.entity.Entity" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Player 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.entity.Player" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- InputManager 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.input.InputManager" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Model 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.model.Model" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- ModelFactory 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.model.ModelFactory" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Block 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.block.Block" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- BlockBuilder 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.block.BlockBuilder" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- BlockRegister 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.registry.BlockRegister" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- EntityRegister 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.registry.EntityRegister" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- ModelRenderer 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.renderer.ModelRenderer" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Renderer 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.renderer.Renderer" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- TextureRenderer 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.renderer.TextureRenderer" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- PauseMenu 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.ui.PauseMenu" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- UIManager 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.ui.UIManager" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- JsonFileReader 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.utility.JsonFileReader" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- ResourceUtil 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.utility.ResourceUtil" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Shader 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.utility.Shader" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- ShaderManager 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.utility.ShaderManager" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- Texture 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.utility.Texture" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- TextureManager 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.utility.TextureManager" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- World 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.world.World" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- MapData 클래스에 대한 로그 설정 -->
-        <Logger name="dev.sinoka.world.MapData" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- 루트 로거 설정: 모든 로그 기본적으로 info 레벨로 출력 -->
-        <Root level="info">
+        <!-- 루트 로그 설정 -->
+        <Root level="debug">
+            <AppenderRef ref="RollingFileAppender"/>
             <AppenderRef ref="Console"/>
         </Root>
+
+        <!-- INFO 레벨 로그 설정 -->
+        <Logger name="org.apache" level="info" additivity="false">
+            <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- ERROR 레벨 로그 설정 -->
+        <Logger name="org.springframework" level="error" additivity="false">
+            <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
     </Loggers>
 </Configuration>

@@ -23,17 +23,21 @@ public class TextureManager {
         return instance;
     }
 
-    public int loadTexture(String path) {
+    public TextureData loadTexture(String path) {
         int textureID = glGenTextures();
+        int width = 0;
+        int height = 0;
 
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            IntBuffer width = stack.mallocInt(1);
-            IntBuffer height = stack.mallocInt(1);
+            IntBuffer widthBuffer = stack.mallocInt(1);
+            IntBuffer heightBuffer = stack.mallocInt(1);
             IntBuffer nrComponents = stack.mallocInt(1);
 
             // Load image using STBImage
-            ByteBuffer data = STBImage.stbi_load(path, width, height, nrComponents, 0);
+            ByteBuffer data = STBImage.stbi_load(path, widthBuffer, heightBuffer, nrComponents, 0);
             if (data != null) {
+                width = widthBuffer.get(0);
+                height = heightBuffer.get(0);
                 int format;
                 if (nrComponents.get(0) == 1) {
                     format = GL_RED;
@@ -46,7 +50,7 @@ public class TextureManager {
                 }
 
                 glBindTexture(GL_TEXTURE_2D, textureID);
-                glTexImage2D(GL_TEXTURE_2D, 0, format, width.get(0), height.get(0), 0, format, GL_UNSIGNED_BYTE, data);
+                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
                 glGenerateMipmap(GL_TEXTURE_2D);
 
                 // Set texture wrapping and filtering
@@ -58,10 +62,36 @@ public class TextureManager {
                 STBImage.stbi_image_free(data);
             } else {
                 System.err.println("Failed to load texture: " + path);
-                STBImage.stbi_image_free(data);
+                if (data != null) {
+                    STBImage.stbi_image_free(data);
+                }
             }
         }
 
-        return textureID;
+        return new TextureData(textureID, width, height);
+    }
+
+    public static class TextureData {
+        private final int textureID;
+        private final int width;
+        private final int height;
+
+        public TextureData(int textureID, int width, int height) {
+            this.textureID = textureID;
+            this.width = width;
+            this.height = height;
+        }
+
+        public int getTextureID() {
+            return textureID;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
     }
 }

@@ -3,13 +3,13 @@ package dev.sinoka.core;
 import dev.sinoka.entity.CompoundCollision;
 import dev.sinoka.entity.Player;
 import dev.sinoka.input.InputManager;
-import dev.sinoka.utility.Camera;
-import dev.sinoka.utility.Shader;
-import dev.sinoka.utility.ShaderManager;
+import dev.sinoka.renderer.TextureRenderer;
+import dev.sinoka.utility.*;
 import dev.sinoka.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
@@ -24,6 +24,7 @@ class GameLoop {
     private final Player player;
     private final World world;
     private final InputManager inputManager;
+    private final BitmapFont bitmapFont;
 
     private float deltaTime = 0.0f;
     private float lastFrame = 0.0f;
@@ -35,6 +36,8 @@ class GameLoop {
     private final float jumpForce = 5.0f;
     private static final float GRAVITY = -9.8f;
 
+    private String wolrdName = "testing";
+
     private static final Logger logger = LogManager.getLogger(GameLoop.class);
 
     public GameLoop(WindowManager windowManager, Camera camera, Player player, World world) {
@@ -43,10 +46,9 @@ class GameLoop {
         this.player = player;
         this.world = world;
         this.inputManager = new InputManager(windowManager.getWindow());
+        JsonFileReader bitmapFontJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("font/galmuri.json"));
+        this.bitmapFont = new BitmapFont(ShaderManager.getInstance().getShader("text"), bitmapFontJFR);
     }
-
-    private static final float FIXED_TIMESTEP = 1.0f / 60.0f; // 60FPS 기준
-    private float accumulator = 0.0f;
 
     public void start() {
         while (!glfwWindowShouldClose(this.windowManager.getWindow())) {
@@ -65,6 +67,7 @@ class GameLoop {
             glClearColor(0.5f, 0.8f, 1f, 1f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_DEPTH_TEST);
 
             // 🔆 셰이더 설정
@@ -75,6 +78,24 @@ class GameLoop {
             // 🏞️ 장면 렌더링
             renderScene();
 
+            // UI 렌더링
+            Shader textShader = ShaderManager.getInstance().getShader("text");
+            glDisable(GL_DEPTH_TEST);
+            textShader.use();
+
+            Matrix4f projection = new Matrix4f().setOrtho2D(0.0f, windowManager.getScrWidth(), 0.0f, windowManager.getScrHeight());
+            textShader.setMat4("projection", projection);
+
+            // 뷰 행렬 설정
+            Matrix4f view = new Matrix4f().identity();
+            textShader.setMat4("view", view);
+
+            // 텍스트 렌더링
+            bitmapFont.renderString(wolrdName+" 월드입니다. Hello, World! 안녕, 세상!", new Vector2f(40, windowManager.getScrHeight()-40), 0.2f);
+
+            if (windowManager.getPause()) {
+                bitmapFont.renderString("일시정지 Pause", new Vector2f(40, windowManager.getScrHeight()-80), 0.2f);
+            }
 
             // 🎮 이벤트 처리
             glfwSwapBuffers(window);
@@ -113,7 +134,7 @@ class GameLoop {
     }
 
     private void renderScene() {
-        world.render("testing");
+        world.render(wolrdName);
     }
 
     private void processInput() {
@@ -194,9 +215,9 @@ class GameLoop {
     }
 
     public boolean isOnGround(Player aPlayer) {
-        CompoundCollision compoundCollision = world.getCompoundCollision("testing");
+        CompoundCollision compoundCollision = world.getCompoundCollision(wolrdName);
         if (compoundCollision == null) {
-            System.err.println("❌ CompoundCollision for map 'testing' is null!");
+            System.err.println("❌ CompoundCollision for map '"+wolrdName+"' is null!");
             return false; // 기본값 false 반환 (또는 원하는 동작 수행)
         }
 
@@ -213,6 +234,7 @@ class GameLoop {
     private void cleanup() {
         logger.debug("🚀 Cleaning up resources...");
         ShaderManager.getInstance().cleanup();
+        bitmapFont.cleanup();
         world.cleanup();
         glfwDestroyWindow(windowManager.getWindow());
         glfwTerminate();

@@ -1,19 +1,33 @@
 {
   "fontName": "Galmuri",
-  "fontPath": "font/galmuri.png",
+  "fontPath": {
+    "en-us": ["font/galmuri.png"],
+    "ko-kr": ["font/galmuri-ko1.png", "font/galmuri-ko2.png"]
+  },
+  "textSetPath": {
+    "en-us": ["font/galmuri.txt"],
+    "ko-kr": ["font/galmuri-ko1.txt", "font/galmuri-ko2.txt"]
+  },
   "textureSize": 100,
-  "default": 6,
+  "default": {
+    "en-us": { "spacingFactor": 5 },
+    "ko-kr": { "spacingFactor": 10 }
+  },
   "glyphs": {
-    "!": 3,
-    "i": 2,
-    "I": 2,
-    "1": 3,
-    "m": 8,
-    "#": 8,
-    "%": 8,
-    "\"": 4,
-    "&": 7,
-    "'": 2,
-    "@": 8
+    " ": { "spacingFactor": 2 },
+    "!": { "spacingFactor": 2 },
+    "i": { "spacingFactor": 1 },
+    "I": { "spacingFactor": 1 },
+    "1": { "spacingFactor": 2 },
+    "m": { "spacingFactor": 7 },
+    "#": { "spacingFactor": 7 },
+    "%": { "spacingFactor": 7 },
+    "\"": { "spacingFactor": 3 },
+    "&": { "spacingFactor": 6 },
+    "'": { "spacingFactor": 1 },
+    "@": { "spacingFactor": 7 },
+    "t": { "spacingFactor": 4 },
+    "s": { "spacingFactor": 4 },
+    ",": { "spacingFactor": 2 }
   }
 }

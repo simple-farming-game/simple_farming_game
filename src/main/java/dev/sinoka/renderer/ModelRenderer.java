@@ -23,6 +23,7 @@ public class ModelRenderer {
     public void render(Model model, Texture texture, Vector3f position, float scale) {
         ShaderManager.getInstance().useDefaultShader(); // 자동으로 쉐이더 사용
 
+        glActiveTexture(GL_TEXTURE0);
         texture.bind();
         ShaderManager.getInstance().getDefaultShader().setInt("material.diffuse", 0);
         Matrix4f mmodel = new Matrix4f();

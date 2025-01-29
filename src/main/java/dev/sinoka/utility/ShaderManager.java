@@ -73,6 +73,17 @@ public class ShaderManager {
         }
     }
 
+    public void printLoadedShaders() {
+        if (shaderMap.isEmpty()) {
+            System.out.println("No shaders loaded.");
+        } else {
+            System.out.println("Loaded Shaders:");
+            for (String shaderName : shaderMap.keySet()) {
+                System.out.println("- " + shaderName);
+            }
+        }
+    }
+
     public void cleanup() {
         for (Shader shader : shaderMap.values()) {
             shader.delete();
