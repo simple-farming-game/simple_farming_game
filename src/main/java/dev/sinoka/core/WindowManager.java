@@ -12,8 +12,8 @@ import org.lwjgl.stb.STBImage;
 
 class WindowManager {
     private long window;
-    private static final int SCR_WIDTH = 800;
-    private static final int SCR_HEIGHT = 600;
+    private static int SCR_WIDTH = 800;
+    private static int SCR_HEIGHT = 600;
 
     private boolean isPause = true;
 
@@ -34,6 +34,8 @@ class WindowManager {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_FOCUSED, GLFW_TRUE);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -60,6 +62,8 @@ class WindowManager {
 
     private void framebufferSizeCallback(long window, int width, int height) {
         glViewport(0, 0, width, height);
+        SCR_WIDTH =  width;
+        SCR_HEIGHT = height;
     }
 
     private void mouseCallback(long window, double xpos, double ypos) {
@@ -101,5 +105,13 @@ class WindowManager {
 
     public void setPause(boolean pause) {
         isPause = pause;
+    }
+
+    public int getScrHeight() {
+        return SCR_HEIGHT;
+    }
+
+    public int getScrWidth() {
+        return SCR_WIDTH;
     }
 }
