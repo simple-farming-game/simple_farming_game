@@ -1,12 +1,12 @@
 {
   "fontName": "Galmuri",
   "fontPath": {
-    "en-us": ["font/galmuri.png"],
-    "ko-kr": ["font/galmuri-ko1.png", "font/galmuri-ko2.png"]
+    "en-us": ["resources/font/galmuri.png"],
+    "ko-kr": ["resources/font/galmuri-ko1.png", "font/galmuri-ko2.png"]
   },
   "textSetPath": {
-    "en-us": ["font/galmuri.txt"],
-    "ko-kr": ["font/galmuri-ko1.txt", "font/galmuri-ko2.txt"]
+    "en-us": ["resources/font/galmuri.txt"],
+    "ko-kr": ["resources/font/galmuri-ko1.txt", "font/galmuri-ko2.txt"]
   },
   "textureSize": 100,
   "default": {

@@ -28,8 +28,8 @@ public class ShaderManager {
         if (defaultShader == null) {
             logger.debug("🚀 Loading Default Shader...");
             defaultShader = new Shader(
-                    ResourceUtil.getAbsolutePath("shader/vertex.glsl"),
-                    ResourceUtil.getAbsolutePath("shader/fragment.glsl")
+                    ResourceUtil.getAbsolutePath("resources/shader/vertex.glsl"),
+                    ResourceUtil.getAbsolutePath("resources/shader/fragment.glsl")
             );
             shaderMap.put("default", defaultShader);
             logger.debug("✅ Default Shader Loaded Successfully!");

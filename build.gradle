@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.gradleup.shadow' version '9.0.0-beta6'
 }
 
 group = 'dev.sinoka'
@@ -70,6 +71,20 @@ dependencies {
     implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources"
+        }
+    }
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+}
+
 test {
     useJUnitPlatform()
 }
@@ -82,7 +97,9 @@ run {
     jvmArgs = ['-Xms512m', '-Xmx2048m', '-Dorg.lwjgl.util.Debug=true', '-XstartOnFirstThread']
 
 }
+
 jar {
+    finalizedBy shadowJar
     manifest {
         attributes 'Main-Class': 'dev.sinoka.Main'
     }

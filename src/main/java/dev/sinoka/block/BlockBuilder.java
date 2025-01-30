@@ -11,7 +11,7 @@ public class BlockBuilder {
     private Texture texture;
     private float strength = 1;
     private boolean isBreakable = true;
-    private Model model = ModelFactory.loadModelFromJson(ResourceUtil.getAbsolutePath("model/json/block.json"));
+    private Model model = ModelFactory.loadModelFromJson(ResourceUtil.getAbsolutePath("resources/model/json/block.json"));
     private boolean isSolid = true;
 
     public BlockBuilder setBlockID(String id) {

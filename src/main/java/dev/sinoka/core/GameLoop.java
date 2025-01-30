@@ -46,7 +46,7 @@ class GameLoop {
         this.player = player;
         this.world = world;
         this.inputManager = new InputManager(windowManager.getWindow());
-        JsonFileReader bitmapFontJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("font/galmuri.json"));
+        JsonFileReader bitmapFontJFR = new JsonFileReader(ResourceUtil.getAbsolutePath("resources/font/galmuri.json"));
         this.bitmapFont = new BitmapFont(ShaderManager.getInstance().getShader("text"), bitmapFontJFR);
     }
 

@@ -44,7 +44,7 @@ public class Application {
         // 🚀 3️⃣ OpenGL 컨텍스트 생성 후 ShaderManager 및 리소스 로드
         this.shaderManager = ShaderManager.getInstance();
         shaderManager.loadDefaultShader(); // ✅ 기본 쉐이더 로드
-        shaderManager.loadShader("text", "shader/textVertex.glsl", "shader/textFragment.glsl");
+        shaderManager.loadShader("text", "resources/shader/textVertex.glsl", "resources/shader/textFragment.glsl");
 
         registerBlocks();
         createTestMap();
@@ -61,7 +61,7 @@ public class Application {
         logger.debug("🔹 Registering blocks...");
 
         // 🚀 5️⃣ OpenGL 컨텍스트가 생성된 후 텍스처 로드 (필수)
-        Texture grassTexture = new Texture(ResourceUtil.getAbsolutePath("image/grass.png"));
+        Texture grassTexture = new Texture(ResourceUtil.getAbsolutePath("resources/image/grass.png"));
         Block grassBlock = new BlockBuilder()
                 .setBlockID("grassBlock")
                 .setStrength(1)

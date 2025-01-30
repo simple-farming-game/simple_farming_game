@@ -112,7 +112,7 @@ public class BitmapFont {
             for (String enTextFilePath : enTextFilePaths) {
                 List<String> enTextOrder = Files.readAllLines(Paths.get(ResourceUtil.getAbsolutePath(enTextFilePath)));
                 enTextOrder.stream().filter(line -> !line.isEmpty())
-                        .forEach(line -> enTextList.add(line));  // 각 라인을 리스트에 추가
+                        .forEach(enTextList::add);  // 각 라인을 리스트에 추가
             }
             enText = enTextList; // 영어 텍스트를 리스트로 저장
 
@@ -121,7 +121,7 @@ public class BitmapFont {
             for (String koTextFilePath : koTextFilePaths) {
                 List<String> koTextOrder = Files.readAllLines(Paths.get(ResourceUtil.getAbsolutePath(koTextFilePath)));
                 koTextOrder.stream().filter(line -> !line.isEmpty())
-                        .forEach(line -> koTextList.add(line));  // 각 라인을 리스트에 추가
+                        .forEach(koTextList::add);  // 각 라인을 리스트에 추가
             }
             koText = koTextList; // 한글 텍스트를 리스트로 저장
 
@@ -198,7 +198,7 @@ public class BitmapFont {
             // 두 개의 텍스처 배열을 처리하기 위한 2중 for문
             for (int j = 0; j < texturesKo.size(); j++) {
                 List<Texture> textures = texturesKo;
-                logger.info("d");
+                logger.info(koText);
 
                 for (int i = 0; i < koText.get(j).length(); i++) {
                     logger.info("dd");
