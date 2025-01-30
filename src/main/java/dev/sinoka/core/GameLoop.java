@@ -32,7 +32,7 @@ class GameLoop {
     private boolean escPressed = false;
     private long window;
 
-    private final float playerSpeed = 5.0f;
+    private float playerSpeed = 5.0f;
     private final float jumpForce = 5.0f;
     private static final float GRAVITY = -9.8f;
 
@@ -198,6 +198,12 @@ class GameLoop {
         if (jump && isOnGround(player)) {
             velocity.y = jumpForce; // 직접 점프 적용
         }
+
+        if (isOnGround(player)) {
+            playerSpeed = 5.0f;
+        }
+
+
 
         // ✅ 최종 위치 반영
         playerPos.y += velocity.y * deltaTime;
