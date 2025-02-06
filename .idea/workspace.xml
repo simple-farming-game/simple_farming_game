@@ -5,30 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e46d53a5-878b-4094-b980-c837dbd362e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/run.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/image/ui/crosshair.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/shader/testingf.glsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/shader/testingv.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/sfg_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/block/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/block/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/GameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/renderer/ModelRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/renderer/ModelRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/renderer/TextureRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/renderer/TextureRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/BitmapFont.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/BitmapFont.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Shader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Texture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/font/galmuri.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/font/galmuri.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/fragment.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/shader/fragment.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.bat" beforeDir="false" afterPath="$PROJECT_DIR$/run.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/run.ps1" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
