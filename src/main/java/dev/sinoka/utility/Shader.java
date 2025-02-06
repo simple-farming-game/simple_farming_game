@@ -41,7 +41,7 @@ public class Shader {
     public void setBool(String name, boolean value) {
         int location = glGetUniformLocation(programId, name);
         if (location == -1) {
-            System.err.println("Uniform '" + name + "' not found in shader!");
+            //System.err.println("Uniform '" + name + "' not found in shader!");
         } else {
             glUniform1i(location, value ? 1 : 0);
         }

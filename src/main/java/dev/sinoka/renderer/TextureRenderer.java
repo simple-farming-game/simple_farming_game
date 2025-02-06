@@ -5,7 +5,6 @@ import dev.sinoka.utility.Texture;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
@@ -13,6 +12,24 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class TextureRenderer {
+    private static TextureRenderer instance;
+    private int screenWidth = 800;  // 기본 화면 너비
+    private int screenHeight = 600; // 기본 화면 높이
+
+    private TextureRenderer() {}
+
+    public static TextureRenderer getInstance() {
+        if (instance == null) {
+            instance = new TextureRenderer();
+        }
+        return instance;
+    }
+
+    public void setScreenSize(int width, int height) {
+        this.screenWidth = width;
+        this.screenHeight = height;
+    }
+
     public static void drawTexture(Texture texture, Vector2f texRegion, Vector2f texSize, int VAO, Shader shaderProgram, Vector2f pos, Vector2f scale) {
         glEnable(GL_BLEND); // 블렌딩 활성화
         glBlendFunc(GL_ONE, GL_ONE);
@@ -40,5 +57,4 @@ public class TextureRenderer {
         glEnable(GL_DEPTH_TEST);
         glDisable(GL_BLEND); // 블렌딩 활성화
     }
-
 }

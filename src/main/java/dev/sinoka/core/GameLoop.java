@@ -1,8 +1,15 @@
 package dev.sinoka.core;
 
+// 중요!:
+// drawTexture 를 사용하여 화면에 2d 를 그리는경우
+// 절대적 크기를 사용하면 안됩니다.(상대적 크기를 사용해야합니다.)
+// 예를들어 화면 크기의 몇배, 화면 꼭대기에서 옆으로 몇픽셀 식입니다.
+
+import dev.sinoka.block.Block;
 import dev.sinoka.entity.CompoundCollision;
 import dev.sinoka.entity.Player;
 import dev.sinoka.input.InputManager;
+import dev.sinoka.renderer.ModelRenderer;
 import dev.sinoka.renderer.TextureRenderer;
 import dev.sinoka.utility.*;
 import dev.sinoka.world.World;
@@ -11,12 +18,19 @@ import org.apache.logging.log4j.Logger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
+import org.w3c.dom.Text;
 
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 class GameLoop {
     private final WindowManager windowManager;
@@ -31,6 +45,13 @@ class GameLoop {
     private boolean isPause;
     private boolean escPressed = false;
     private long window;
+
+    private Texture selectTexture = new Texture(new Vector4f(1,1,1, 0.5f));
+    private Texture crosshairTexture = new Texture(ResourceUtil.getAbsolutePath("resources/image/ui/crosshair.png"));
+
+    private int VAO;
+    private int VBO;
+    private int EBO;
 
     private float playerSpeed = 5.0f;
     private final float jumpForce = 5.0f;
@@ -51,13 +72,25 @@ class GameLoop {
     }
 
     public void start() {
+
+        createMesh();
+
         while (!glfwWindowShouldClose(this.windowManager.getWindow())) {
             float startTime = (float) glfwGetTime();
             deltaTime = startTime - lastFrame;
             lastFrame = startTime;
-
+            Block selectBlock = player.getSelectBlock(world, camera, this.wolrdName);
+            Vector3f selectBlockPos = player.getSelectBlockPos(world, camera, this.wolrdName);
+//
             window = this.windowManager.getWindow();
             isPause = windowManager.getPause();
+            int screenWidth = windowManager.getScrWidth();
+            int screenHeight = windowManager.getScrHeight();
+            float screenHeightPercent = screenHeight * 0.01f;
+            TextureRenderer.getInstance().setScreenSize(screenWidth,screenHeight);
+            camera.setWindowSize(screenWidth,screenHeight);
+
+            camera.updateMatrices();
 
             // 🎮 키 입력 처리
             processInput();
@@ -78,12 +111,19 @@ class GameLoop {
             // 🏞️ 장면 렌더링
             renderScene();
 
+            glDepthFunc(GL_LEQUAL);
+            logger.debug(selectBlockPos);
+            if (selectBlock != null) {
+                ModelRenderer.getInstance().render(selectBlock.getModel(), selectTexture, selectBlockPos.floor(), 1, false);
+            }
+            glDepthFunc(GL_LESS);
+
             // UI 렌더링
-            Shader textShader = ShaderManager.getInstance().getShader("text");
             glDisable(GL_DEPTH_TEST);
+            Shader textShader = ShaderManager.getInstance().getShader("text");
             textShader.use();
 
-            Matrix4f projection = new Matrix4f().setOrtho2D(0.0f, windowManager.getScrWidth(), 0.0f, windowManager.getScrHeight());
+            Matrix4f projection = new Matrix4f().setOrtho2D(0, windowManager.getScrWidth(), 0.0f, windowManager.getScrHeight());
             textShader.setMat4("projection", projection);
 
             // 뷰 행렬 설정
@@ -96,6 +136,18 @@ class GameLoop {
             if (windowManager.getPause()) {
                 bitmapFont.renderString("일시정지 Pause", new Vector2f(40, windowManager.getScrHeight()-80), 0.2f);
             }
+
+            float screenRatio = screenWidth / screenHeight;
+
+            // TextureRenderer.getInstance().drawTexture(
+            //         crosshairTexture,
+            //         new Vector2f(0, 0),         // UV 좌표 (왼쪽 상단)
+            //         new Vector2f(8, 8),         // UV 크기 (텍스처에서 사용할 영역)
+            //         VAO,
+            //         ShaderManager.getInstance().getShader("text"),
+            //         new Vector2f(screenWidth/2+(8*(screenHeightPercent*3*screenRatio))/2, screenHeight/2+(8*(screenHeightPercent*3))/2),
+            //         new Vector2f(screenHeightPercent*3, screenHeightPercent*3)
+            // );
 
             // 🎮 이벤트 처리
             glfwSwapBuffers(window);
@@ -123,13 +175,9 @@ class GameLoop {
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         glfwGetWindowSize(window, w, h);
-        Matrix4f projection = new Matrix4f().perspective(
-                (float) Math.toRadians(camera.getZoom()),
-                (float) w.get(0) / (float) h.get(0),
-                0.01f, 1000.0f
-        );
 
-        shader.setMat4("projection", projection);
+
+        shader.setMat4("projection", camera.getProjectionMatrix());
         shader.setMat4("view", camera.getViewMatrix());
     }
 
@@ -199,11 +247,6 @@ class GameLoop {
             velocity.y = jumpForce; // 직접 점프 적용
         }
 
-        if (isOnGround(player)) {
-            playerSpeed = 5.0f;
-        }
-
-
 
         // ✅ 최종 위치 반영
         playerPos.y += velocity.y * deltaTime;
@@ -239,5 +282,34 @@ class GameLoop {
         glfwDestroyWindow(windowManager.getWindow());
         glfwTerminate();
         logger.debug("✅ Cleanup completed!");
+    }
+
+    private static final float[] VERTICES = {
+            -4.0f,  4.0f,  // 왼쪽 위 (-470/2, +470/2)
+            -4.0f, -4.0f,  // 왼쪽 아래 (-470/2, -470/2)
+            4.0f, -4.0f,   // 오른쪽 아래 (+470/2, -470/2)
+            4.0f,  4.0f    // 오른쪽 위 (+470/2, +470/2)
+    };
+
+    private static final int[] INDICES = {1, 2, 0, 0, 3, 2};
+
+    private void createMesh() {
+        int attributeSize = 2;
+        int stride = attributeSize * Float.BYTES;
+
+        VAO = glGenVertexArrays();  // Generate VAO_EN
+        VBO = glGenBuffers();
+        EBO = glGenBuffers();
+
+        glBindVertexArray(VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, VERTICES, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDICES, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, attributeSize, GL_FLOAT, false, stride, 0);
+        glEnableVertexAttribArray(0);
+        glBindVertexArray(0); // Unbind int VAO
     }
 }

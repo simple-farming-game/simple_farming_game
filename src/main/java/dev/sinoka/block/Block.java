@@ -30,7 +30,11 @@ public class Block {
     }
 
     public void render(Vector3f position) {
-        ModelRenderer.getInstance().render(model, texture, position, blockSize);
+        ModelRenderer.getInstance().render(model, texture, position, blockSize, false);
+    }
+
+    public void renderWireframe(Vector3f position) {
+        ModelRenderer.getInstance().render(model, texture, position, blockSize, true);
     }
 
     // Getter 메서드

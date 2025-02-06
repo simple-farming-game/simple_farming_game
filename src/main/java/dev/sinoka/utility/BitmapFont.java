@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BitmapFont {
     private static final float[] VERTICES_KO = {
@@ -37,6 +36,9 @@ public class BitmapFont {
     private Shader shaderProgram;
     private List<String> enText;
     private List<String> koText;
+
+    private int screenWidth;
+    private int screenHeight;
 
     private Map<Character, Glyph> glyphs = new HashMap<>();
 
@@ -198,10 +200,8 @@ public class BitmapFont {
             // 두 개의 텍스처 배열을 처리하기 위한 2중 for문
             for (int j = 0; j < texturesKo.size(); j++) {
                 List<Texture> textures = texturesKo;
-                logger.info(koText);
 
                 for (int i = 0; i < koText.get(j).length(); i++) {
-                    logger.info("dd");
                     char c = koText.get(j).charAt(i);
                     JSONObject glyphInfo = glyphData.optJSONObject(String.valueOf(c));
 
@@ -309,7 +309,7 @@ public class BitmapFont {
         // [📌 핵심 수정] 한글과 영어의 비율을 동일하게 유지
         Vector2f newScale = isKo ? new Vector2f(scale / (TEXTURE_WIDTH_KO / TEXTURE_WIDTH_EN), scale / (TEXTURE_HEIGHT_KO / TEXTURE_HEIGHT_EN)) : new Vector2f(scale, scale);
 
-        TextureRenderer.drawTexture(
+        TextureRenderer.getInstance().drawTexture(
                 texture,
                 texRegion,
                 texSize,  // ✅ 올바르게 계산된 texSize 적용
@@ -318,6 +318,11 @@ public class BitmapFont {
                 position,
                 newScale
         );
+    }
+
+    public void setScreenSize(int screenWidth,int screenHeight) {
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
     }
 
     public void cleanup() {

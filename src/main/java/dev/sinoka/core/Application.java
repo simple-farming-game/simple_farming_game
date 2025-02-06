@@ -45,6 +45,8 @@ public class Application {
         this.shaderManager = ShaderManager.getInstance();
         shaderManager.loadDefaultShader(); // ✅ 기본 쉐이더 로드
         shaderManager.loadShader("text", "resources/shader/textVertex.glsl", "resources/shader/textFragment.glsl");
+        shaderManager.loadShader("testing", "resources/shader/testingv.glsl", "resources/shader/testingf.glsl");
+
 
         registerBlocks();
         createTestMap();
