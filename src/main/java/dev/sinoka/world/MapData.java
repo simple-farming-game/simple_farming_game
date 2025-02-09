@@ -17,7 +17,8 @@ public class MapData {
         Vector3i position = new Vector3i(x, y, z);
         // 기존에 블록이 있으면 덮어쓰기
         if (tileMap.containsKey(position)) {
-            tileMap.remove(position);
+            System.out.println("dd");
+            return;
         }
         tileMap.put(position, blockID);
     }
