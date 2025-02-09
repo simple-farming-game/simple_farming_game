@@ -40,14 +40,22 @@ public class World {
         MapData map = getMap(mapName);
         if (map != null) {
             map.setBlockAt(x, y, z, blockID);
-            int mapIndex = maps.indexOf(map);
-            if (mapIndex != -1) {
-                setMapChanged(mapIndex);  // 블록을 추가한 후 맵 상태 변경
-            }
+            setMapChanged(maps.indexOf(map));  // ✅ 맵이 변경됨을 표시
         } else {
             System.err.println("❌ Map '" + mapName + "' not found!");
         }
     }
+
+    public void removeBlockFromMap(String mapName, int x, int y, int z) {
+        MapData map = getMap(mapName);
+        if (map != null) {
+            map.removeBlockAt(x, y, z);
+            setMapChanged(maps.indexOf(map));  // ✅ 맵이 변경됨을 표시
+        } else {
+            System.err.println("❌ Map '" + mapName + "' not found!");
+        }
+    }
+
 
     public void render(String mapName) {
         MapData map = getMap(mapName);

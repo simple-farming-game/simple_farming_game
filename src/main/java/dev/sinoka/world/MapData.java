@@ -14,7 +14,20 @@ public class MapData {
     }
 
     public void setBlockAt(int x, int y, int z, String blockID) {
-        tileMap.put(new Vector3i(x, y, z), blockID);
+        Vector3i position = new Vector3i(x, y, z);
+        // 기존에 블록이 있으면 덮어쓰기
+        if (tileMap.containsKey(position)) {
+            tileMap.remove(position);
+        }
+        tileMap.put(position, blockID);
+    }
+
+    public void removeBlockAt(int x, int y, int z) {
+        Vector3i position = new Vector3i(x, y, z);
+        // 해당 위치에 블록이 있으면 제거
+        if (tileMap.containsKey(position)) {
+            tileMap.remove(position);
+        }
     }
 
     public String getBlockAt(int x, int y, int z) {

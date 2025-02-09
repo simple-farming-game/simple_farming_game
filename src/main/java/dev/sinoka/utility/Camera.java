@@ -211,4 +211,12 @@ public class Camera {
 
         return direction;
     }
+
+    public float getYaw() {
+        return yaw;
+    }
+
+    public float getPitch() {
+        return pitch;
+    }
 }

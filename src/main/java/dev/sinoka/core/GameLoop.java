@@ -6,6 +6,7 @@ package dev.sinoka.core;
 // 예를들어 화면 크기의 몇배, 화면 꼭대기에서 옆으로 몇픽셀 식입니다.
 
 import dev.sinoka.block.Block;
+import dev.sinoka.entity.BoxCollision;
 import dev.sinoka.entity.CompoundCollision;
 import dev.sinoka.entity.Player;
 import dev.sinoka.input.InputManager;
@@ -20,7 +21,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
-import org.w3c.dom.Text;
+import org.lwjgl.glfw.GLFW;
 
 import java.nio.IntBuffer;
 
@@ -46,6 +47,10 @@ class GameLoop {
     private boolean escPressed = false;
     private long window;
 
+    private int frameCount = 0;
+    private float timeElapsed = 0.0f;
+    private float fps = 0.0f;
+
     private Texture selectTexture = new Texture(new Vector4f(1,1,1, 0.5f));
     private Texture crosshairTexture = new Texture(ResourceUtil.getAbsolutePath("resources/image/ui/crosshair.png"));
 
@@ -56,6 +61,8 @@ class GameLoop {
     private float playerSpeed = 5.0f;
     private final float jumpForce = 5.0f;
     private static final float GRAVITY = -9.8f;
+
+    private Vector3f selectBlockPos;
 
     private String wolrdName = "testing";
 
@@ -80,8 +87,18 @@ class GameLoop {
             deltaTime = startTime - lastFrame;
             lastFrame = startTime;
             Block selectBlock = player.getSelectBlock(world, camera, this.wolrdName);
-            Vector3f selectBlockPos = player.getSelectBlockPos(world, camera, this.wolrdName);
-//
+            selectBlockPos = player.getSelectBlockPos(world, camera, this.wolrdName);
+
+            frameCount++;                     // 현재 프레임 카운트 증가
+            timeElapsed += deltaTime;          // deltaTime을 누적하여 경과 시간 계산
+
+            // 1초마다 FPS 계산
+            if (timeElapsed >= 1.0f) {
+                fps = frameCount / timeElapsed;  // FPS 계산
+                frameCount = 0;                  // 프레임 카운트 초기화
+                timeElapsed = 0.0f;              // 시간 초기화
+            }
+
             window = this.windowManager.getWindow();
             isPause = windowManager.getPause();
             int screenWidth = windowManager.getScrWidth();
@@ -112,7 +129,6 @@ class GameLoop {
             renderScene();
 
             glDepthFunc(GL_LEQUAL);
-            logger.debug(selectBlockPos);
             if (selectBlock != null) {
                 ModelRenderer.getInstance().render(selectBlock.getModel(), selectTexture, selectBlockPos.floor(), 1, false);
             }
@@ -137,17 +153,9 @@ class GameLoop {
                 bitmapFont.renderString("일시정지 Pause", new Vector2f(40, windowManager.getScrHeight()-80), 0.2f);
             }
 
-            float screenRatio = screenWidth / screenHeight;
+            bitmapFont.renderString(String.valueOf(fps), new Vector2f(40, windowManager.getScrHeight()-110), 0.2f);
 
-            // TextureRenderer.getInstance().drawTexture(
-            //         crosshairTexture,
-            //         new Vector2f(0, 0),         // UV 좌표 (왼쪽 상단)
-            //         new Vector2f(8, 8),         // UV 크기 (텍스처에서 사용할 영역)
-            //         VAO,
-            //         ShaderManager.getInstance().getShader("text"),
-            //         new Vector2f(screenWidth/2+(8*(screenHeightPercent*3*screenRatio))/2, screenHeight/2+(8*(screenHeightPercent*3))/2),
-            //         new Vector2f(screenHeightPercent*3, screenHeightPercent*3)
-            // );
+            player.rotateProcess(camera);
 
             // 🎮 이벤트 처리
             glfwSwapBuffers(window);
@@ -155,8 +163,6 @@ class GameLoop {
         }
         cleanup();
     }
-
-
 
     private void handleMouseMode() {
         glfwSetInputMode(window, GLFW_CURSOR, isPause ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
@@ -185,6 +191,8 @@ class GameLoop {
         world.render(wolrdName);
     }
 
+    private boolean mousePressed = false; // 마우스 클릭 상태 저장
+
     private void processInput() {
         inputManager.update(); // ✅ 키 입력 업데이트
 
@@ -205,9 +213,18 @@ class GameLoop {
                 resetPlayer();
             }
             handlePlayerMovement(window);
+
+            // ✅ 마우스 클릭 감지 (연속 입력 방지)
+            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+                if (!mousePressed && selectBlockPos != null) {
+                    player.blockBreakProcess(world, wolrdName, selectBlockPos);
+                    mousePressed = true; // 클릭 플래그 설정
+                }
+            } else {
+                mousePressed = false; // 클릭이 해제되면 플래그 초기화
+            }
         }
     }
-
 
     private void handlePlayerMovement(long window) {
         Vector3f moveVector = new Vector3f();
@@ -232,7 +249,6 @@ class GameLoop {
 
         if (moveVector.lengthSquared() > 0) {
             moveVector.normalize().mul(playerSpeed * deltaTime);
-            playerPos.add(moveVector);
         }
 
         // ✅ 중력 적용 (이제 피직스 엔진이 없으므로 직접 적용)
@@ -247,6 +263,15 @@ class GameLoop {
             velocity.y = jumpForce; // 직접 점프 적용
         }
 
+        // ✅ 충돌 검사 후 X, Z 방향의 이동을 멈추기
+        if (isCollidingWithWorld(playerPos.add(moveVector))) {
+            // 충돌이 발생하면 X, Z 방향 속도를 0으로 설정
+            velocity.x = 0;
+            velocity.z = 0;
+        } else {
+            // 충돌이 없으면 이동
+            playerPos.add(moveVector);
+        }
 
         // ✅ 최종 위치 반영
         playerPos.y += velocity.y * deltaTime;
@@ -267,6 +292,19 @@ class GameLoop {
         return compoundCollision.intersects(aPlayer.getCollision());
     }
 
+    // X, Z 방향 충돌 체크 함수 (예: AABB 충돌 검사)
+    private boolean isCollidingWithWorld(Vector3f newPos) {
+        BoxCollision playerCollision = player.getCollision(); // 플레이어의 충돌 박스
+        playerCollision.setPosition(newPos); // 플레이어의 새로운 위치로 충돌 박스 업데이트
+
+        CompoundCollision compoundCollision = world.getCompoundCollision(wolrdName);
+        if (compoundCollision == null) {
+            System.err.println("❌ CompoundCollision for map '"+wolrdName+"' is null!");
+            return false; // 기본값 false 반환 (또는 원하는 동작 수행)
+        }
+
+        return compoundCollision.intersects(playerCollision);
+    }
 
     private void resetPlayer() {
         Vector3f resetPosition = new Vector3f(0, 5f, 0);

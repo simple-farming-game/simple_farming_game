@@ -12,8 +12,8 @@ public class Player {
 
     public Player(Vector3f pos) {
         this.pos = pos;
-        Vector3f size = new Vector3f(1,2,0.5f);
-        this.collision = new BoxCollision(pos.sub(size.x*0.5f,0,0), size);
+        Vector3f size = new Vector3f(0.5f, 2, 0);
+        this.collision = new BoxCollision(pos.sub(size.x * 0.5f, 0, size.z * 0.5f), size);
         this.velocity = new Vector3f(0, 0, 0); // 초기 속도 0으로 설정
         collision.setSolid(true);
     }
@@ -37,6 +37,10 @@ public class Player {
 
     public BoxCollision getCollision() {
         return collision;
+    }
+
+    public void rotateProcess(Camera camera) {
+        collision.rotate(camera.getYaw());
     }
 
     public Block getSelectBlock(World world, Camera camera, String mapName){
@@ -73,5 +77,9 @@ public class Player {
             selectPos.add(camera.getDirectionVector());
         }
         return null;
+    }
+
+    public void blockBreakProcess(World world, String mapName, Vector3f pos) {
+        world.removeBlockFromMap(mapName, (int) pos.x, (int) pos.y, (int) pos.z);
     }
 }

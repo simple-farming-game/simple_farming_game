@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e46d53a5-878b-4094-b980-c837dbd362e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/MatUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.bat" beforeDir="false" afterPath="$PROJECT_DIR$/run.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/run.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/GameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/BoxCollision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/BoxCollision.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/MapData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/MapData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/World.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
