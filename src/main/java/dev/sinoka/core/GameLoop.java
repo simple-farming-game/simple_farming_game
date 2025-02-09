@@ -59,7 +59,7 @@ class GameLoop {
     private int EBO;
 
     private float playerSpeed = 5.0f;
-    private final float jumpForce = 5.0f;
+    private final float jumpForce = 10.0f;
     private static final float GRAVITY = -9.8f;
 
     private Vector3f selectBlockPos;
@@ -220,6 +220,11 @@ class GameLoop {
                     player.blockBreakProcess(world, wolrdName, selectBlockPos);
                     mousePressed = true; // 클릭 플래그 설정
                 }
+            } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+                if (!mousePressed && selectBlockPos != null) {
+                    player.blockPlaceProcess(world, wolrdName, camera, selectBlockPos, "grassBlock");
+                    mousePressed = true; // 클릭 플래그 설정
+                }
             } else {
                 mousePressed = false; // 클릭이 해제되면 플래그 초기화
             }
@@ -268,9 +273,6 @@ class GameLoop {
             // 충돌이 발생하면 X, Z 방향 속도를 0으로 설정
             velocity.x = 0;
             velocity.z = 0;
-        } else {
-            // 충돌이 없으면 이동
-            playerPos.add(moveVector);
         }
 
         // ✅ 최종 위치 반영

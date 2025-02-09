@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e46d53a5-878b-4094-b980-c837dbd362e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/MatUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/core/GameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/BoxCollision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/BoxCollision.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/utility/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/MapData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/MapData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/sinoka/world/World.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +53,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
   </component>
@@ -74,20 +75,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Gradle.sfg [:GLFWDemo.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.sfg [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.sfg [build].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Shell Script.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/block-breaking&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/newkin/sfg/build/libs/resources/font&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Gradle.sfg [:GLFWDemo.main()].executor": "Debug",
+    "Gradle.sfg [:Main.main()].executor": "Run",
+    "Gradle.sfg [build].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Shell Script.Unnamed.executor": "Run",
+    "git-widget-placeholder": "feat/place-block",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/newkin/sfg/build/libs/resources/font"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/build/libs/resources/font" />
@@ -175,7 +176,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feat/block-breaking" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
