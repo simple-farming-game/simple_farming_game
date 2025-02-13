@@ -104,6 +104,7 @@ class GameLoop {
             int screenWidth = windowManager.getScrWidth();
             int screenHeight = windowManager.getScrHeight();
             float screenHeightPercent = screenHeight * 0.01f;
+            float screenWidthPercent = screenHeight * 0.01f;
             TextureRenderer.getInstance().setScreenSize(screenWidth,screenHeight);
             camera.setWindowSize(screenWidth,screenHeight);
 
@@ -147,13 +148,13 @@ class GameLoop {
             textShader.setMat4("view", view);
 
             // 텍스트 렌더링
-            bitmapFont.renderString(wolrdName+" 월드입니다. Hello, World! 안녕, 세상!", new Vector2f(40, windowManager.getScrHeight()-40), 0.2f);
+            bitmapFont.renderString(wolrdName+" 월드입니다. Hello, World! 안녕, 세상!", new Vector2f(screenWidthPercent*5, windowManager.getScrHeight()-screenHeightPercent*5), screenHeightPercent/30);
 
             if (windowManager.getPause()) {
-                bitmapFont.renderString("일시정지 Pause", new Vector2f(40, windowManager.getScrHeight()-80), 0.2f);
+                bitmapFont.renderString("일시정지 Pause", new Vector2f(screenWidthPercent*5, windowManager.getScrHeight()-screenHeightPercent*10), screenHeightPercent/30);
             }
 
-            bitmapFont.renderString(String.valueOf(fps), new Vector2f(40, windowManager.getScrHeight()-110), 0.2f);
+            bitmapFont.renderString(String.valueOf(fps), new Vector2f(screenWidthPercent*5, windowManager.getScrHeight()-screenHeightPercent*15), screenHeightPercent/30);
 
             player.rotateProcess(camera);
 
