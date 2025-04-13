@@ -15,3 +15,10 @@ font is [Galmuri9](https://quiple.dev/galmuri)
 `2022. 7. 24. ~ 2025. 4. 13.`
 
 `SFG 프로젝트. 여기에 잠들다.`
+
+# 도움주신 분들
+
+감사했습니다. 죄송합니다.
+
+ - kdh8219 - 파이썬 버전 sfg 2d 리팩토링
+ - yulmwu - 파이썬 버전 sfg 2d 리드미 작성 + 잡버그 수정
