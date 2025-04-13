@@ -10,8 +10,8 @@ font is [Galmuri9](https://quiple.dev/galmuri)
 
 ![마지막 커밋](https://github.com/simple-farming-game/simple_farming_game/blob/main/image.png?raw=true)
 
-54d1d7d237fe7d3fe73678e8c16012e5d9d2ec80 커밋. 시작. 
+`54d1d7d237fe7d3fe73678e8c16012e5d9d2ec80 커밋. 시작. `
 
-2022. 7. 24. ~ 2025. 4. 13.
+`2022. 7. 24. ~ 2025. 4. 13.`
 
-SFG 프로젝트. 여기에 잠들다.
+`SFG 프로젝트. 여기에 잠들다.`
